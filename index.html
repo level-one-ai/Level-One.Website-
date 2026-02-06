@@ -46,94 +46,74 @@
   /* ─── SPLASH SCREEN STYLES ─── */
   #splash-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0; width: 100vw; height: 100vh;
     background-color: #000000;
-    z-index: 99999; /* Top priority */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease-out; /* Final fade out of black screen */
+    z-index: 99999; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: opacity 1.5s ease-out;
   }
 
-  /* Container to stack Logo and Text on top of each other */
   .splash-center {
     position: relative;
-    width: 300px;
-    height: 120px; /* Increased height for bigger logo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 400px;
+    height: 150px;
+    display: flex; align-items: center; justify-content: center;
     margin-bottom: 2rem;
   }
 
   #splash-logo {
-    height: 90px; /* MODIFIED: Made Logo Bigger */
+    height: 120px; /* Bigger Logo */
     width: auto;
     opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+    transition: opacity 1s ease-in-out;
     position: absolute; 
   }
 
   #splash-text {
     font-family: var(--heading);
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--white);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
     position: absolute; 
     text-align: center;
   }
 
-  /* Loading Bar Container */
   .splash-loader-box {
-    width: 200px;
-    height: 2px;
+    width: 250px;
+    height: 3px;
     background: rgba(255,255,255,0.1);
     border-radius: 2px;
     overflow: hidden;
-    opacity: 0; /* Starts hidden */
+    opacity: 0;
     transition: opacity 0.5s ease;
   }
 
-  /* MODIFIED: White Loading Bar */
   .splash-loader-bar {
     height: 100%;
-    width: 0%;
-    background: #ffffff; /* White */
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* White Glow */
+    width: 0%; /* JS will control this based on real loading */
+    background: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     transition: width 0.1s linear; 
   }
 
-  /* MODIFIED: Glitch Effect Only (Removed Shake) */
-  .glitch-active {
-    position: relative;
-    /* Removed animation: shake ... */
-  }
+  /* Glitch Effect */
+  .glitch-active { position: relative; }
   .glitch-active::before, .glitch-active::after {
     content: "LEVEL ONE";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0.7;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.7;
   }
   .glitch-active::before {
-    color: #0ff; z-index: -1; left: 2px;
-    clip-path: inset(0 0 0 0);
+    color: #0ff; z-index: -1; left: 2px; clip-path: inset(0 0 0 0);
     animation: glitch-anim-1 2s infinite linear alternate-reverse;
   }
   .glitch-active::after {
-    color: #f0f; z-index: -2; left: -2px;
-    clip-path: inset(0 0 0 0);
+    color: #f0f; z-index: -2; left: -2px; clip-path: inset(0 0 0 0);
     animation: glitch-anim-2 2s infinite linear alternate-reverse;
   }
-  
-  /* Retained Glitch Keyframes */
   @keyframes glitch-anim-1 {
     0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
     20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
@@ -150,7 +130,6 @@
     80% { clip-path: inset(55% 0 10% 0); transform: translate(2px, 0); }
     100% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
   }
-
 
   /* ─── DOCKED RIGHT SIDE CARD STYLES ─── */
   canvas#hero-lightpass {
@@ -172,101 +151,28 @@
 
   @media(max-width: 768px) {
     canvas#hero-lightpass {
-        left: 0;
-        width: 100vw;
-        top: 0;
-        height: 100vh;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
+        left: 0; width: 100vw; top: 0; height: 100vh;
+        border-radius: 0; box-shadow: none; border: none;
     }
   }
 
-  /* Progress bar (Website Scroll) */
-  .progress-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    z-index: 10000;
-    background: rgba(0, 0, 0, 0.8);
-  }
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255, 107, 53, 0.95) 0%, rgba(255, 107, 53, 0.75) 100%);
-    width: 0%;
-    transition: width 0.05s ease-out, background-position 0.3s ease-out;
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6), 0 0 40px rgba(255, 107, 53, 0.3);
-    background-size: 200% 100%;
-    background-position: 0% 0%;
-  }
+  .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 10000; background: rgba(0, 0, 0, 0.8); }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, rgba(255, 107, 53, 0.95) 0%, rgba(255, 107, 53, 0.75) 100%); width: 0%; transition: width 0.05s ease-out, background-position 0.3s ease-out; box-shadow: 0 0 20px rgba(255, 107, 53, 0.6), 0 0 40px rgba(255, 107, 53, 0.3); background-size: 200% 100%; background-position: 0% 0%; }
 
   .grid-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 70% 50% at 50% 20%, rgba(0,0,0,0.6) 0%, transparent 70%); }
   .ambient-glow { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(255,255,255,0.02) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
-  /* ─── HEADER ─── */
-  nav { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    z-index: 1000; 
-    padding: 0 2.5rem; 
-    height: 80px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    background: rgba(5,5,7,0.6); 
-    backdrop-filter: blur(24px) saturate(1.2); 
-    border-bottom: 1px solid var(--border); 
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 2.5rem; height: 80px; display: flex; align-items: center; justify-content: space-between; background: rgba(5,5,7,0.6); backdrop-filter: blur(24px) saturate(1.2); border-bottom: 1px solid var(--border); }
   .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
   .nav-logo img { height: 36px; width: auto; filter: brightness(1.2); } 
-  
-  .nav-logo-text { 
-    font-family: var(--heading); 
-    font-weight: 700; 
-    font-size: 1.3rem; 
-    color: var(--white); 
-    letter-spacing: 0.15em; 
-    text-transform: uppercase; 
-    position: relative;
-  }
+  .nav-logo-text { font-family: var(--heading); font-weight: 700; font-size: 1.3rem; color: var(--white); letter-spacing: 0.15em; text-transform: uppercase; position: relative; }
 
-  /* Glitch Effect for Header */
-  .glitch-effect {
-    position: relative;
-    color: var(--white);
-  }
-  .glitch-effect::before,
-  .glitch-effect::after {
-    content: "LEVEL ONE";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-  }
-  .glitch-effect::before {
-    color: #0ff;
-    z-index: -1;
-    animation: glitch-anim-1 3s infinite linear alternate-reverse;
-  }
-  .glitch-effect::after {
-    color: #f0f;
-    z-index: -2;
-    animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
-  }
-  /* Pause glitch most of the time so it's not annoying */
-  .glitch-effect::before, .glitch-effect::after {
-    animation-delay: 4s;
-    animation-duration: 0.2s; 
-    animation-iteration-count: infinite;
-  }
+  .glitch-effect { position: relative; color: var(--white); }
+  .glitch-effect::before, .glitch-effect::after { content: "LEVEL ONE"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; }
+  .glitch-effect::before { color: #0ff; z-index: -1; animation: glitch-anim-1 3s infinite linear alternate-reverse; }
+  .glitch-effect::after { color: #f0f; z-index: -2; animation: glitch-anim-2 2.5s infinite linear alternate-reverse; }
+  .glitch-effect::before, .glitch-effect::after { animation-delay: 4s; animation-duration: 0.2s; animation-iteration-count: infinite; }
 
-  /* Hexagon hamburger button */
   .hex-burger { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; position: relative; z-index: 1001; }
   .hex-border { position: absolute; inset: 0; }
   .hex-border polygon { fill: none; stroke: rgba(255,255,255,0.25); stroke-width: 1.5; transition: stroke 0.3s; }
@@ -277,7 +183,6 @@
   .hex-burger.open .bars span:nth-child(2) { opacity: 0; }
   .hex-burger.open .bars span:nth-child(3) { transform: rotate(-45deg) translate(2px, -4px); }
 
-  /* Fullscreen menu overlay */
   .menu-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(5,5,7,0.95); backdrop-filter: blur(30px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.22,1,0.36,1); }
   .menu-overlay.open { opacity: 1; pointer-events: auto; }
   .menu-overlay a { font-family: var(--heading); font-size: 1.8rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s, transform 0.3s; transform: translateY(10px); opacity: 0; }
@@ -297,7 +202,6 @@
   .hero-cta .btn-primary { background: var(--white-faded); color: var(--bg); border: 1px solid transparent; backdrop-filter: blur(12px); padding: 0.5rem 1.2rem; font-size: 0.78rem; }
   .hero-cta .btn-primary:hover { background: rgba(255, 107, 53, 0.5); color: var(--white); border-color: transparent; box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); }
 
-  /* ── Hero (Normal scroll, not fixed) ── */
   .hero { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0; margin-top: 80px; z-index: 5; background: var(--bg); }
   .hero-video-bg { position: absolute; inset: 0; z-index: 0; }
   .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
@@ -411,7 +315,6 @@
     <img id="splash-logo" src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Loading Logo">
     <div id="splash-text" class="glitch-active">LEVEL ONE</div>
   </div>
-  
   <div class="splash-loader-box" id="loaderBox">
     <div class="splash-loader-bar" id="loaderBar"></div>
   </div>
@@ -448,18 +351,14 @@
   <div class="hero-video-bg">
     <video autoplay loop muted playsinline><source src="https://cdn.jsdelivr.net/gh/level-one-ai/Level-One.Website-@main/images/Mobius_Ring.mp4" type="video/mp4"></video>
   </div>
-
   <div class="hero-overlay"></div>
-
   <div class="hero-nodes">
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>Custom AI Agents</div>
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Automated Outreach</div>
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>MCP Integrations</div>
-    <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Workflow Engines</div>
+    <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Workflow Engines</div>
   </div>
-
   <div class="hero-fade"></div>
-
   <div class="hero-content">
     <div class="hero-badge anim anim-up"><span class="pulse"></span> AI Automation for Business</div>
     <h1 class="anim anim-up d1">Custom AI solutions, built to seamlessly scale your vision faster than ever.</h1>
@@ -720,97 +619,117 @@
 <footer><p>© 2025 Level One — AI Growth Partner</p></footer>
 
 <script>
-  // ─── MODIFIED: SPLIT TIMING LOGIC ───
-  document.body.style.overflow = 'hidden'; // Stop scrolling during splash
+  // ─── COMBINED LOADING & SPLASH SCREEN LOGIC ───
   
-  function runSplashSequence() {
-    const logo = document.getElementById('splash-logo');
-    const text = document.getElementById('splash-text');
-    const loaderBox = document.getElementById('loaderBox');
-    const loaderBar = document.getElementById('loaderBar');
-    const splashScreen = document.getElementById('splash-screen');
-
-    // 1. Logo Fades In EARLY (Almost instantly)
-    setTimeout(() => {
-        logo.style.opacity = '1';
-    }, 50);
-
-    // 2. Loading Bar Fades In LATER (1s wait)
-    setTimeout(() => {
-        loaderBox.style.opacity = '1';
-        
-        // Start growing bar to 60%
-        loaderBar.style.transition = 'width 2.5s linear';
-        loaderBar.style.width = '60%';
-    }, 1000);
-
-    // 3. Swap Logo for Text (at ~3.5s which is 60%)
-    setTimeout(() => {
-        logo.style.opacity = '0';
-        setTimeout(() => {
-            text.style.opacity = '1';
-            // Finish growing bar to 100%
-            loaderBar.style.transition = 'width 3s linear';
-            loaderBar.style.width = '100%';
-        }, 800); // Wait for logo to fade out
-    }, 3500);
-
-    // 4. Fade Out Elements (at 6.5s)
-    setTimeout(() => {
-        text.style.opacity = '0';
-        loaderBox.style.opacity = '0';
-    }, 6500);
-
-    // 5. Fade Out Black Screen & Unlock Scroll (at 7s)
-    setTimeout(() => {
-        splashScreen.style.opacity = '0';
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
-        
-        setTimeout(() => {
-            splashScreen.style.display = 'none';
-        }, 1000);
-        
-        window.scrollTo(0, 0);
-    }, 7000);
-  }
-
-  // Start the sequence immediately
-  runSplashSequence();
-
-
-  // ─── SCROLL VIDEO SCRIPT ───
+  // 1. Lock scrolling immediately
+  document.body.style.overflow = 'hidden'; 
+  
+  // 2. Elements
+  const splashScreen = document.getElementById('splash-screen');
+  const splashLogo = document.getElementById('splash-logo');
+  const splashText = document.getElementById('splash-text');
+  const loaderBox = document.getElementById('loaderBox');
+  const loaderBar = document.getElementById('loaderBar');
+  
   const canvas = document.getElementById("hero-lightpass");
   const context = canvas.getContext("2d");
 
-  // --- CONFIGURATION ---
+  // 3. Configuration
   const frameCount = 120; 
   const currentFrame = index => (
     `https://github.com/level-one-ai/Level-One.Website-/blob/main/scroll-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg?raw=true`
   );
-  // ---------------------
 
   const images = [];
+  let imagesLoaded = 0;
+  
   const videoState = { 
     targetFrame: 0,
     smoothFrame: 0
   };
 
-  // 1. Preload Images
+  // 4. Initial Splash Animation (Phase 1)
+  // Fade in Logo immediately
+  setTimeout(() => {
+    splashLogo.style.opacity = '1';
+  }, 100);
+
+  // Fade in Loading Bar Container after 1 second
+  setTimeout(() => {
+    loaderBox.style.opacity = '1';
+  }, 1000);
+
+  // 5. Preload Images & Update Bar (Phase 2)
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     img.src = currentFrame(i);
+    
+    // When an image loads, update progress
+    img.onload = () => {
+      imagesLoaded++;
+      const percent = (imagesLoaded / frameCount) * 100;
+      
+      // Update bar width based on REAL download progress
+      loaderBar.style.width = percent + '%';
+
+      // Start the physics loop only once the first image is ready
+      if (imagesLoaded === 1) {
+        loop();
+        render(0); // Draw first frame
+      }
+
+      // Check if ALL images are loaded
+      if (imagesLoaded === frameCount) {
+        finishSplashScreen();
+      }
+    };
+    
     images.push(img);
   }
 
-  // 2. The Physics Loop (Linear Interpolation)
+  // 6. Finish Sequence (Phase 3)
+  function finishSplashScreen() {
+    // Wait a tiny bit to ensure the bar hits 100% visually
+    setTimeout(() => {
+        // A. Fade Out Logo
+        splashLogo.style.opacity = '0';
+        
+        // B. Wait 0.5s, then Fade Out Bar
+        setTimeout(() => {
+            loaderBox.style.opacity = '0';
+            
+            // C. Wait 0.5s, then Fade In Text
+            setTimeout(() => {
+                splashText.style.opacity = '1';
+                
+                // D. Wait 2s (Read Text), then Fade Out Text
+                setTimeout(() => {
+                    splashText.style.opacity = '0';
+                    
+                    // E. Wait 0.5s, then Fade Out Black Screen
+                    setTimeout(() => {
+                        splashScreen.style.opacity = '0';
+                        document.body.style.overflow = 'auto'; // Unlock Scroll
+                        
+                        // Cleanup DOM
+                        setTimeout(() => {
+                            splashScreen.style.display = 'none';
+                        }, 1500);
+                        
+                    }, 500);
+                }, 2000); 
+            }, 500);
+        }, 500);
+    }, 500);
+  }
+
+  // 7. Physics Loop
   function loop() {
     videoState.smoothFrame += (videoState.targetFrame - videoState.smoothFrame) * 0.025;
     const frameIndex = Math.floor(videoState.smoothFrame);
     render(frameIndex);
     requestAnimationFrame(loop);
   }
-
-  images[0].onload = () => { loop(); };
 
   function render(index) {
     if (index < 0) index = 0;
@@ -828,7 +747,7 @@
     context.drawImage(img, x, y, img.width * scale, img.height * scale);
   }
 
-  // 3. Scroll Listener
+  // 8. Event Listeners
   window.addEventListener('scroll', () => {  
     const scrollTop = document.documentElement.scrollTop;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -843,13 +762,11 @@
     updateProgressBar();
   });
 
-  // Resize Listener
   window.addEventListener('resize', () => {
     render(Math.floor(videoState.smoothFrame)); 
   });
 
-
-  // ─── EXISTING WEBSITE SCRIPTS ───
+  // Website UI Scripts
   function updateProgressBar() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
