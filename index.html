@@ -56,10 +56,12 @@
   }
   .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--orange-faded) 0%, rgba(255, 107, 53, 0.5) 100%);
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.95) 0%, rgba(255, 107, 53, 0.75) 100%);
     width: 0%;
-    transition: width 0.1s ease-out;
-    box-shadow: 0 0 10px var(--orange-glow);
+    transition: width 0.05s ease-out, background-position 0.3s ease-out;
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6), 0 0 40px rgba(255, 107, 53, 0.3);
+    background-size: 200% 100%;
+    background-position: 0% 0%;
   }
 
   .grid-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 70% 50% at 50% 20%, rgba(0,0,0,0.6) 0%, transparent 70%); }
@@ -142,9 +144,9 @@
     gap: 0.5rem;
   }
   .btn-primary:hover { 
-    background: var(--orange-faded);
+    background: rgba(255, 107, 53, 0.5);
     color: var(--white);
-    box-shadow: 0 0 30px var(--orange-glow); 
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); 
     transform: translateY(-2px); 
   }
   .btn-outline { font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; background: transparent; color: var(--white); border: 1px solid var(--border-hover); border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
@@ -161,10 +163,10 @@
     font-size: 0.78rem;
   }
   .hero-cta .btn-primary:hover {
-    background: var(--orange-faded);
+    background: rgba(255, 107, 53, 0.5);
     color: var(--white);
     border-color: transparent;
-    box-shadow: 0 0 30px var(--orange-glow);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25);
   }
 
   /* ── Hero (Normal scroll, not fixed) ── */
@@ -426,7 +428,7 @@
   .srv-card:hover .srv-card-visual svg { transform: scale(1.05); }
 
   .srv-card-visual {
-    width: 100%; height: 280px;
+    width: 100%; height: 420px;
     position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     background: rgba(255,255,255,0.01);
@@ -536,7 +538,7 @@
     section{padding:5rem 1.2rem}
     .hero-content { padding: 0 1.5rem 3.5rem; }
     .hero h1 { font-size: 1.6rem; }
-    .srv-card-visual { height: 220px; }
+    .srv-card-visual { height: 330px; }
     .feature-grid, .process-grid, .services-grid { gap: 1rem; }
   }
   ::-webkit-scrollbar{width:5px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
@@ -863,7 +865,12 @@
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     
-    document.getElementById('progressBar').style.width = scrollPercentage + '%';
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = scrollPercentage + '%';
+    
+    // Add diagonal movement effect - background position shifts as you scroll
+    const bgPosition = (scrollTop / 10) % 200;
+    progressBar.style.backgroundPosition = bgPosition + '% 0%';
   }
 
   window.addEventListener('scroll', updateProgressBar);
