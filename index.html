@@ -62,7 +62,7 @@
   }
 
   #splash-logo {
-    height: 120px; /* Bigger Logo */
+    height: 120px; 
     width: auto;
     opacity: 0;
     transition: opacity 1s ease-in-out;
@@ -94,10 +94,10 @@
 
   .splash-loader-bar {
     height: 100%;
-    width: 0%; /* JS will control this based on real loading */
+    width: 0%; 
     background: #ffffff;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-    transition: width 0.1s linear; 
+    transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth updates */
   }
 
   /* Glitch Effect */
@@ -356,7 +356,7 @@
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>Custom AI Agents</div>
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Automated Outreach</div>
     <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>MCP Integrations</div>
-    <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Workflow Engines</div>
+    <div class="h-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Workflow Engines</div>
   </div>
   <div class="hero-fade"></div>
   <div class="hero-content">
@@ -619,7 +619,7 @@
 <footer><p>© 2025 Level One — AI Growth Partner</p></footer>
 
 <script>
-  // ─── COMBINED LOADING & SPLASH SCREEN LOGIC ───
+  // ─── CRITICAL: COMBINED LOADING & SPLASH SCREEN LOGIC ───
   
   // 1. Lock scrolling immediately
   document.body.style.overflow = 'hidden'; 
@@ -630,6 +630,8 @@
   const splashText = document.getElementById('splash-text');
   const loaderBox = document.getElementById('loaderBox');
   const loaderBar = document.getElementById('loaderBar');
+  
+  const heroVideo = document.querySelector('.hero-video-bg video'); // SELECT VIDEO
   
   const canvas = document.getElementById("hero-lightpass");
   const context = canvas.getContext("2d");
@@ -648,53 +650,84 @@
     smoothFrame: 0
   };
 
-  // 4. Initial Splash Animation (Phase 1)
-  // Fade in Logo immediately
+  // 4. Initial Splash Animation (Logo Fades In First)
   setTimeout(() => {
     splashLogo.style.opacity = '1';
   }, 100);
 
-  // Fade in Loading Bar Container after 1 second
+  // 5. Preload Images & Update Bar
+  // Show bar after a small delay
   setTimeout(() => {
     loaderBox.style.opacity = '1';
-  }, 1000);
+  }, 800);
 
-  // 5. Preload Images & Update Bar (Phase 2)
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     img.src = currentFrame(i);
     
-    // When an image loads, update progress
     img.onload = () => {
       imagesLoaded++;
-      const percent = (imagesLoaded / frameCount) * 100;
       
-      // Update bar width based on REAL download progress
+      // Calculate Image Progress (Max 95% - wait for video)
+      const percent = Math.min(95, (imagesLoaded / frameCount) * 100);
       loaderBar.style.width = percent + '%';
 
-      // Start the physics loop only once the first image is ready
       if (imagesLoaded === 1) {
         loop();
-        render(0); // Draw first frame
+        render(0); 
       }
 
-      // Check if ALL images are loaded
+      // If all images loaded, check video
       if (imagesLoaded === frameCount) {
-        finishSplashScreen();
+        checkVideoAndFinish();
       }
     };
-    
     images.push(img);
   }
 
-  // 6. Finish Sequence (Phase 3)
+  // 6. VIDEO CHECK & FORCE PLAY
+  // Attempt to play video immediately to ensure it buffers
+  if (heroVideo) {
+      heroVideo.play().catch(() => {
+          // If autoplay blocked, mute and try again
+          heroVideo.muted = true;
+          heroVideo.play();
+      });
+  }
+
+  function checkVideoAndFinish() {
+      // Check if video is actually moving (time > 0)
+      if (heroVideo && heroVideo.readyState >= 3 && !heroVideo.paused) {
+          finishSplashScreen();
+      } else {
+          // If not ready, wait for event
+          if(heroVideo) {
+              heroVideo.addEventListener('timeupdate', function onTimeUpdate() {
+                  if(heroVideo.currentTime > 0) {
+                      heroVideo.removeEventListener('timeupdate', onTimeUpdate);
+                      finishSplashScreen();
+                  }
+              });
+              // Fallback force play again
+              heroVideo.play();
+          } else {
+              // No video found? Just finish.
+              finishSplashScreen();
+          }
+      }
+  }
+
+  // 7. Finish Sequence (Phase 3)
   function finishSplashScreen() {
-    // Wait a tiny bit to ensure the bar hits 100% visually
+    // Force bar to 100%
+    loaderBar.style.width = '100%';
+
+    // Wait a moment for bar to visually complete
     setTimeout(() => {
         // A. Fade Out Logo
         splashLogo.style.opacity = '0';
         
-        // B. Wait 0.5s, then Fade Out Bar
+        // B. Wait 0.8s (Logo fade), then Fade Out Bar
         setTimeout(() => {
             loaderBox.style.opacity = '0';
             
@@ -706,24 +739,23 @@
                 setTimeout(() => {
                     splashText.style.opacity = '0';
                     
-                    // E. Wait 0.5s, then Fade Out Black Screen
+                    // E. Wait 0.8s, then Fade Out Black Screen
                     setTimeout(() => {
                         splashScreen.style.opacity = '0';
                         document.body.style.overflow = 'auto'; // Unlock Scroll
                         
-                        // Cleanup DOM
                         setTimeout(() => {
                             splashScreen.style.display = 'none';
                         }, 1500);
                         
-                    }, 500);
+                    }, 800);
                 }, 2000); 
             }, 500);
-        }, 500);
+        }, 800);
     }, 500);
   }
 
-  // 7. Physics Loop
+  // 8. Physics Loop
   function loop() {
     videoState.smoothFrame += (videoState.targetFrame - videoState.smoothFrame) * 0.025;
     const frameIndex = Math.floor(videoState.smoothFrame);
@@ -747,7 +779,6 @@
     context.drawImage(img, x, y, img.width * scale, img.height * scale);
   }
 
-  // 8. Event Listeners
   window.addEventListener('scroll', () => {  
     const scrollTop = document.documentElement.scrollTop;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
