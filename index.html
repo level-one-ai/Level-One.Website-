@@ -167,34 +167,18 @@
     box-shadow: 0 0 30px var(--orange-glow);
   }
 
-  /* ── Hero (Full-screen video — fixed behind content) ── */
+  /* ── Hero (Normal scroll, not fixed) ── */
   .hero {
-    position: fixed; 
-    top: 0; 
-    left: 0;
+    position: relative; 
     width: 100%; 
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex; 
     align-items: flex-end; 
     justify-content: flex-start;
     padding: 0;
-    z-index: 0;
-    will-change: transform;
-  }
-
-  /* Spacer to push content below hero */
-  .hero-spacer { 
-    height: 100vh; 
-    position: relative; 
-    z-index: 0; 
-  }
-
-  /* All content after hero scrolls on top */
-  .scroll-content {
-    position: relative; 
     z-index: 1;
-    background: var(--bg);
+    margin-top: 60px; /* Account for fixed nav */
   }
 
   /* Full-screen background video */
@@ -278,12 +262,39 @@
     padding: 7rem 2rem;
     border: 2px solid transparent;
     transition: border-color 0.4s ease;
+    background: var(--bg);
   }
   section:hover {
     border-color: rgba(255, 255, 255, 0.2);
   }
   .section-inner { max-width: 1140px; margin: 0 auto; }
-  .section-num { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1.2rem; text-transform: uppercase; }
+  
+  /* Updated section-num to match hero badge style */
+  .section-num { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem;
+    font-family: var(--mono); 
+    font-size: 0.68rem; 
+    font-weight: 500; 
+    letter-spacing: 0.06em; 
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem; 
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem; 
+    border: 1px solid var(--border); 
+    border-radius: 100px;
+    background: rgba(5,5,7,0.5); 
+    backdrop-filter: blur(12px);
+  }
+  .section-num .pulse { 
+    width: 6px; 
+    height: 6px; 
+    border-radius: 50%; 
+    background: var(--white); 
+    animation: pulse 2s ease-in-out infinite; 
+  }
+  
   .section-title { font-family: var(--heading); font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.15; }
   .section-desc { color: var(--text-secondary); max-width: 560px; font-size: 0.95rem; line-height: 1.75; margin-bottom: 3.5rem; }
 
@@ -506,7 +517,7 @@
   .cta-section { text-align: center; border-top: 1px solid var(--border); }
   .glow-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); max-width: 300px; margin: 0 auto 2.5rem; }
 
-  footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
+  footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; background: var(--bg); }
   footer p { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); }
 
   /* ── Responsive ── */
@@ -523,7 +534,6 @@
   @media(max-width:768px){
     .h-node{display:none} 
     section{padding:5rem 1.2rem}
-    .hero-video-container{width:300px;height:300px}
     .hero-content { padding: 0 1.5rem 3.5rem; }
     .hero h1 { font-size: 1.6rem; }
     .srv-card-visual { height: 220px; }
@@ -592,16 +602,10 @@
   </div>
 </section>
 
-<!-- Spacer so content starts after hero viewport -->
-<div class="hero-spacer"></div>
-
-<!-- All scrolling content -->
-<div class="scroll-content">
-
 <!-- ══ Features ══ -->
 <section id="features">
   <div class="section-inner">
-    <div class="section-num anim anim-up">01 — What We Build</div>
+    <div class="section-num anim anim-up"><span class="pulse"></span> 01 — What We Build</div>
     <h2 class="section-title anim anim-up d1">Intelligent systems.<br>Tangible results.</h2>
     <p class="section-desc anim anim-up d2">We architect AI solutions that don't just work — they compound. Every system is designed to run, learn, and scale without you in the loop.</p>
     <div class="feature-grid">
@@ -648,7 +652,7 @@
 <!-- ══ Process ══ -->
 <section class="process-section" id="process">
   <div class="section-inner">
-    <div class="section-num anim anim-up">02 — Process</div>
+    <div class="section-num anim anim-up"><span class="pulse"></span> 02 — Process</div>
     <h2 class="section-title anim anim-up d1">Process is Result</h2>
     <p class="section-desc anim anim-up d2">The real outcome is only as strong as the system behind it.</p>
     <div class="process-grid">
@@ -683,7 +687,7 @@
 <!-- ══ About ══ -->
 <section class="about-section" id="about">
   <div class="section-inner">
-    <div class="section-num anim anim-up">03 — About Us</div>
+    <div class="section-num anim anim-up"><span class="pulse"></span> 03 — About Us</div>
     <h2 class="section-title anim anim-up d1">The mind behind the machine.</h2>
     <div class="about-layout" style="margin-top:2.5rem">
       <div class="anim anim-left d2">
@@ -721,7 +725,7 @@
 <!-- ══ Services — Redesigned with pill overlays ══ -->
 <section class="services-section" id="services">
   <div class="section-inner">
-    <div class="section-num anim anim-up">04 — Our Services</div>
+    <div class="section-num anim anim-up"><span class="pulse"></span> 04 — Our Services</div>
     <h2 class="section-title anim anim-up d1">What we specialize in.</h2>
     <p class="section-desc anim anim-up d2">Four pillars of AI-driven growth designed to eliminate friction, accelerate revenue, and compound operational leverage.</p>
     <div class="services-grid">
@@ -843,27 +847,21 @@
 <section class="cta-section">
   <div style="max-width:600px;margin:0 auto">
     <div class="glow-line"></div>
-    <div class="section-num anim anim-up" style="text-align:center">05 — Let's Talk</div>
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 05 — Let's Talk</div>
     <h2 class="section-title anim anim-up d1" style="text-align:center">Ready to build your AI growth engine?</h2>
     <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Book a free strategy call. We'll map your operations, find the leverage, and deliver a clear roadmap.</p>
     <div style="text-align:center" class="anim anim-scale d3"><a href="#" class="btn-primary" style="padding:0.7rem 2rem;font-size:0.85rem">Book a Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></a></div>
   </div>
 </section>
-</div><!-- end .scroll-content -->
 
-<footer style="position:relative;z-index:1;background:var(--bg)"><p>© 2025 Level One — AI Growth Partner</p></footer>
+<footer><p>© 2025 Level One — AI Growth Partner</p></footer>
 
 <script>
   // Progress bar
   function updateProgressBar() {
-    const scrollContent = document.querySelector('.scroll-content');
-    const scrollTop = window.pageY || document.documentElement.scrollTop;
-    const heroHeight = window.innerHeight;
-    
-    // Start calculating progress after hero section
-    const effectiveScroll = Math.max(0, scrollTop - heroHeight);
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight - heroHeight;
-    const scrollPercentage = scrollHeight > 0 ? (effectiveScroll / scrollHeight) * 100 : 0;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     
     document.getElementById('progressBar').style.width = scrollPercentage + '%';
   }
