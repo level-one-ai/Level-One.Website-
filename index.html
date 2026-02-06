@@ -43,6 +43,115 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ─── SPLASH SCREEN STYLES ─── */
+  #splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    z-index: 99999; /* Top priority */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-out; /* Final fade out of black screen */
+  }
+
+  /* Container to stack Logo and Text on top of each other */
+  .splash-center {
+    position: relative;
+    width: 300px;
+    height: 120px; /* Increased height for bigger logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  #splash-logo {
+    height: 90px; /* MODIFIED: Made Logo Bigger */
+    width: auto;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    position: absolute; 
+  }
+
+  #splash-text {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    position: absolute; 
+    text-align: center;
+  }
+
+  /* Loading Bar Container */
+  .splash-loader-box {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0; /* Starts hidden */
+    transition: opacity 0.5s ease;
+  }
+
+  /* MODIFIED: White Loading Bar */
+  .splash-loader-bar {
+    height: 100%;
+    width: 0%;
+    background: #ffffff; /* White */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* White Glow */
+    transition: width 0.1s linear; 
+  }
+
+  /* MODIFIED: Glitch Effect Only (Removed Shake) */
+  .glitch-active {
+    position: relative;
+    /* Removed animation: shake ... */
+  }
+  .glitch-active::before, .glitch-active::after {
+    content: "LEVEL ONE";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0.7;
+  }
+  .glitch-active::before {
+    color: #0ff; z-index: -1; left: 2px;
+    clip-path: inset(0 0 0 0);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+  }
+  .glitch-active::after {
+    color: #f0f; z-index: -2; left: -2px;
+    clip-path: inset(0 0 0 0);
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+  }
+  
+  /* Retained Glitch Keyframes */
+  @keyframes glitch-anim-1 {
+    0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
+    20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
+    40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 0); }
+    60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+    80% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+    100% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 0); }
+  }
+  @keyframes glitch-anim-2 {
+    0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, 0); }
+    20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 0); }
+    40% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 0); }
+    60% { clip-path: inset(15% 0 80% 0); transform: translate(-2px, 0); }
+    80% { clip-path: inset(55% 0 10% 0); transform: translate(2px, 0); }
+    100% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
+  }
+
+
   /* ─── DOCKED RIGHT SIDE CARD STYLES ─── */
   canvas#hero-lightpass {
     position: fixed;
@@ -73,7 +182,7 @@
     }
   }
 
-  /* Progress bar */
+  /* Progress bar (Website Scroll) */
   .progress-container {
     position: fixed;
     top: 0;
@@ -96,18 +205,15 @@
   .grid-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 70% 50% at 50% 20%, rgba(0,0,0,0.6) 0%, transparent 70%); }
   .ambient-glow { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(255,255,255,0.02) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
-  /* ─── MODIFIED HEADER ─── */
+  /* ─── HEADER ─── */
   nav { 
     position: fixed; 
-    top: 0; /* Changed from 3px to 0 for cleaner look */
+    top: 0; 
     left: 0; 
     right: 0; 
     z-index: 1000; 
     padding: 0 2.5rem; 
-    
-    /* MODIFIED: Increased height */
     height: 80px; 
-    
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
@@ -116,20 +222,19 @@
     border-bottom: 1px solid var(--border); 
   }
   .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
-  .nav-logo img { height: 36px; width: auto; filter: brightness(1.2); } /* Slightly larger logo */
+  .nav-logo img { height: 36px; width: auto; filter: brightness(1.2); } 
   
-  /* MODIFIED: Professional Caps & Glitch Base */
   .nav-logo-text { 
     font-family: var(--heading); 
     font-weight: 700; 
-    font-size: 1.3rem; /* Larger Text */
+    font-size: 1.3rem; 
     color: var(--white); 
-    letter-spacing: 0.15em; /* Professional Spacing */
-    text-transform: uppercase; /* All Caps */
+    letter-spacing: 0.15em; 
+    text-transform: uppercase; 
     position: relative;
   }
 
-  /* ─── GLITCH EFFECT ─── */
+  /* Glitch Effect for Header */
   .glitch-effect {
     position: relative;
     color: var(--white);
@@ -154,22 +259,6 @@
     z-index: -2;
     animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
   }
-  @keyframes glitch-anim-1 {
-    0% { clip-path: inset(20% 0 80% 0); transform: translate(-1px, 0); }
-    20% { clip-path: inset(60% 0 10% 0); transform: translate(1px, 0); }
-    40% { clip-path: inset(40% 0 50% 0); transform: translate(-1px, 0); }
-    60% { clip-path: inset(80% 0 5% 0); transform: translate(1px, 0); }
-    80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 0); }
-    100% { clip-path: inset(30% 0 20% 0); transform: translate(1px, 0); }
-  }
-  @keyframes glitch-anim-2 {
-    0% { clip-path: inset(10% 0 60% 0); transform: translate(1px, 0); }
-    20% { clip-path: inset(80% 0 5% 0); transform: translate(-1px, 0); }
-    40% { clip-path: inset(30% 0 20% 0); transform: translate(1px, 0); }
-    60% { clip-path: inset(15% 0 80% 0); transform: translate(-1px, 0); }
-    80% { clip-path: inset(55% 0 10% 0); transform: translate(1px, 0); }
-    100% { clip-path: inset(40% 0 30% 0); transform: translate(-1px, 0); }
-  }
   /* Pause glitch most of the time so it's not annoying */
   .glitch-effect::before, .glitch-effect::after {
     animation-delay: 4s;
@@ -178,12 +267,7 @@
   }
 
   /* Hexagon hamburger button */
-  .hex-burger {
-    width: 42px; height: 42px;
-    display: flex; align-items: center; justify-content: center;
-    background: none; border: none; cursor: pointer;
-    position: relative; z-index: 1001;
-  }
+  .hex-burger { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; position: relative; z-index: 1001; }
   .hex-border { position: absolute; inset: 0; }
   .hex-border polygon { fill: none; stroke: rgba(255,255,255,0.25); stroke-width: 1.5; transition: stroke 0.3s; }
   .hex-burger:hover .hex-border polygon { stroke: rgba(255,255,255,0.5); }
@@ -194,23 +278,9 @@
   .hex-burger.open .bars span:nth-child(3) { transform: rotate(-45deg) translate(2px, -4px); }
 
   /* Fullscreen menu overlay */
-  .menu-overlay {
-    position: fixed; inset: 0; z-index: 999;
-    background: rgba(5,5,7,0.95); backdrop-filter: blur(30px);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 2rem;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.4s cubic-bezier(0.22,1,0.36,1);
-  }
+  .menu-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(5,5,7,0.95); backdrop-filter: blur(30px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.22,1,0.36,1); }
   .menu-overlay.open { opacity: 1; pointer-events: auto; }
-  .menu-overlay a {
-    font-family: var(--heading); font-size: 1.8rem; font-weight: 600;
-    color: var(--text-secondary); text-decoration: none;
-    letter-spacing: -0.02em;
-    transition: color 0.3s, transform 0.3s;
-    transform: translateY(10px);
-    opacity: 0;
-  }
+  .menu-overlay a { font-family: var(--heading); font-size: 1.8rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s, transform 0.3s; transform: translateY(10px); opacity: 0; }
   .menu-overlay.open a { transform: translateY(0); opacity: 1; }
   .menu-overlay a:nth-child(1) { transition-delay: 0.1s; }
   .menu-overlay a:nth-child(2) { transition-delay: 0.15s; }
@@ -218,57 +288,27 @@
   .menu-overlay a:nth-child(4) { transition-delay: 0.25s; }
   .menu-overlay a:hover { color: var(--white); transform: translateX(6px); }
 
-  .btn-primary { 
-    font-family: var(--body); font-size: 0.8rem; font-weight: 500; 
-    padding: 0.55rem 1.3rem; background: var(--white-faded); color: var(--bg); 
-    border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; 
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
-  }
-  .btn-primary:hover { 
-    background: rgba(255, 107, 53, 0.5); color: var(--white);
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); transform: translateY(-2px); 
-  }
+  .btn-primary { font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; background: var(--white-faded); color: var(--bg); border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary:hover { background: rgba(255, 107, 53, 0.5); color: var(--white); box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); transform: translateY(-2px); }
   .btn-outline { font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; background: transparent; color: var(--white); border: 1px solid var(--border-hover); border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
   .btn-outline:hover { border-color: var(--border-glow); background: var(--white-dim); }
 
-  /* Hero CTA button */
   .hero-cta { margin-top: 1.5rem; }
-  .hero-cta .btn-primary {
-    background: var(--white-faded); color: var(--bg); border: 1px solid transparent;
-    backdrop-filter: blur(12px); padding: 0.5rem 1.2rem; font-size: 0.78rem;
-  }
-  .hero-cta .btn-primary:hover {
-    background: rgba(255, 107, 53, 0.5); color: var(--white); border-color: transparent;
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.25);
-  }
+  .hero-cta .btn-primary { background: var(--white-faded); color: var(--bg); border: 1px solid transparent; backdrop-filter: blur(12px); padding: 0.5rem 1.2rem; font-size: 0.78rem; }
+  .hero-cta .btn-primary:hover { background: rgba(255, 107, 53, 0.5); color: var(--white); border-color: transparent; box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); }
 
   /* ── Hero (Normal scroll, not fixed) ── */
-  .hero {
-    position: relative; width: 100%; min-height: 100vh;
-    overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start;
-    padding: 0; margin-top: 80px; /* Account for larger nav */
-    z-index: 5; background: var(--bg); 
-  }
-
+  .hero { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0; margin-top: 80px; z-index: 5; background: var(--bg); }
   .hero-video-bg { position: absolute; inset: 0; z-index: 0; }
   .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, var(--bg) 0%, rgba(5,5,7,0.5) 35%, rgba(5,5,7,0.15) 60%, rgba(5,5,7,0.3) 100%); pointer-events: none; }
   .hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; z-index: 2; background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%); pointer-events: none; }
-
   .hero-content { position: relative; z-index: 3; padding: 0 3.5rem 5rem; max-width: 680px; text-align: left; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: var(--mono); font-size: 0.68rem; color: var(--text-secondary);
-    padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 100px;
-    background: rgba(5,5,7,0.5); backdrop-filter: blur(12px);
-    margin-bottom: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;
-  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.68rem; color: var(--text-secondary); padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 100px; background: rgba(5,5,7,0.5); backdrop-filter: blur(12px); margin-bottom: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase; }
   .hero-badge .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--white); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:0.4}50%{opacity:1;box-shadow:0 0 8px rgba(255,255,255,0.5)} }
-
   .hero h1 { font-family: var(--heading); font-size: clamp(1.8rem, 3.8vw, 3rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.12; margin-bottom: 0.8rem; text-shadow: 0 2px 30px rgba(0,0,0,0.5); }
   .hero-sub { font-size: 0.88rem; color: rgba(255,255,255,0.65); max-width: 480px; line-height: 1.7; text-shadow: 0 1px 20px rgba(0,0,0,0.4); }
-
   .hero-nodes { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
   .h-node { position: absolute; display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; background: rgba(10,10,14,0.7); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 0.65rem; color: var(--text-secondary); backdrop-filter: blur(10px); animation: nfloat 7s ease-in-out infinite; white-space: nowrap; }
   .h-node svg { width: 14px; height: 14px; opacity: 0.6; }
@@ -278,12 +318,10 @@
   section { position: relative; z-index: 1; padding: 7rem 2rem; border: 2px solid transparent; transition: border-color 0.4s ease; background: transparent; }
   section:hover { border-color: rgba(255, 255, 255, 0.2); }
   .section-inner { max-width: 1140px; margin: 0 auto; }
-   
   .section-num { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; color: var(--text-secondary); margin-bottom: 1.2rem; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 100px; background: rgba(5,5,7,0.5); backdrop-filter: blur(12px); }
   .section-num .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--white); animation: pulse 2s ease-in-out infinite; }
   .section-title { font-family: var(--heading); font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.15; }
   .section-desc { color: var(--text-secondary); max-width: 560px; font-size: 0.95rem; line-height: 1.75; margin-bottom: 3.5rem; }
-
   .anim { opacity: 0; transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1), filter 0.8s cubic-bezier(0.22,1,0.36,1); }
   .anim.vis { opacity: 1; filter: blur(0); }
   .anim-up { transform: translateY(40px); }
@@ -296,7 +334,6 @@
   .anim-scale.vis { transform: scale(1); }
   .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s} .d5{transition-delay:.4s} .d6{transition-delay:.48s}
 
-  /* ── Feature Grid ── */
   .feature-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; background: transparent; }
   .feature-card { background: rgba(10, 10, 14, 0.85); backdrop-filter: blur(10px); padding: 2.2rem; transition: all 0.4s; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 0 30px var(--white-glow-card); }
   .feature-card:hover { background: var(--bg-card-hover); border-color: var(--border); box-shadow: 0 0 50px var(--orange-glow-bright); transform: translateY(-4px); }
@@ -307,23 +344,8 @@
   .feature-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; flex: 1; }
   .feature-labels { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
   .feature-label { font-family: var(--mono); font-size: 0.6rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); background: rgba(255,255,255,0.02); }
-  
-  /* ─── MODIFIED: REALISTIC CODE HIGHLIGHTING ─── */
-  .card-code { 
-    font-family: var(--mono); font-size: 0.68rem; line-height: 1.7; 
-    color: #abb2bf; /* Default code color (VS Code Grey) */
-    background: rgba(15, 15, 20, 0.6); 
-    border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; 
-    margin-top: auto; overflow-x: auto; 
-  }
-  /* Syntax Colors (VS Code / One Dark inspired) */
-  .card-code .kw { color: #c678dd; }  /* Keywords (Purple) */
-  .card-code .fn { color: #61afef; }  /* Functions (Blue) */
-  .card-code .var { color: #e06c75; } /* Variables (Red) */
-  .card-code .num { color: #d19a66; } /* Numbers (Orange) */
-  .card-code .prop { color: #d19a66; }/* Properties (Orange) */
-  .card-code .op { color: #abb2bf; }  /* Operators (White/Grey) */
-
+  .card-code { font-family: var(--mono); font-size: 0.68rem; line-height: 1.7; color: #abb2bf; background: rgba(15, 15, 20, 0.6); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-top: auto; overflow-x: auto; }
+  .card-code .kw { color: #c678dd; } .card-code .fn { color: #61afef; } .card-code .var { color: #e06c75; } .card-code .num { color: #d19a66; } .card-code .prop { color: #d19a66; } .card-code .op { color: #abb2bf; }
   .icon-particles { position: absolute; inset: 0; overflow: hidden; }
   .icon-particles span { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: rgba(255,255,255,0.15); animation: drift 8s linear infinite; }
   @keyframes drift { 0%{transform:translateY(100%) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-20px) translateX(20px);opacity:0} }
@@ -383,6 +405,17 @@
 </style>
 </head>
 <body>
+
+<div id="splash-screen">
+  <div class="splash-center">
+    <img id="splash-logo" src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Loading Logo">
+    <div id="splash-text" class="glitch-active">LEVEL ONE</div>
+  </div>
+  
+  <div class="splash-loader-box" id="loaderBox">
+    <div class="splash-loader-bar" id="loaderBar"></div>
+  </div>
+</div>
 
 <canvas id="hero-lightpass"></canvas>
 
@@ -687,6 +720,64 @@
 <footer><p>© 2025 Level One — AI Growth Partner</p></footer>
 
 <script>
+  // ─── MODIFIED: SPLIT TIMING LOGIC ───
+  document.body.style.overflow = 'hidden'; // Stop scrolling during splash
+  
+  function runSplashSequence() {
+    const logo = document.getElementById('splash-logo');
+    const text = document.getElementById('splash-text');
+    const loaderBox = document.getElementById('loaderBox');
+    const loaderBar = document.getElementById('loaderBar');
+    const splashScreen = document.getElementById('splash-screen');
+
+    // 1. Logo Fades In EARLY (Almost instantly)
+    setTimeout(() => {
+        logo.style.opacity = '1';
+    }, 50);
+
+    // 2. Loading Bar Fades In LATER (1s wait)
+    setTimeout(() => {
+        loaderBox.style.opacity = '1';
+        
+        // Start growing bar to 60%
+        loaderBar.style.transition = 'width 2.5s linear';
+        loaderBar.style.width = '60%';
+    }, 1000);
+
+    // 3. Swap Logo for Text (at ~3.5s which is 60%)
+    setTimeout(() => {
+        logo.style.opacity = '0';
+        setTimeout(() => {
+            text.style.opacity = '1';
+            // Finish growing bar to 100%
+            loaderBar.style.transition = 'width 3s linear';
+            loaderBar.style.width = '100%';
+        }, 800); // Wait for logo to fade out
+    }, 3500);
+
+    // 4. Fade Out Elements (at 6.5s)
+    setTimeout(() => {
+        text.style.opacity = '0';
+        loaderBox.style.opacity = '0';
+    }, 6500);
+
+    // 5. Fade Out Black Screen & Unlock Scroll (at 7s)
+    setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+        
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+        }, 1000);
+        
+        window.scrollTo(0, 0);
+    }, 7000);
+  }
+
+  // Start the sequence immediately
+  runSplashSequence();
+
+
   // ─── SCROLL VIDEO SCRIPT ───
   const canvas = document.getElementById("hero-lightpass");
   const context = canvas.getContext("2d");
@@ -713,12 +804,8 @@
 
   // 2. The Physics Loop (Linear Interpolation)
   function loop() {
-    // "Chase" the target frame by 2.5% every refresh for heavy cinematic feel
     videoState.smoothFrame += (videoState.targetFrame - videoState.smoothFrame) * 0.025;
-    
-    // Round to nearest integer to pick the image file
     const frameIndex = Math.floor(videoState.smoothFrame);
-    
     render(frameIndex);
     requestAnimationFrame(loop);
   }
@@ -726,10 +813,8 @@
   images[0].onload = () => { loop(); };
 
   function render(index) {
-    // Clamp index to prevent errors at start/end
     if (index < 0) index = 0;
     if (index >= frameCount) index = frameCount - 1;
-    
     const img = images[index];
     if (!img || !img.complete) return; 
 
