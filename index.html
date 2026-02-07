@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Level One is a premier AI Automation Agency specializing in Agentic AI, Hyperautomation, and Custom AI Agents for scalable business growth.">
+<meta name="keywords" content="AI Agency, AI Automation, Agentic AI, Hyperautomation, Business Process Automation, AI Consulting">
 <title>Level One — AI Growth Partner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -34,6 +36,8 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
+  html { scrollbar-gutter: stable; } /* Helps with some browser jumping */
+
   body { 
     font-family: var(--body); 
     background: var(--bg); 
@@ -41,79 +45,53 @@
     overflow-x: hidden; 
     line-height: 1.6; 
     -webkit-font-smoothing: antialiased;
+    /* Transition for padding when scrollbar disappears */
+    transition: padding-right 0s; 
   }
+
+  /* ─── FIX: Main Content Wrapper ─── */
+  #main-content { position: relative; z-index: 10; width: 100%; }
 
   /* ─── SPLASH SCREEN STYLES ─── */
   #splash-screen {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: #000000;
-    z-index: 99999; 
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #000000; z-index: 99999; 
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     transition: opacity 1.5s ease-out;
+    opacity: 0; pointer-events: none; /* Default hidden */
   }
-
   .splash-center {
-    position: relative;
-    width: 400px;
-    height: 150px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 2rem;
+    position: relative; width: 400px; height: 150px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;
   }
-
   #splash-logo {
-    height: 120px; 
-    width: auto;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    position: absolute; 
+    height: 120px; width: auto; 
+    opacity: 0; /* Start hidden */
+    transition: opacity 1s ease-in-out; position: absolute; 
   }
-
   #splash-text {
-    font-family: var(--heading);
-    font-weight: 700;
-    font-size: 2.5rem;
-    color: var(--white);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    position: absolute; 
-    text-align: center;
+    font-family: var(--heading); font-weight: 700; font-size: 2.5rem;
+    color: var(--white); letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0; transition: opacity 0.8s ease-in-out;
+    position: absolute; text-align: center;
   }
-
   .splash-loader-box {
-    width: 250px;
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    overflow: hidden;
-    opacity: 0;
+    width: 250px; height: 3px; background: rgba(255,255,255,0.1);
+    border-radius: 2px; overflow: hidden; 
+    opacity: 0; /* Start hidden */
     transition: opacity 0.5s ease;
   }
-
   .splash-loader-bar {
-    height: 100%;
-    width: 0%; 
-    background: #ffffff;
+    height: 100%; width: 0%; background: #ffffff;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-    transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth updates */
+    transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1); 
   }
-
-  /* Glitch Effect */
   .glitch-active { position: relative; }
   .glitch-active::before, .glitch-active::after {
-    content: "LEVEL ONE";
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.7;
+    content: "LEVEL ONE"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.7;
   }
-  .glitch-active::before {
-    color: #0ff; z-index: -1; left: 2px; clip-path: inset(0 0 0 0);
-    animation: glitch-anim-1 2s infinite linear alternate-reverse;
-  }
-  .glitch-active::after {
-    color: #f0f; z-index: -2; left: -2px; clip-path: inset(0 0 0 0);
-    animation: glitch-anim-2 2s infinite linear alternate-reverse;
-  }
+  .glitch-active::before { color: #0ff; z-index: -1; left: 2px; clip-path: inset(0 0 0 0); animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+  .glitch-active::after { color: #f0f; z-index: -2; left: -2px; clip-path: inset(0 0 0 0); animation: glitch-anim-2 2s infinite linear alternate-reverse; }
   @keyframes glitch-anim-1 {
     0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
     20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
@@ -131,29 +109,15 @@
     100% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
   }
 
-  /* ─── DOCKED RIGHT SIDE CARD STYLES ─── */
+  /* ─── SCROLL CANVAS ─── */
   canvas#hero-lightpass {
-    position: fixed;
-    top: 15vh;
-    height: 70vh;
-    right: 0;
-    width: 80vw; 
-    z-index: -99;
-    object-fit: cover;
-    opacity: 0.7; 
-    border-radius: 24px 0 0 24px;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-right: none;
-    box-shadow: 
-        -10px 0 50px rgba(255, 255, 255, 0.05),
-        inset 10px 0 20px rgba(255, 255, 255, 0.02); 
+    position: fixed; top: 15vh; height: 70vh; right: 0; width: 80vw; 
+    z-index: -99; object-fit: cover; opacity: 0.7; 
+    border-radius: 24px 0 0 24px; border: 1px solid rgba(255,255,255,0.08); border-right: none;
+    box-shadow: -10px 0 50px rgba(255, 255, 255, 0.05), inset 10px 0 20px rgba(255, 255, 255, 0.02); 
   }
-
   @media(max-width: 768px) {
-    canvas#hero-lightpass {
-        left: 0; width: 100vw; top: 0; height: 100vh;
-        border-radius: 0; box-shadow: none; border: none;
-    }
+    canvas#hero-lightpass { left: 0; width: 100vw; top: 0; height: 100vh; border-radius: 0; box-shadow: none; border: none; }
   }
 
   .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 10000; background: rgba(0, 0, 0, 0.8); }
@@ -162,45 +126,96 @@
   .grid-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 70% 50% at 50% 20%, rgba(0,0,0,0.6) 0%, transparent 70%); }
   .ambient-glow { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(255,255,255,0.02) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 2.5rem; height: 80px; display: flex; align-items: center; justify-content: space-between; background: rgba(5,5,7,0.6); backdrop-filter: blur(24px) saturate(1.2); border-bottom: 1px solid var(--border); }
+  nav { 
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
+    padding: 0 2.5rem; height: 80px; display: flex; align-items: center; justify-content: space-between; 
+    background: rgba(5,5,7,0.6); backdrop-filter: blur(24px) saturate(1.2); 
+    border-bottom: 1px solid var(--border); 
+    transition: padding-right 0s; /* Prevents animation on scrollbar shift */
+  }
   .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
   .nav-logo img { height: 36px; width: auto; filter: brightness(1.2); } 
   .nav-logo-text { font-family: var(--heading); font-weight: 700; font-size: 1.3rem; color: var(--white); letter-spacing: 0.15em; text-transform: uppercase; position: relative; }
 
-  .glitch-effect { position: relative; color: var(--white); }
-  .glitch-effect::before, .glitch-effect::after { content: "LEVEL ONE"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; }
-  .glitch-effect::before { color: #0ff; z-index: -1; animation: glitch-anim-1 3s infinite linear alternate-reverse; }
-  .glitch-effect::after { color: #f0f; z-index: -2; animation: glitch-anim-2 2.5s infinite linear alternate-reverse; }
-  .glitch-effect::before, .glitch-effect::after { animation-delay: 4s; animation-duration: 0.2s; animation-iteration-count: infinite; }
-
-  .hex-burger { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; position: relative; z-index: 1001; }
+  /* ─── HEXAGON BUTTON REDESIGN ─── */
+  .hex-burger { 
+    width: 42px; height: 42px; 
+    display: flex; align-items: center; justify-content: center; 
+    background: none; border: none; cursor: pointer; 
+    position: relative; z-index: 1001; 
+    opacity: 1; transition: opacity 0.3s, transform 0.3s; 
+  }
+  .hex-burger:active { transform: scale(0.95); }
+  .hex-burger.hidden { opacity: 0; pointer-events: none; } 
   .hex-border { position: absolute; inset: 0; }
-  .hex-border polygon { fill: none; stroke: rgba(255,255,255,0.25); stroke-width: 1.5; transition: stroke 0.3s; }
-  .hex-burger:hover .hex-border polygon { stroke: rgba(255,255,255,0.5); }
-  .hex-burger .bars { display: flex; flex-direction: column; gap: 4px; position: relative; z-index: 1; transition: all 0.3s; }
-  .hex-burger .bars span { display: block; width: 16px; height: 1.5px; background: rgba(255,255,255,0.7); transition: all 0.3s; transform-origin: center; }
-  .hex-burger.open .bars span:nth-child(1) { transform: rotate(45deg) translate(2px, 4px); }
-  .hex-burger.open .bars span:nth-child(2) { opacity: 0; }
-  .hex-burger.open .bars span:nth-child(3) { transform: rotate(-45deg) translate(2px, -4px); }
+  
+  /* SVG Border Styling */
+  .hex-border polygon { 
+    fill: transparent; 
+    stroke: rgba(255,255,255,0.4); 
+    stroke-width: 1.5; 
+    transition: stroke 0.3s, fill 0.3s; 
+  }
+  /* Hover */
+  .hex-burger:hover .hex-border polygon { 
+    stroke: #ffffff; 
+    fill: rgba(255,255,255,0.05); 
+  }
+  /* Open State = WHITE */
+  .hex-burger.open .hex-border polygon {
+    fill: rgba(255, 255, 255, 0.1); 
+    stroke: #ffffff; 
+  }
 
-  .menu-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(5,5,7,0.95); backdrop-filter: blur(30px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.22,1,0.36,1); }
+  /* ─── MENU OVERLAY (DIMMED + STAGGERED ANIMATION) ─── */
+  .menu-overlay { 
+    position: fixed; inset: 0; z-index: 999; 
+    background: rgba(5,5,7,0.85); 
+    backdrop-filter: blur(20px); 
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; 
+    opacity: 0; pointer-events: none; 
+    transition: opacity 0.6s ease; /* Fade background slower */
+  }
   .menu-overlay.open { opacity: 1; pointer-events: auto; }
-  .menu-overlay a { font-family: var(--heading); font-size: 1.8rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s, transform 0.3s; transform: translateY(10px); opacity: 0; }
-  .menu-overlay.open a { transform: translateY(0); opacity: 1; }
-  .menu-overlay a:nth-child(1) { transition-delay: 0.1s; }
-  .menu-overlay a:nth-child(2) { transition-delay: 0.15s; }
-  .menu-overlay a:nth-child(3) { transition-delay: 0.2s; }
-  .menu-overlay a:nth-child(4) { transition-delay: 0.25s; }
-  .menu-overlay a:hover { color: var(--white); transform: translateX(6px); }
+  
+  .menu-overlay a { 
+    font-family: var(--heading); 
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    color: var(--text-secondary); 
+    text-decoration: none; letter-spacing: -0.02em; 
+    opacity: 0; 
+    transform: translateX(60px); /* Start further right */
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s;
+  }
+  
+  /* Open State for Links: In JS we will add 'show' class to handle staggering */
+  .menu-overlay a.show { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+  
+  .menu-overlay a:hover { color: var(--white); transform: translateX(6px) !important; }
 
-  .btn-primary { font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; background: var(--white-faded); color: var(--bg); border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
-  .btn-primary:hover { background: rgba(255, 107, 53, 0.5); color: var(--white); box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); transform: translateY(-2px); }
+  /* ─── BUTTONS (WHITE GLOW) ─── */
+  .btn-primary { 
+    font-family: var(--body); font-size: 0.8rem; font-weight: 500; 
+    padding: 0.55rem 1.3rem; background: var(--white-faded); color: var(--bg); 
+    border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; 
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; 
+  }
+  .btn-primary:hover { 
+    background: #ffffff; 
+    color: #000000; 
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); 
+    transform: translateY(-2px); 
+  }
   .btn-outline { font-family: var(--body); font-size: 0.8rem; font-weight: 500; padding: 0.55rem 1.3rem; background: transparent; color: var(--white); border: 1px solid var(--border-hover); border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
   .btn-outline:hover { border-color: var(--border-glow); background: var(--white-dim); }
 
   .hero-cta { margin-top: 1.5rem; }
   .hero-cta .btn-primary { background: var(--white-faded); color: var(--bg); border: 1px solid transparent; backdrop-filter: blur(12px); padding: 0.5rem 1.2rem; font-size: 0.78rem; }
-  .hero-cta .btn-primary:hover { background: rgba(255, 107, 53, 0.5); color: var(--white); border-color: transparent; box-shadow: 0 0 20px rgba(255, 107, 53, 0.25); }
+  .hero-cta .btn-primary:hover { background: #ffffff; color: #000; border-color: transparent; box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
 
   .hero { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0; margin-top: 80px; z-index: 5; background: var(--bg); }
   .hero-video-bg { position: absolute; inset: 0; z-index: 0; }
@@ -241,24 +256,20 @@
   .feature-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; background: transparent; }
   .feature-card { background: rgba(10, 10, 14, 0.85); backdrop-filter: blur(10px); padding: 2.2rem; transition: all 0.4s; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 0 30px var(--white-glow-card); }
   .feature-card:hover { background: var(--bg-card-hover); border-color: var(--border); box-shadow: 0 0 50px var(--orange-glow-bright); transform: translateY(-4px); }
-  .feature-card-icon { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; border-radius: 10px; background: rgba(255,255,255,0.015); border: 1px solid var(--border); }
-  .wireframe-icon { width: 80px; height: 80px; filter: drop-shadow(0 0 12px rgba(255,255,255,0.15)) drop-shadow(0 0 30px rgba(255,255,255,0.05)); }
-  .wireframe-icon path,.wireframe-icon circle,.wireframe-icon rect,.wireframe-icon line,.wireframe-icon polyline { stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 1; }
+  .card-img-fill { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  .feature-card-icon { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; border-radius: 10px; background: rgba(255,255,255,0.015); border: 1px solid var(--border); padding: 0; }
   .feature-card h3 { font-family: var(--heading); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.6rem; }
   .feature-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; flex: 1; }
   .feature-labels { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
   .feature-label { font-family: var(--mono); font-size: 0.6rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); background: rgba(255,255,255,0.02); }
   .card-code { font-family: var(--mono); font-size: 0.68rem; line-height: 1.7; color: #abb2bf; background: rgba(15, 15, 20, 0.6); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; margin-top: auto; overflow-x: auto; }
   .card-code .kw { color: #c678dd; } .card-code .fn { color: #61afef; } .card-code .var { color: #e06c75; } .card-code .num { color: #d19a66; } .card-code .prop { color: #d19a66; } .card-code .op { color: #abb2bf; }
-  .icon-particles { position: absolute; inset: 0; overflow: hidden; }
-  .icon-particles span { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: rgba(255,255,255,0.15); animation: drift 8s linear infinite; }
-  @keyframes drift { 0%{transform:translateY(100%) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-20px) translateX(20px);opacity:0} }
 
   .process-section { border-top: 1px solid var(--border); }
   .process-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; background: transparent; }
   .process-card { background: rgba(10, 10, 14, 0.85); backdrop-filter: blur(10px); padding: 2.2rem; transition: all 0.4s; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 0 30px var(--white-glow-card); }
   .process-card:hover { background: var(--bg-card-hover); border-color: var(--border); box-shadow: 0 0 50px var(--orange-glow-bright); transform: translateY(-4px); }
-  .process-card-icon { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; border-radius: 10px; background: rgba(255,255,255,0.015); border: 1px solid var(--border); }
+  .process-card-icon { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; border-radius: 10px; background: rgba(255,255,255,0.015); border: 1px solid var(--border); padding: 0; overflow: hidden; }
   .step-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
   .step-label::before { content: ''; width: 2px; height: 14px; background: var(--white); opacity: 0.3; }
   .process-card h3 { font-family: var(--heading); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; }
@@ -283,19 +294,153 @@
   .services-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; background: transparent; }
   .srv-card { background: rgba(10, 10, 14, 0.85); backdrop-filter: blur(10px); padding: 0; transition: all 0.4s; position: relative; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 0 30px var(--white-glow-card); }
   .srv-card:hover { background: var(--bg-card-hover); border-color: var(--border); box-shadow: 0 0 50px var(--orange-glow-bright); transform: translateY(-4px); }
-  .srv-card:hover .srv-card-visual svg { transform: scale(1.05); }
-  .srv-card-visual { width: 100%; height: 420px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.01); border-bottom: 1px solid var(--border); }
-  .srv-card-visual svg { width: 120px; height: 120px; filter: drop-shadow(0 0 20px rgba(255,255,255,0.12)) drop-shadow(0 0 50px rgba(255,255,255,0.04)); transition: transform 0.5s cubic-bezier(0.22,1,0.36,1); }
-  .srv-card-visual svg path, .srv-card-visual svg circle, .srv-card-visual svg rect, .srv-card-visual svg line, .srv-card-visual svg polyline { stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 0.8; }
-  .srv-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .srv-particles span { position: absolute; width: 1.5px; height: 1.5px; border-radius: 50%; background: rgba(255,255,255,0.1); animation: srv-drift 10s linear infinite; }
-  @keyframes srv-drift { 0% { transform: translateY(100%) translateX(-10px); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { transform: translateY(-20px) translateX(15px); opacity: 0; } }
-  .srv-pills { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 1.2rem; gap: 0.45rem; pointer-events: none; }
-  .srv-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; font-weight: 400; color: var(--text-secondary); padding: 0.38rem 0.85rem; border: 1px solid var(--border); border-radius: 100px; background: rgba(5,5,7,0.7); backdrop-filter: blur(12px); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; pointer-events: auto; transition: all 0.3s; }
-  .srv-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--white); opacity: 0.4; animation: pulse 2.5s ease-in-out infinite; }
-  .srv-pill:hover { border-color: var(--border-glow); color: var(--text); background: rgba(5,5,7,0.85); }
-  .srv-card-title { position: absolute; top: 1.2rem; left: 1.2rem; font-family: var(--heading); font-size: 1.05rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; pointer-events: none; }
-  .srv-card-num { position: absolute; top: 1.2rem; right: 1.2rem; font-family: var(--mono); font-size: 0.6rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.08em; }
+  .srv-card:hover .srv-card-visual img { transform: scale(1.05); opacity: 0.7; }
+  .srv-card-visual { width: 100%; height: 420px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #000; border-bottom: 1px solid var(--border); }
+  .srv-card-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+  .srv-pills { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 1.2rem; gap: 0.45rem; pointer-events: none; z-index: 2; }
+  .srv-pill { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; font-weight: 500; color: #e2e2e8; padding: 0.38rem 0.85rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; background: rgba(5,5,7,0.8); backdrop-filter: blur(12px); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; pointer-events: auto; transition: all 0.3s; }
+  .srv-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: #ffffff; opacity: 0.8; animation: pulse 2.5s ease-in-out infinite; }
+  .srv-pill:hover { border-color: var(--white); color: #ffffff; background: rgba(5,5,7,0.95); }
+  .srv-card-title { position: absolute; top: 1.2rem; left: 1.2rem; font-family: var(--heading); font-size: 1.05rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; pointer-events: none; z-index: 2; text-shadow: 0 2px 15px rgba(0,0,0,0.9); }
+  .srv-card-num { position: absolute; top: 1.2rem; right: 1.2rem; font-family: var(--mono); font-size: 0.6rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.08em; z-index: 2; text-shadow: 0 2px 15px rgba(0,0,0,0.9); }
+
+  /* ─── BLOG SECTION STYLES ─── */
+  .blog-section { border-top: 1px solid var(--border); padding-bottom: 2rem; }
+  .blog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2rem; }
+  .blog-card { 
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; 
+    overflow: hidden; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column;
+  }
+  .blog-card:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-color: var(--white-dim); }
+  .blog-image { height: 240px; overflow: hidden; position: relative; }
+  .blog-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; opacity: 0.8; }
+  .blog-card:hover .blog-image img { transform: scale(1.05); opacity: 1; }
+  .blog-content { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+  .blog-meta { font-family: var(--mono); font-size: 0.7rem; color: var(--orange); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .blog-title { font-family: var(--heading); font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3; color: var(--text); }
+  .blog-excerpt { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
+  .blog-link { margin-top: auto; font-family: var(--mono); font-size: 0.75rem; color: var(--white); display: flex; align-items: center; gap: 0.5rem; }
+  
+  /* ─── NEWSLETTER STYLES ─── */
+  .newsletter-container {
+    margin-top: 4rem; padding: 2.5rem;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 16px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;
+  }
+  .newsletter-content h3 { font-family: var(--heading); font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .newsletter-content p { font-size: 0.9rem; color: var(--text-secondary); }
+  .newsletter-form { display: flex; gap: 0.8rem; width: 100%; max-width: 480px; }
+  .newsletter-input {
+    flex: 1; padding: 0.8rem 1.2rem;
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--white); font-family: var(--body); font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .newsletter-input:focus { border-color: var(--white-faded); }
+  
+  @media(min-width: 768px) {
+    .newsletter-container { flex-direction: row; text-align: left; justify-content: space-between; }
+    .newsletter-content { max-width: 450px; }
+  }
+
+  /* ─── BLOG & CALENDAR VIEWS (Hidden by default) ─── */
+  #blog-view, #calendar-view {
+    display: none; padding-top: 120px; min-height: 100vh; background: var(--bg); position: relative; z-index: 20;
+  }
+  .blog-article { max-width: 800px; margin: 0 auto; padding: 0 2rem 5rem; }
+  .back-btn { 
+    display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); 
+    font-family: var(--mono); font-size: 0.8rem; cursor: pointer; margin-bottom: 2rem; transition: color 0.3s; 
+  }
+  .back-btn:hover { color: var(--orange); }
+  .article-meta { font-family: var(--mono); color: var(--orange); font-size: 0.8rem; margin-bottom: 1rem; }
+  .article-title { font-family: var(--heading); font-size: 2.5rem; line-height: 1.2; margin-bottom: 2rem; }
+  .article-body { font-size: 1.05rem; line-height: 1.8; color: #d1d1d6; }
+  .article-body h2 { font-family: var(--heading); font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1rem; color: var(--white); }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+  .article-body li { margin-bottom: 0.5rem; }
+  .article-references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+  .article-references h3 { font-family: var(--heading); font-size: 1rem; color: var(--text-secondary); margin-bottom: 1rem; }
+  .article-references ul { list-style: none; padding: 0; }
+  .article-references li { margin-bottom: 0.5rem; }
+  .citation-link { color: var(--text-secondary); text-decoration: none; border-bottom: 1px dotted var(--text-secondary); transition: all 0.2s; }
+  .citation-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  /* ─── CALENDAR STYLES (IMPORTED) ─── */
+  .form-container, .main-container { display: grid; grid-template-columns: 240px 1fr 240px; gap: 20px; max-width: 1050px; width: 100%; height: 500px; margin: 0 auto; }
+  /* Ensure formPage is visible by default inside calendar view */
+  #formPage { display: grid; } 
+  #calendarPage { display: none; }
+  
+  .form-left-panel, .form-right-panel, .left-panel, .right-panel, .form-center-panel, .calendar-panel {
+    background: linear-gradient(145deg, #1e1e1e, #161616); border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: center;
+  }
+  .form-center-panel, .calendar-panel { padding: 30px 35px; justify-content: flex-start; }
+  .left-panel, .right-panel { justify-content: flex-start; overflow-y: auto; }
+  
+  .form-logo-container, .logo-container { width: 140px; height: 161.54px; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; }
+  .hexagon-shape, .thank-you-hexagon { width: 140px; height: 161.54px; background-color: #000; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255,255,255,0.1); }
+  .hexagon-inner, .thank-you-hexagon-inner { width: 134px; height: 154.61px; background-color: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .logo-image, .thank-you-logo-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05) translateX(-3px); }
+  
+  .form-header { color: #fff; font-size: 24px; font-weight: 600; margin-bottom: 6px; text-align: center; letter-spacing: -0.5px; }
+  .form-subheader { color: #999; font-size: 13px; margin-bottom: 24px; text-align: center; font-weight: 400; }
+  .form-group { margin-bottom: 14px; width: 100%; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 14px; }
+  .form-label { display: block; color: #fff; font-size: 11px; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.3px; text-transform: uppercase; }
+  .form-input { width: 100%; padding: 11px 14px; background: linear-gradient(145deg, #0d0d0d, #080808); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; color: #fff; font-size: 14px; transition: all 0.3s ease; }
+  .form-input:focus { outline: none; border-color: rgba(255,140,0,0.3); background: linear-gradient(145deg, #101010, #0a0a0a); }
+  
+  .next-btn, .confirm-btn, .modal-exit-btn { background: linear-gradient(135deg, #ff8c00 0%, #ff7700 100%); color: white; border: none; padding: 16px 32px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 600; transition: all 0.3s; width: 100%; box-shadow: 0 4px 12px rgba(255,140,0,0.3); text-transform: uppercase; }
+  .next-btn:hover:not(:disabled), .confirm-btn:hover:not(:disabled), .modal-exit-btn:hover { background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,140,0,0.4); }
+  .next-btn:disabled, .confirm-btn:disabled { background: linear-gradient(135deg, #333 0%, #2a2a2a 100%); cursor: not-allowed; opacity: 0.4; }
+  
+  .info-item { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: linear-gradient(145deg, #0d0d0d, #080808); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 8px; }
+  .info-emoji { width: 8px; height: 8px; border-radius: 50%; background: #ff8c00; animation: blink 2s ease-in-out infinite; flex-shrink: 0; }
+  .info-text { font-size: 11px; color: #fff; flex: 1; word-break: break-word; }
+  @keyframes blink { 0%,100%{opacity:1;box-shadow:0 0 8px rgba(255,140,0,0.8)} 50%{opacity:0.3;box-shadow:0 0 3px rgba(255,140,0,0.3)} }
+  
+  .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .month-year { color: white; font-size: 16px; font-weight: 600; }
+  .nav-btn { background: linear-gradient(145deg, #0d0d0d, #080808); color: white; border: 1px solid rgba(255,255,255,0.06); width: 32px; height: 32px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+  .nav-btn:hover { border-color: #ff8c00; }
+  
+  .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 5px; }
+  .weekday { text-align: center; color: #999; font-size: 9px; font-weight: 600; }
+  .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; flex: 1; }
+  .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #0d0d0d, #080808); color: white; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255,255,255,0.06); font-size: 10px; }
+  .calendar-day:hover { border-color: #ff8c00; background: linear-gradient(135deg, #ff8c00 0%, #ff7700 100%); }
+  .calendar-day.disabled { color: #555; cursor: not-allowed; }
+  .calendar-day.today { border: 2px solid #ff8c00; }
+  .calendar-day.selected { background: linear-gradient(135deg, #ff8c00 0%, #ff7700 100%); border-color: #ff8c00; }
+  
+  .time-header { color: white; font-size: 14px; font-weight: 600; margin-bottom: 10px; text-align: center; }
+  .time-slots-container { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; }
+  .time-slot { padding: 8px; background: linear-gradient(145deg, #0d0d0d, #080808); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; text-align: center; cursor: pointer; font-size: 12px; color: #fff; }
+  .time-slot:hover, .time-slot.selected { background: linear-gradient(135deg, #ff8c00 0%, #ff7700 100%); border-color: #ff8c00; color: white; }
+  
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+  .modal-content { background: linear-gradient(145deg, #1e1e1e, #161616); border-radius: 16px; padding: 30px; max-width: 500px; width: 90%; border: 1px solid rgba(255,255,255,0.08); transform: scale(0.9); transition: transform 0.3s; }
+  .modal-overlay.active .modal-content { transform: scale(1); }
+  .modal-header, .thank-you-title { color: #ff8c00; font-size: 20px; font-weight: 600; margin-bottom: 20px; text-align: center; }
+  .modal-info-item { display: flex; justify-content: space-between; padding: 10px 15px; background: linear-gradient(145deg, #0d0d0d, #080808); border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.06); }
+  .modal-info-label { color: #999; font-size: 13px; font-weight: 600; }
+  .modal-info-value { color: #fff; font-size: 13px; text-align: right; }
+  .thank-you-screen { display: none; text-align: center; padding: 40px 20px; }
+  .thank-you-screen.active { display: block; }
+  .thank-you-message { color: #fff; font-size: 16px; line-height: 1.6; margin-bottom: 15px; }
+  .thank-you-note { color: #999; font-size: 14px; font-style: italic; }
+
+  @media (max-width: 900px) {
+    .form-container, .main-container { grid-template-columns: 1fr; height: auto; }
+    .form-left-panel, .form-right-panel { display: none; }
+    .form-center-panel { border-radius: 16px; }
+    .logo-container { width: 100px; height: 115px; }
+    .hexagon-shape { width: 100px; height: 115px; }
+    .hexagon-inner { width: 96px; height: 110px; }
+  }
 
   .cta-section { text-align: center; border-top: 1px solid var(--border); }
   .glow-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); max-width: 300px; margin: 0 auto 2.5rem; }
@@ -330,13 +475,12 @@
 <div class="ambient-glow"></div>
 
 <nav>
-  <a href="#" class="nav-logo">
+  <a href="#" class="nav-logo" id="navLogoBtn">
     <img src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Level One">
     <span class="nav-logo-text glitch-effect" data-text="LEVEL ONE">LEVEL ONE</span>
   </a>
   <button class="hex-burger" id="hexBurger" aria-label="Menu">
     <svg class="hex-border" viewBox="0 0 42 42"><polygon points="21,1 39,11 39,31 21,41 3,31 3,11"/></svg>
-    <div class="bars"><span></span><span></span><span></span></div>
   </button>
 </nav>
 
@@ -345,11 +489,16 @@
   <a href="#process" class="menu-link">Process</a>
   <a href="#about" class="menu-link">About</a>
   <a href="#services" class="menu-link">Services</a>
+  <a href="#insights" class="menu-link">Insights</a>
 </div>
+
+<div id="main-content">
 
 <section class="hero">
   <div class="hero-video-bg">
-    <video autoplay loop muted playsinline><source src="https://cdn.jsdelivr.net/gh/level-one-ai/Level-One.Website-@main/images/Mobius_Ring.mp4" type="video/mp4"></video>
+    <video autoplay loop muted playsinline>
+      <source src="https://res.cloudinary.com/dw5n0wlmr/video/upload/f_auto,q_auto/v1770454069/Mobius_Ring_qoul2x.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-nodes">
@@ -364,7 +513,7 @@
     <h1 class="anim anim-up d1">Custom AI solutions, built to seamlessly scale your vision faster than ever.</h1>
     <p class="hero-sub anim anim-up d2">Your AI Growth Partner — expertly crafted automation systems, custom agents, and end-to-end workflows that eliminate bottlenecks and compound results.</p>
     <div class="hero-cta anim anim-up d3">
-      <a href="#" class="btn-primary">Book a Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></a>
+      <button onclick="openCalendar()" class="btn-primary">Book a Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
     </div>
   </div>
 </section>
@@ -377,8 +526,7 @@
     <div class="feature-grid">
       <div class="feature-card anim anim-up d1">
         <div class="feature-card-icon">
-          <div class="icon-particles"><span style="left:20%;animation-delay:0s"></span><span style="left:50%;animation-delay:2s"></span><span style="left:75%;animation-delay:4s"></span></div>
-          <svg class="wireframe-icon" viewBox="0 0 80 80"><rect x="12" y="10" width="56" height="60" rx="4"/><line x1="22" y1="24" x2="28" y2="24"/><line x1="34" y1="24" x2="58" y2="24"/><line x1="22" y1="36" x2="28" y2="36"/><line x1="34" y1="36" x2="52" y2="36"/><line x1="22" y1="48" x2="28" y2="48"/><line x1="34" y1="48" x2="56" y2="48"/><polyline points="22,24 24,26 28,22" stroke-width="1.2"/><polyline points="22,36 24,38 28,34" stroke-width="1.2"/><circle cx="25" cy="48" r="3" stroke-width="0.8" opacity="0.4"/><line x1="22" y1="58" x2="58" y2="58" opacity="0.2"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" class="card-img-fill" alt="Automate Tasks">
         </div>
         <div class="feature-labels"><span class="feature-label">× Social media post</span><span class="feature-label">✓ Employee Tracking</span><span class="feature-label">✓ Payment reminder</span></div>
         <h3>Automate Repetitive Tasks</h3>
@@ -386,8 +534,7 @@
       </div>
       <div class="feature-card anim anim-up d2">
         <div class="feature-card-icon">
-          <div class="icon-particles"><span style="left:30%;animation-delay:1s"></span><span style="left:60%;animation-delay:3s"></span><span style="left:85%;animation-delay:5s"></span></div>
-          <svg class="wireframe-icon" viewBox="0 0 80 80"><rect x="8" y="8" width="64" height="48" rx="3"/><line x1="8" y1="18" x2="72" y2="18" opacity="0.3"/><circle cx="14" cy="13" r="2" opacity="0.4"/><circle cx="20" cy="13" r="2" opacity="0.4"/><circle cx="26" cy="13" r="2" opacity="0.4"/><text x="14" y="30" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.5)" stroke="none">function process()</text><text x="18" y="38" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.35)" stroke="none">for (let i = 0;</text><text x="18" y="46" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.35)" stroke="none">  perform(data);</text><circle cx="56" cy="66" r="8" stroke-width="0.8"/><circle cx="56" cy="66" r="4" stroke-width="0.6" opacity="0.4"/><line x1="56" y1="58" x2="56" y2="56" stroke-width="0.8"/><line x1="48" y1="66" x2="46" y2="66" stroke-width="0.8"/><line x1="64" y1="66" x2="66" y2="66" stroke-width="0.8"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" class="card-img-fill" alt="Custom AI Agents">
         </div>
         <div class="card-code">
           <span class="kw">function</span> <span class="fn">processNumbers</span>(<span class="var">numbers</span>) {<br>
@@ -403,8 +550,7 @@
       </div>
       <div class="feature-card anim anim-up d3">
         <div class="feature-card-icon">
-          <div class="icon-particles"><span style="left:15%;animation-delay:0.5s"></span><span style="left:45%;animation-delay:2.5s"></span><span style="left:70%;animation-delay:4.5s"></span></div>
-          <svg class="wireframe-icon" viewBox="0 0 80 80"><circle cx="34" cy="34" r="18" stroke-width="1"/><line x1="47" y1="47" x2="64" y2="64" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="34" r="8" stroke-width="0.6" opacity="0.3"/><line x1="34" y1="26" x2="34" y2="42" stroke-width="0.5" opacity="0.3"/><line x1="26" y1="34" x2="42" y2="34" stroke-width="0.5" opacity="0.3"/><circle cx="18" cy="62" r="3" stroke-width="0.8" opacity="0.4"/><circle cx="28" cy="68" r="2" stroke-width="0.8" opacity="0.3"/><line x1="18" y1="62" x2="28" y2="68" stroke-width="0.5" opacity="0.3"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" class="card-img-fill" alt="AI Consultancy">
         </div>
         <div class="feature-labels"><span class="feature-label">Consulting</span><span class="feature-label">AI Strategy</span></div>
         <h3>AI Consultancy Services</h3>
@@ -412,8 +558,7 @@
       </div>
       <div class="feature-card anim anim-up d4">
         <div class="feature-card-icon">
-          <div class="icon-particles"><span style="left:25%;animation-delay:1.5s"></span><span style="left:55%;animation-delay:3.5s"></span><span style="left:80%;animation-delay:5.5s"></span></div>
-          <svg class="wireframe-icon" viewBox="0 0 80 80"><rect x="6" y="28" width="18" height="18" rx="3"/><rect x="31" y="28" width="18" height="18" rx="3"/><rect x="56" y="28" width="18" height="18" rx="3"/><line x1="24" y1="37" x2="31" y2="37" stroke-width="0.8"/><line x1="49" y1="37" x2="56" y2="37" stroke-width="0.8"/><polyline points="28,35 31,37 28,39" stroke-width="0.8"/><polyline points="53,35 56,37 53,39" stroke-width="0.8"/><path d="M15 28V20H65V28" stroke-width="0.5" opacity="0.25"/><path d="M15 46V54H65V46" stroke-width="0.5" opacity="0.25"/><circle cx="15" cy="17" r="2" stroke-width="0.6" opacity="0.3"/><circle cx="65" cy="17" r="2" stroke-width="0.6" opacity="0.3"/><circle cx="40" cy="57" r="2" stroke-width="0.6" opacity="0.3"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" class="card-img-fill" alt="Automated Workflows">
         </div>
         <div class="feature-labels"><span class="feature-label">Zero Oversight</span><span class="feature-label">End-to-End</span></div>
         <h3>Automated Workflows</h3>
@@ -431,7 +576,7 @@
     <div class="process-grid">
       <div class="process-card anim anim-left d1">
         <div class="process-card-icon">
-          <svg class="wireframe-icon" viewBox="0 0 80 80" style="width:64px;height:64px"><circle cx="40" cy="36" r="14" stroke-width="0.8"/><circle cx="40" cy="36" r="6" stroke-width="0.6" opacity="0.4"/><path d="M40 22V18M40 50V54M26 36H22M54 36H58" stroke-width="0.8"/><path d="M30 26L27 23M50 26L53 23M30 46L27 49M50 46L53 49" stroke-width="0.7"/><rect x="20" y="60" width="6" height="10" rx="1" opacity="0.3"/><rect x="30" y="56" width="6" height="14" rx="1" opacity="0.4"/><rect x="40" y="52" width="6" height="18" rx="1" opacity="0.5"/><rect x="50" y="54" width="6" height="16" rx="1" opacity="0.35"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459429/Whisk_2d3cf369b4c88a8a8f941b53648eb51deg.png" class="card-img-fill" alt="Discovery">
         </div>
         <div class="step-label">Step 1</div>
         <h3>Discovery & Strategy</h3>
@@ -439,7 +584,7 @@
       </div>
       <div class="process-card anim anim-up d2">
         <div class="process-card-icon">
-          <svg class="wireframe-icon" viewBox="0 0 80 80" style="width:64px;height:64px"><rect x="10" y="26" width="24" height="28" rx="3" stroke-width="0.8"/><rect x="46" y="26" width="24" height="28" rx="3" stroke-width="0.8"/><line x1="34" y1="36" x2="46" y2="36" stroke-width="0.8"/><line x1="34" y1="44" x2="46" y2="44" stroke-width="0.8"/><circle cx="38" cy="36" r="2" stroke-width="0.6" opacity="0.5"/><circle cx="42" cy="44" r="2" stroke-width="0.6" opacity="0.5"/><line x1="22" y1="54" x2="22" y2="62" stroke-width="0.5" opacity="0.3"/><line x1="58" y1="54" x2="58" y2="62" stroke-width="0.5" opacity="0.3"/><circle cx="22" cy="65" r="2" stroke-width="0.5" opacity="0.25"/><circle cx="58" cy="65" r="2" stroke-width="0.5" opacity="0.25"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459428/Whisk_5349c90e685b97fae1c4144eb7f7fb57eg.png" class="card-img-fill" alt="Implementation">
         </div>
         <div class="step-label">Step 2</div>
         <h3>Implementation & Integration</h3>
@@ -447,7 +592,7 @@
       </div>
       <div class="process-card anim anim-right d3">
         <div class="process-card-icon">
-          <svg class="wireframe-icon" viewBox="0 0 80 80" style="width:64px;height:64px"><circle cx="40" cy="34" r="16" stroke-width="0.8"/><path d="M24 38C24 38 22 38 22 42V48C22 50 24 52 26 52H28" stroke-width="0.8"/><path d="M56 38C56 38 58 38 58 42V48C58 50 56 52 54 52H52" stroke-width="0.8"/><rect x="24" y="40" width="8" height="12" rx="3" stroke-width="0.7"/><rect x="48" y="40" width="8" height="12" rx="3" stroke-width="0.7"/><path d="M34 60Q40 68 46 60" stroke-width="0.6" opacity="0.3"/><path d="M32 64Q40 74 48 64" stroke-width="0.5" opacity="0.2"/><line x1="40" y1="18" x2="40" y2="10" stroke-width="0.7" opacity="0.3"/><polyline points="37,13 40,10 43,13" stroke-width="0.7" opacity="0.3"/></svg>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459420/Whisk_7741b67544eeaef8cd14c8fb31b59fcdeg.png" class="card-img-fill" alt="Optimization">
         </div>
         <div class="step-label">Step 3</div>
         <h3>Optimization & Support</h3>
@@ -499,22 +644,9 @@
 
       <div class="srv-card anim anim-up d1">
         <div class="srv-card-visual">
-          <div class="srv-particles">
-            <span style="left:15%;animation-delay:0s"></span><span style="left:40%;animation-delay:2.5s"></span>
-            <span style="left:65%;animation-delay:5s"></span><span style="left:85%;animation-delay:7s"></span>
-          </div>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459418/Whisk_99745a4700b012798fb40774e808e27beg.png" alt="Lead Generation">
           <span class="srv-card-num">01</span>
           <span class="srv-card-title">Lead Generation</span>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="28" r="12" stroke-width="0.8"/>
-            <path d="M26 52C26 42 54 42 54 52" stroke-width="0.8"/>
-            <line x1="40" y1="52" x2="40" y2="68" stroke-width="0.6" opacity="0.3"/>
-            <circle cx="40" cy="72" r="4" stroke-width="0.6" opacity="0.3"/>
-            <line x1="54" y1="28" x2="68" y2="18" stroke-width="0.5" opacity="0.3"/>
-            <circle cx="70" cy="16" r="3" stroke-width="0.5" opacity="0.25"/>
-            <line x1="26" y1="28" x2="14" y2="20" stroke-width="0.5" opacity="0.3"/>
-            <circle cx="12" cy="18" r="2.5" stroke-width="0.5" opacity="0.2"/>
-          </svg>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> AI Cold Email Systems</div>
             <div class="srv-pill"><span class="pill-dot"></span> Application Systems</div>
@@ -525,23 +657,9 @@
 
       <div class="srv-card anim anim-up d2">
         <div class="srv-card-visual">
-          <div class="srv-particles">
-            <span style="left:20%;animation-delay:1s"></span><span style="left:50%;animation-delay:3.5s"></span>
-            <span style="left:70%;animation-delay:6s"></span><span style="left:90%;animation-delay:8s"></span>
-          </div>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459413/Whisk_aaf194a8b8db6f2a143446669843f3badr.jpg" alt="Project Management">
           <span class="srv-card-num">02</span>
           <span class="srv-card-title">Project Management</span>
-          <svg viewBox="0 0 80 80">
-            <rect x="10" y="12" width="60" height="44" rx="3" stroke-width="0.8"/>
-            <line x1="10" y1="24" x2="70" y2="24" stroke-width="0.5" opacity="0.3"/>
-            <rect x="18" y="30" width="20" height="4" rx="1" opacity="0.3"/>
-            <rect x="18" y="40" width="30" height="4" rx="1" opacity="0.25"/>
-            <rect x="18" y="50" width="14" height="4" rx="1" opacity="0.2"/>
-            <circle cx="58" cy="40" r="8" stroke-width="0.7" opacity="0.4"/>
-            <polyline points="54,40 57,43 62,37" stroke-width="0.8" opacity="0.5"/>
-            <path d="M30 56V66H50V56" stroke-width="0.5" opacity="0.2"/>
-            <circle cx="40" cy="70" r="3" stroke-width="0.5" opacity="0.2"/>
-          </svg>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> AI Automated Fulfillment</div>
             <div class="srv-pill"><span class="pill-dot"></span> AI Onboarding Systems</div>
@@ -552,22 +670,9 @@
 
       <div class="srv-card anim anim-up d3">
         <div class="srv-card-visual">
-          <div class="srv-particles">
-            <span style="left:10%;animation-delay:0.5s"></span><span style="left:35%;animation-delay:3s"></span>
-            <span style="left:60%;animation-delay:5.5s"></span><span style="left:80%;animation-delay:7.5s"></span>
-          </div>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459406/Whisk_d1963aa83204981ae444ac5c0925a947eg.png" alt="Hiring Systems">
           <span class="srv-card-num">03</span>
           <span class="srv-card-title">Hiring Systems</span>
-          <svg viewBox="0 0 80 80">
-            <circle cx="28" cy="24" r="10" stroke-width="0.8"/>
-            <circle cx="52" cy="24" r="10" stroke-width="0.8"/>
-            <path d="M16 48C16 38 40 38 40 48" stroke-width="0.7"/>
-            <path d="M40 48C40 38 64 38 64 48" stroke-width="0.7"/>
-            <line x1="40" y1="48" x2="40" y2="60" stroke-width="0.5" opacity="0.3"/>
-            <rect x="28" y="60" width="24" height="12" rx="3" stroke-width="0.6" opacity="0.3"/>
-            <line x1="34" y1="65" x2="46" y2="65" stroke-width="0.4" opacity="0.25"/>
-            <line x1="34" y1="69" x2="42" y2="69" stroke-width="0.4" opacity="0.2"/>
-          </svg>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Intake Systems</div>
             <div class="srv-pill"><span class="pill-dot"></span> AI Scoring Systems</div>
@@ -578,22 +683,9 @@
 
       <div class="srv-card anim anim-up d4">
         <div class="srv-card-visual">
-          <div class="srv-particles">
-            <span style="left:25%;animation-delay:1.5s"></span><span style="left:45%;animation-delay:4s"></span>
-            <span style="left:75%;animation-delay:6.5s"></span><span style="left:95%;animation-delay:9s"></span>
-          </div>
+          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459405/Whisk_55a208eb59d9974be53410b59e7f56ceeg.png" alt="Sales Administration">
           <span class="srv-card-num">04</span>
           <span class="srv-card-title">Sales Administration</span>
-          <svg viewBox="0 0 80 80">
-            <rect x="10" y="14" width="60" height="40" rx="3" stroke-width="0.8"/>
-            <line x1="10" y1="26" x2="70" y2="26" stroke-width="0.5" opacity="0.3"/>
-            <line x1="38" y1="26" x2="38" y2="54" stroke-width="0.5" opacity="0.2"/>
-            <polyline points="16,50 26,42 38,48 48,36 56,40 64,32" stroke-width="0.9" opacity="0.5"/>
-            <circle cx="40" cy="68" r="7" stroke-width="0.6" opacity="0.35"/>
-            <text x="36" y="72" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.3)" stroke="none">$</text>
-            <circle cx="18" cy="20" r="2.5" stroke-width="0.5" opacity="0.3"/>
-            <circle cx="24" cy="20" r="2.5" stroke-width="0.5" opacity="0.2"/>
-          </svg>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Customized CRMs</div>
             <div class="srv-pill"><span class="pill-dot"></span> AI Asset Generators</div>
@@ -606,223 +698,820 @@
   </div>
 </section>
 
+<section class="blog-section" id="insights">
+  <div class="section-inner">
+    <div class="section-num anim anim-up"><span class="pulse"></span> 05 — Industry Insights</div>
+    <h2 class="section-title anim anim-up d1">Future-Proof Strategies.</h2>
+    <p class="section-desc anim anim-up d2">Explore the latest trends in Agentic AI and Hyperautomation that are reshaping the agency landscape in 2025.</p>
+    
+    <div class="blog-grid">
+      <div class="blog-card anim anim-up d1" onclick="openBlog('agentic')">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop" alt="Agentic AI">
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">Agentic AI • 5 Min Read</div>
+          <h3 class="blog-title">Beyond Chatbots: The Rise of Agentic AI</h3>
+          <p class="blog-excerpt">Why 2025 is the year AI moves from "chatting" to "acting". Discover how autonomous agents are becoming outcome owners.</p>
+          <div class="blog-link">Read Article <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></div>
+        </div>
+      </div>
+
+      <div class="blog-card anim anim-up d2" onclick="openBlog('hyperautomation')">
+        <div class="blog-image">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1740&auto=format&fit=crop" alt="Hyperautomation">
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">Hyperautomation • 4 Min Read</div>
+          <h3 class="blog-title">Hyperautomation: The End of Siloed Workflows</h3>
+          <p class="blog-excerpt">Connecting the dots between your CRM, ERP, and AI. How end-to-end orchestration is replacing isolated task automation.</p>
+          <div class="blog-link">Read Article <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="newsletter-container anim anim-up d3">
+      <div class="newsletter-content">
+        <h3>Stay ahead of the curve.</h3>
+        <p>Get the latest AI insights, system updates, and new feature breakdowns delivered directly to your inbox.</p>
+      </div>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" id="emailInput" placeholder="Enter your email" required class="newsletter-input">
+        <button type="submit" class="btn-primary" id="subscribeBtn">Subscribe <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
 <section class="cta-section">
   <div style="max-width:600px;margin:0 auto">
     <div class="glow-line"></div>
-    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 05 — Let's Talk</div>
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 06 — Let's Talk</div>
     <h2 class="section-title anim anim-up d1" style="text-align:center">Ready to build your AI growth engine?</h2>
     <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Book a free strategy call. We'll map your operations, find the leverage, and deliver a clear roadmap.</p>
-    <div style="text-align:center" class="anim anim-scale d3"><a href="#" class="btn-primary" style="padding:0.7rem 2rem;font-size:0.85rem">Book a Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></a></div>
+    <div style="text-align:center" class="anim anim-scale d3"><button onclick="openCalendar()" class="btn-primary">Book a Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button></div>
   </div>
 </section>
+
+</div> <div id="blog-view">
+  <div class="section-inner blog-article">
+    <div class="back-btn" onclick="closeBlog()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 8l6 7"/></svg> Back to Home
+    </div>
+    <div id="blog-content-injection"></div>
+  </div>
+</div>
+
+<div id="calendar-view">
+  <div class="section-inner" style="padding-bottom:5rem;">
+    <div class="back-btn" onclick="closeBlog()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 8l6 7"/></svg> Back to Home
+    </div>
+    
+    <div class="form-container" id="formPage">
+        <div class="form-left-panel">
+            <div class="form-logo-container">
+                <div class="hexagon-shape">
+                    <div class="hexagon-inner">
+                        <img src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Level One Logo" class="logo-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-center-panel">
+            <h1 class="form-header">Client Information</h1>
+            <p class="form-subheader">Please fill out your details to schedule your kickoff call</p>
+            
+            <form id="clientForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label class="form-label" for="formName">Name</label>
+                    <input type="text" id="formName" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="formEmail">Email</label>
+                        <input type="email" id="formEmail" class="form-input" placeholder="your.email@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="formPhone">Phone Number</label>
+                        <input type="tel" id="formPhone" class="form-input" placeholder="+1 (555) 123-4567" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="formCompany">Company Name</label>
+                    <input type="text" id="formCompany" class="form-input" placeholder="Your company name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="formLocation">Location</label>
+                    <input type="text" id="formLocation" class="form-input" placeholder="City, Country" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="formWebsite">Website <span class="optional">(optional)</span></label>
+                    <input type="url" id="formWebsite" class="form-input" placeholder="https://www.example.com">
+                </div>
+            </form>
+        </div>
+
+        <div class="form-right-panel">
+            <button class="next-btn" id="nextBtn" disabled>Next</button>
+        </div>
+    </div>
+
+    <div class="main-container" id="calendarPage">
+        <div class="left-panel">
+            <div class="logo-container">
+                <div class="hexagon-shape">
+                    <div class="hexagon-inner">
+                        <img src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Level One Logo" class="logo-image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientName"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientEmail"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientPhone"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientCompany"></span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientLocation"></span>
+            </div>
+
+            <div class="info-item" id="websiteItem" style="display: none;">
+                <span class="info-emoji"></span>
+                <span class="info-text" id="clientWebsite"></span>
+            </div>
+        </div>
+
+        <div class="calendar-panel">
+            <div class="calendar-header">
+                <h2 class="month-year" id="monthYear"></h2>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="prevBtn">‹</button>
+                    <button class="nav-btn" id="nextBtn2">›</button>
+                </div>
+            </div>
+
+            <div class="weekdays">
+                <div class="weekday">SUN</div>
+                <div class="weekday">MON</div>
+                <div class="weekday">TUE</div>
+                <div class="weekday">WED</div>
+                <div class="weekday">THU</div>
+                <div class="weekday">FRI</div>
+                <div class="weekday">SAT</div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="right-panel">
+            <div class="time-header" id="selectedDateDisplay">Select a date</div>
+            
+            <div class="time-slots-container">
+                <div class="time-slot" data-time="09:00">9:00am</div>
+                <div class="time-slot" data-time="09:30">9:30am</div>
+                <div class="time-slot" data-time="10:00">10:00am</div>
+                <div class="time-slot" data-time="10:30">10:30am</div>
+                <div class="time-slot" data-time="11:00">11:00am</div>
+                <div class="time-slot" data-time="11:30">11:30am</div>
+                <div class="time-slot" data-time="12:00">12:00pm</div>
+                <div class="time-slot" data-time="12:30">12:30pm</div>
+                <div class="time-slot" data-time="01:00">1:00pm</div>
+                <div class="time-slot" data-time="01:30">1:30pm</div>
+                <div class="time-slot" data-time="02:00">2:00pm</div>
+                <div class="time-slot" data-time="02:30">2:30pm</div>
+                <div class="time-slot" data-time="03:00">3:00pm</div>
+                <div class="time-slot" data-time="03:30">3:30pm</div>
+                <div class="time-slot" data-time="04:00">4:00pm</div>
+                <div class="time-slot" data-time="04:30">4:30pm</div>
+                <div class="time-slot" data-time="05:00">5:00pm</div>
+            </div>
+            
+            <button class="confirm-btn" id="confirmBtn" disabled>Confirm Booking</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div id="confirmationSection">
+                <h2 class="modal-header">Kickoff Call Confirmed</h2>
+                <div class="modal-info-section">
+                    <div class="modal-info-item">
+                        <span class="modal-info-label">Name:</span>
+                        <span class="modal-info-value" id="modalName"></span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-label">Email:</span>
+                        <span class="modal-info-value" id="modalEmail"></span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-label">Kickoff Date:</span>
+                        <span class="modal-info-value" id="modalNewDate"></span>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-label">Kickoff Time:</span>
+                        <span class="modal-info-value" id="modalNewTime"></span>
+                    </div>
+                </div>
+                <button class="modal-exit-btn" id="finishBtn">Finish</button>
+            </div>
+
+            <div class="thank-you-screen" id="thankYouSection">
+                <div class="thank-you-logo">
+                    <div class="thank-you-hexagon">
+                        <div class="thank-you-hexagon-inner">
+                            <img src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Level One Logo" class="thank-you-logo-image">
+                        </div>
+                    </div>
+                </div>
+                <h2 class="thank-you-title">Thank You!</h2>
+                <p class="thank-you-message">
+                    We're excited to begin this journey with you! Your kickoff call is confirmed and we can't wait to dive into your project.
+                </p>
+                <p class="thank-you-note">
+                    You will receive a calendar invitation and email confirmation shortly. We'll send you a reminder before your scheduled kickoff time.
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
 <footer><p>© 2025 Level One — AI Growth Partner</p></footer>
 
 <script>
-  // ─── CRITICAL: COMBINED LOADING & SPLASH SCREEN LOGIC ───
+  // ─── SCROLLBAR UTILITY FOR JUMP FIX ───
+  function getScrollbarWidth() {
+    return window.innerWidth - document.documentElement.clientWidth;
+  }
+
+  // ─── CALENDAR LOGIC ───
+  let clientData = { name: '', email: '', phone: '', company: '', location: '', website: '' };
   
-  // 1. Lock scrolling immediately
+  // Validation
+  function validateForm() {
+      const name = document.getElementById('formName').value.trim();
+      const email = document.getElementById('formEmail').value.trim();
+      const phone = document.getElementById('formPhone').value.trim();
+      const company = document.getElementById('formCompany').value.trim();
+      const location = document.getElementById('formLocation').value.trim();
+      const isValid = name && email && phone && company && location;
+      document.getElementById('nextBtn').disabled = !isValid;
+  }
+  document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('input', validateForm);
+  });
+
+  // Next Btn
+  document.getElementById('nextBtn').addEventListener('click', function() {
+      clientData.name = document.getElementById('formName').value.trim();
+      clientData.email = document.getElementById('formEmail').value.trim();
+      clientData.phone = document.getElementById('formPhone').value.trim();
+      clientData.company = document.getElementById('formCompany').value.trim();
+      clientData.location = document.getElementById('formLocation').value.trim();
+      clientData.website = document.getElementById('formWebsite').value.trim();
+
+      document.getElementById('clientName').textContent = clientData.name;
+      document.getElementById('clientEmail').textContent = clientData.email;
+      document.getElementById('clientPhone').textContent = clientData.phone;
+      document.getElementById('clientCompany').textContent = clientData.company;
+      document.getElementById('clientLocation').textContent = clientData.location;
+      
+      if (clientData.website) {
+          document.getElementById('clientWebsite').textContent = clientData.website;
+          document.getElementById('websiteItem').style.display = 'flex';
+      }
+
+      document.getElementById('formPage').style.display = 'none';
+      document.getElementById('calendarPage').style.display = 'grid'; // ensure grid
+      document.getElementById('calendarPage').classList.add('active');
+      
+      renderCalendar();
+      updateTimeSelection();
+  });
+
+  // Calendar
+  let currentDate = new Date();
+  let selectedDate = null;
+  let selectedTime = null;
+
+  function renderCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      document.getElementById('monthYear').textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      const grid = document.getElementById('calendarGrid');
+      grid.innerHTML = '';
+      const firstDay = new Date(year, month, 1);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < 42; i++) {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() + i);
+          const dayElement = document.createElement('div');
+          dayElement.className = 'calendar-day';
+          dayElement.textContent = date.getDate();
+          
+          const isCurrentMonth = date.getMonth() === month;
+          const isPast = date < today;
+
+          if (!isCurrentMonth || isPast) {
+              dayElement.classList.add('disabled');
+          } else {
+              dayElement.addEventListener('click', () => {
+                  selectedDate = date;
+                  renderCalendar();
+                  updateTimeSelection();
+              });
+          }
+          if (date.toDateString() === today.toDateString()) dayElement.classList.add('today');
+          if (selectedDate && date.toDateString() === selectedDate.toDateString()) dayElement.classList.add('selected');
+          grid.appendChild(dayElement);
+      }
+  }
+
+  function updateTimeSelection() {
+      const display = document.getElementById('selectedDateDisplay');
+      if (selectedDate) {
+          display.textContent = selectedDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      } else {
+          display.textContent = 'Select a date';
+      }
+  }
+
+  const timeSlots = document.querySelectorAll('.time-slot');
+  const confirmBtn = document.getElementById('confirmBtn');
+  
+  timeSlots.forEach(slot => {
+      slot.addEventListener('click', function() {
+          if (!selectedDate) return;
+          timeSlots.forEach(s => s.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedTime = this.dataset.time;
+          confirmBtn.disabled = false;
+      });
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+  });
+  document.getElementById('nextBtn2').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+  });
+
+  // CONFIRM BOOKING
+  confirmBtn.addEventListener('click', async function() {
+      if (!selectedDate || !selectedTime) return;
+      const formattedNewDate = selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      const bookingData = {
+          name: clientData.name, email: clientData.email, phone: clientData.phone, company: clientData.company,
+          location: clientData.location, website: clientData.website || '', kickoffDate: formattedNewDate,
+          kickoffTime: selectedTime, callBooking: 'Website', timestamp: new Date().toISOString()
+      };
+      
+      try {
+          confirmBtn.disabled = true; confirmBtn.textContent = 'Sending...';
+          const response = await fetch('https://hook.eu2.make.com/ljg9pk80v0l6bons8zu4b7mrl0jhj5td', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(bookingData)
+          });
+          if (response.ok) {
+              document.getElementById('modalName').textContent = bookingData.name;
+              document.getElementById('modalEmail').textContent = bookingData.email;
+              document.getElementById('modalNewDate').textContent = formattedNewDate;
+              document.getElementById('modalNewTime').textContent = selectedTime;
+              document.getElementById('modalOverlay').classList.add('active');
+          } else { throw new Error('Failed'); }
+      } catch (error) {
+          console.error(error);
+          confirmBtn.textContent = 'Error - Try Again';
+          setTimeout(() => { confirmBtn.textContent = 'Confirm Booking'; confirmBtn.disabled = false; }, 3000);
+      }
+  });
+
+  // FINISH BUTTON (Trigger Exit Sequence)
+  document.getElementById('finishBtn').addEventListener('click', function() {
+      document.getElementById('confirmationSection').style.display = 'none';
+      document.getElementById('thankYouSection').classList.add('active');
+      
+      // Wait 3 Seconds then reset
+      setTimeout(() => {
+          closeCalendarAndReset();
+      }, 3000);
+  });
+
+  function closeCalendarAndReset() {
+      // 1. Trigger Transition
+      triggerTransition(() => {
+          // 2. Hide Calendar, Show Main
+          document.getElementById('calendar-view').style.display = 'none';
+          document.getElementById('main-content').style.display = 'block';
+          
+          // 3. Reset Calendar State
+          document.getElementById('modalOverlay').classList.remove('active');
+          document.getElementById('confirmationSection').style.display = 'block';
+          document.getElementById('thankYouSection').classList.remove('active');
+          document.getElementById('formPage').style.display = 'grid';
+          document.getElementById('calendarPage').style.display = 'none';
+          document.getElementById('clientForm').reset();
+          clientData = {};
+          selectedDate = null; selectedTime = null;
+          timeSlots.forEach(s => s.classList.remove('selected'));
+          confirmBtn.disabled = true; confirmBtn.textContent = 'Confirm Booking';
+          document.getElementById('nextBtn').disabled = true;
+          
+          hexBurger.classList.remove('hidden');
+          window.scrollTo(0, 0);
+      });
+  }
+
+  // ─── CUSTOM SLOW SCROLL LOGIC ───
+  function smoothScrollTo(targetY, duration) {
+    const startY = window.pageYOffset;
+    const distance = targetY - startY;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startY, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+    function ease(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+    requestAnimationFrame(animation);
+  }
+
+  // ─── NEWSLETTER WEBHOOK LOGIC ───
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value;
+      const btn = document.getElementById('subscribeBtn');
+      const webhookUrl = "YOUR_MAKE_WEBHOOK_URL_HERE"; 
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Sending...';
+      btn.style.opacity = '0.7';
+      fetch(webhookUrl, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, source: 'website_newsletter' })
+      })
+      .then(response => {
+        if(response.ok) {
+          btn.innerHTML = 'Subscribed! ✓'; btn.style.backgroundColor = '#4ade80'; btn.style.color = '#000'; newsletterForm.reset();
+        } else { throw new Error('Error'); }
+      })
+      .catch(error => {
+        btn.innerHTML = 'Error. Try again.'; btn.style.backgroundColor = '#ef4444'; 
+        setTimeout(() => { btn.innerHTML = originalText; btn.style.backgroundColor = ''; btn.style.opacity = '1'; }, 3000);
+      });
+    });
+  }
+
+  // ─── BLOG DATA ───
+  const blogPosts = {
+    agentic: `
+      <div class="article-meta">TRENDS 2025 • AGENTIC AI</div>
+      <h1 class="article-title">Beyond Chatbots: The Rise of Agentic AI</h1>
+      <div class="article-body">
+        <p>The era of passive AI is ending. While 2023 and 2024 were defined by Generative AI that could write, code, and create, 2025 is emerging as the year of <strong>Agentic AI</strong>—systems that don't just respond to prompts, but actively plan, reason, and execute complex workflows to achieve specific business outcomes.</p>
+        <h2>From Task Takers to Outcome Owners</h2>
+        <p>Traditional LLMs function like extremely knowledgeable librarians: you ask a question, and they give you an answer. Agentic AI functions like a skilled employee. You give it a goal (e.g., "Increase outreach to Series B founders in Fintech"), and the agent autonomously breaks that goal down into steps: scraping data, verifying emails, drafting personalized messaging, and scheduling the campaign.</p>
+        <p>According to recent industry surveys, 88% of senior executives plan to increase AI budgets specifically to accommodate this shift toward agentic capabilities. The value proposition has shifted from simple "efficiency" to "autonomous execution."</p>
+        <h2>The Multi-Agent Ecosystem</h2>
+        <p>The most powerful application of this technology isn't a single super-bot, but rather <strong>multi-agent collaboration</strong>. Imagine a "Sales Team" of agents:</p>
+        <ul><li><strong>The Researcher:</strong> Scours the web for prospect news and trigger events.</li><li><strong>The Strategist:</strong> Analyzes that data to find the perfect angle.</li><li><strong>The Copywriter:</strong> Drafts the email matching your brand voice.</li><li><strong>The Manager:</strong> Reviews the output for quality assurance before sending.</li></ul>
+        <p>This orchestration allows for a level of complexity and nuance that single-prompt interactions simply cannot match.</p>
+        <h2>Why This Matters for Agencies</h2>
+        <p>For service-based businesses, this means the bottleneck of "human oversight" is widening. By deploying vertical-specific agents—whether for compliance checking, supply chain logistics, or customer support—agencies can scale operations without linearly scaling headcount.</p>
+        <p>We are no longer just automating tasks; we are architecting the workforce of the future.</p>
+        <div class="article-references"><h3>References & Citations</h3><ul><li>Svitla Systems: <a href="https://svitla.com/blog/agentic-ai-trends-2025/" target="_blank" class="citation-link">Agentic AI Trends 2025: From Assistants to Agents</a></li><li>OpenOcean VC: <a href="https://www.openocean.vc/articles/the-state-of-agentic-ai-in-2025-whats-working-what-isnt-and-whats-next" target="_blank" class="citation-link">The state of agentic AI in 2025</a></li><li>Deloitte: <a href="https://www.deloitte.com/ro/en/Industries/technology/perspectives/agentic-reality-check-preparing-silicon-based-workforce.html" target="_blank" class="citation-link">The agentic reality check: preparing for a silicon-based workforce</a></li></ul></div>
+      </div>
+    `,
+    hyperautomation: `
+      <div class="article-meta">STRATEGY • HYPERAUTOMATION</div>
+      <h1 class="article-title">Hyperautomation: The End of Siloed Workflows</h1>
+      <div class="article-body">
+        <p>In the past decade, businesses collected software tools like trading cards. A CRM for sales, an ERP for finance, a project management tool for delivery. The result? <strong>Data silos.</strong> Information trapped in one system requires manual entry to move to another. This is the problem <strong>Hyperautomation</strong> solves.</p>
+        <h2>Connecting the Dots</h2>
+        <p>Hyperautomation is not a single technology, but a strategic approach. It combines AI, Machine Learning, and Robotic Process Automation (RPA) to automate as many business and IT processes as possible. It is the difference between "automating an email" and "automating the entire client lifecycle."</p>
+        <h2>The ROI of Integration</h2>
+        <p>When an AI agent can "see" your entire business operation, it can make decisions that were previously impossible for software. For example, a Hyperautomation system can:</p>
+        <ul><li>Detect a signed contract in your e-signature tool.</li><li>Automatically trigger the invoice in your accounting software.</li><li>Provision a project environment in your PM tool.</li><li>Send a welcome kit via your email provider.</li></ul>
+        <p>This end-to-end orchestration reduces the "toggle tax"—the time humans spend switching between apps—and drastically reduces error rates.</p>
+        <h2>The 2025 Outlook</h2>
+        <p>Gartner forecasts that by 2025, hyperautomation will be a condition of survival for mid-sized to large enterprises. The focus is shifting from "saving time" to "increasing agility." Companies that have integrated their data layers will be able to pivot, scale, and deploy new AI models infinitely faster than those stuck with fragmented systems.</p>
+        <p>At Level One, we don't just build bots; we build the connective tissue that turns your isolated tools into a unified growth engine.</p>
+        <div class="article-references"><h3>References & Citations</h3><ul><li>Vuram: <a href="https://www.vuram.com/article/10-game-changing-ai-and-hyperautomation-trends/" target="_blank" class="citation-link">10 Game-changing AI and Hyperautomation Trends for 2025</a></li><li>Atomicwork: <a href="https://www.atomicwork.com/esm/hyperautomation-guide" target="_blank" class="citation-link">The Ultimate Guide to Hyperautomation in 2025</a></li><li>IBM: <a href="https://www.ibm.com/think/insights/hyperautomation-benefits-and-challenges" target="_blank" class="citation-link">Hyperautomation: The Benefits and Challenges</a></li></ul></div>
+      </div>
+    `
+  };
+
+  // ─── CLOUDINARY & SPLASH SCREEN LOGIC ───
   document.body.style.overflow = 'hidden'; 
   
-  // 2. Elements
   const splashScreen = document.getElementById('splash-screen');
   const splashLogo = document.getElementById('splash-logo');
   const splashText = document.getElementById('splash-text');
   const loaderBox = document.getElementById('loaderBox');
   const loaderBar = document.getElementById('loaderBar');
-  
-  const heroVideo = document.querySelector('.hero-video-bg video'); // SELECT VIDEO
-  
+  const navLogoBtn = document.getElementById('navLogoBtn');
+  const hexBurger = document.getElementById('hexBurger');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const heroVideo = document.querySelector('.hero-video-bg video'); 
   const canvas = document.getElementById("hero-lightpass");
   const context = canvas.getContext("2d");
 
-  // 3. Configuration
+  let isBlogOpen = false;
+
   const frameCount = 120; 
   const currentFrame = index => (
-    `https://github.com/level-one-ai/Level-One.Website-/blob/main/scroll-images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg?raw=true`
+    `https://res.cloudinary.com/dw5n0wlmr/image/upload/f_auto,q_auto/v1770458357/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`
   );
 
   const images = [];
   let imagesLoaded = 0;
-  
-  const videoState = { 
-    targetFrame: 0,
-    smoothFrame: 0
-  };
+  const videoState = { targetFrame: 0, smoothFrame: 0 };
 
-  // 4. Initial Splash Animation (Logo Fades In First)
-  setTimeout(() => {
-    splashLogo.style.opacity = '1';
-  }, 100);
-
-  // 5. Preload Images & Update Bar
-  // Show bar after a small delay
-  setTimeout(() => {
-    loaderBox.style.opacity = '1';
-  }, 800);
+  // FADE IN SEQUENCE UPDATE
+  setTimeout(() => { splashLogo.style.opacity = '1'; }, 500); // 0.5s delay after black screen
+  setTimeout(() => { loaderBox.style.opacity = '1'; }, 1000); // bar follows
+  setTimeout(() => { if (splashScreen.style.display !== 'none') { finishSplashScreen('intro'); } }, 8000);
 
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     img.src = currentFrame(i);
-    
     img.onload = () => {
       imagesLoaded++;
-      
-      // Calculate Image Progress (Max 95% - wait for video)
       const percent = Math.min(95, (imagesLoaded / frameCount) * 100);
       loaderBar.style.width = percent + '%';
-
-      if (imagesLoaded === 1) {
-        loop();
-        render(0); 
-      }
-
-      // If all images loaded, check video
-      if (imagesLoaded === frameCount) {
-        checkVideoAndFinish();
-      }
+      if (imagesLoaded === 1) { loop(); render(0); }
+      if (imagesLoaded === frameCount) { checkVideoAndFinish(); }
     };
+    img.onerror = () => { imagesLoaded++; if (imagesLoaded === frameCount) checkVideoAndFinish(); };
     images.push(img);
   }
 
-  // 6. VIDEO CHECK & FORCE PLAY
-  // Attempt to play video immediately to ensure it buffers
   if (heroVideo) {
-      heroVideo.play().catch(() => {
-          // If autoplay blocked, mute and try again
-          heroVideo.muted = true;
-          heroVideo.play();
-      });
+      heroVideo.play().catch(() => { heroVideo.muted = true; heroVideo.play(); });
   }
 
   function checkVideoAndFinish() {
-      // Check if video is actually moving (time > 0)
       if (heroVideo && heroVideo.readyState >= 3 && !heroVideo.paused) {
-          finishSplashScreen();
+          finishSplashScreen('intro');
       } else {
-          // If not ready, wait for event
           if(heroVideo) {
-              heroVideo.addEventListener('timeupdate', function onTimeUpdate() {
+              const onTimeUpdate = () => {
                   if(heroVideo.currentTime > 0) {
                       heroVideo.removeEventListener('timeupdate', onTimeUpdate);
-                      finishSplashScreen();
+                      finishSplashScreen('intro');
                   }
-              });
-              // Fallback force play again
+              };
+              heroVideo.addEventListener('timeupdate', onTimeUpdate);
               heroVideo.play();
           } else {
-              // No video found? Just finish.
-              finishSplashScreen();
+              finishSplashScreen('intro');
           }
       }
   }
 
-  // 7. Finish Sequence (Phase 3)
-  function finishSplashScreen() {
-    // Force bar to 100%
+  function finishSplashScreen(mode) {
     loaderBar.style.width = '100%';
-
-    // Wait a moment for bar to visually complete
     setTimeout(() => {
-        // A. Fade Out Logo
         splashLogo.style.opacity = '0';
-        
-        // B. Wait 0.8s (Logo fade), then Fade Out Bar
         setTimeout(() => {
             loaderBox.style.opacity = '0';
-            
-            // C. Wait 0.5s, then Fade In Text
-            setTimeout(() => {
-                splashText.style.opacity = '1';
-                
-                // D. Wait 2s (Read Text), then Fade Out Text
+            if (mode === 'intro') {
                 setTimeout(() => {
-                    splashText.style.opacity = '0';
-                    
-                    // E. Wait 0.8s, then Fade Out Black Screen
+                    splashText.style.opacity = '1';
                     setTimeout(() => {
-                        splashScreen.style.opacity = '0';
-                        document.body.style.overflow = 'auto'; // Unlock Scroll
-                        
-                        setTimeout(() => {
-                            splashScreen.style.display = 'none';
-                        }, 1500);
-                        
-                    }, 800);
-                }, 2000); 
-            }, 500);
+                        splashText.style.opacity = '0';
+                        revealSite();
+                    }, 2000); 
+                }, 500);
+            } else {
+                revealSite();
+            }
         }, 800);
     }, 500);
   }
 
-  // 8. Physics Loop
+  function revealSite() {
+    setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        if(!isBlogOpen && !menuOverlay.classList.contains('open')) { 
+            document.body.style.overflow = 'auto'; 
+        } 
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            loaderBar.style.width = '0%';
+            loaderBar.style.transition = 'none';
+        }, 1500);
+    }, 500);
+  }
+
+  function triggerTransition(callback) {
+    splashScreen.style.display = 'flex';
+    requestAnimationFrame(() => {
+        splashScreen.style.opacity = '1';
+        // Add 500ms delay before logo appears to match new requirement
+        setTimeout(() => {
+            splashLogo.style.opacity = '1';
+            loaderBox.style.opacity = '1';
+            loaderBar.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            setTimeout(() => { loaderBar.style.width = '100%'; }, 100);
+        }, 500);
+    });
+    setTimeout(() => {
+        callback();
+        finishSplashScreen('transition');
+    }, 2300); // Increased timing to account for delay
+  }
+
+  function openBlog(type) {
+    isBlogOpen = true;
+    triggerTransition(() => {
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('calendar-view').style.display = 'none';
+        document.getElementById('blog-view').style.display = 'block';
+        document.getElementById('blog-content-injection').innerHTML = blogPosts[type];
+        hexBurger.classList.add('hidden');
+        window.scrollTo(0, 0);
+    });
+  }
+
+  function openCalendar() {
+    isBlogOpen = true;
+    triggerTransition(() => {
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('blog-view').style.display = 'none';
+        document.getElementById('calendar-view').style.display = 'block';
+        hexBurger.classList.add('hidden');
+        window.scrollTo(0, 0);
+    });
+  }
+
+  function closeBlog() {
+    isBlogOpen = false;
+    triggerTransition(() => {
+        document.getElementById('blog-view').style.display = 'none';
+        document.getElementById('calendar-view').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        hexBurger.classList.remove('hidden');
+        window.scrollTo(0, 0);
+    });
+  }
+
+  navLogoBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if(isBlogOpen) { closeBlog(); } else { window.scrollTo({top: 0, behavior: 'smooth'}); }
+  });
+
   function loop() {
     videoState.smoothFrame += (videoState.targetFrame - videoState.smoothFrame) * 0.025;
-    const frameIndex = Math.floor(videoState.smoothFrame);
-    render(frameIndex);
+    render(Math.floor(videoState.smoothFrame));
     requestAnimationFrame(loop);
   }
 
   function render(index) {
-    if (index < 0) index = 0;
-    if (index >= frameCount) index = frameCount - 1;
+    if (index < 0) index = 0; if (index >= frameCount) index = frameCount - 1;
     const img = images[index];
     if (!img || !img.complete) return; 
-
     canvas.width = canvas.clientWidth; 
     canvas.height = canvas.clientHeight;
-
     const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
     const x = (canvas.width / 2) - (img.width / 2) * scale;
     const y = (canvas.height / 2) - (img.height / 2) * scale;
-
     context.drawImage(img, x, y, img.width * scale, img.height * scale);
   }
 
   window.addEventListener('scroll', () => {  
+    if(document.getElementById('main-content').style.display === 'none') return;
     const scrollTop = document.documentElement.scrollTop;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const scrollFraction = scrollTop / maxScroll;
-
-    const frameIndex = Math.min(
-      frameCount - 1,
-      Math.ceil(scrollFraction * frameCount)
-    );
-    
-    videoState.targetFrame = frameIndex;
+    videoState.targetFrame = Math.min(frameCount - 1, Math.ceil(scrollFraction * frameCount));
     updateProgressBar();
   });
 
-  window.addEventListener('resize', () => {
-    render(Math.floor(videoState.smoothFrame)); 
-  });
+  window.addEventListener('resize', () => { render(Math.floor(videoState.smoothFrame)); });
 
-  // Website UI Scripts
   function updateProgressBar() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    
     const progressBar = document.getElementById('progressBar');
     if(progressBar) {
       progressBar.style.width = scrollPercentage + '%';
-      const bgPosition = (scrollTop / 10) % 200;
-      progressBar.style.backgroundPosition = bgPosition + '% 0%';
+      progressBar.style.backgroundPosition = (scrollTop / 10) % 200 + '% 0%';
     }
   }
 
-  const hexBtn = document.getElementById('hexBurger');
-  const menuOverlay = document.getElementById('menuOverlay');
-  if(hexBtn && menuOverlay) {
-    hexBtn.addEventListener('click', () => {
-      hexBtn.classList.toggle('open');
-      menuOverlay.classList.toggle('open');
+  // ─── UPDATED MENU BEHAVIOR (SCROLL LOCK + SLOW SCROLL + DELAYED ANIMATION) ───
+  if(hexBurger && menuOverlay) {
+    hexBurger.addEventListener('click', () => {
+      const isOpen = hexBurger.classList.toggle('open');
+      
+      // Calculate Scrollbar Width to prevent jump
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      
+      if(isOpen) { 
+          // OPENING SEQUENCE
+          menuOverlay.classList.add('open');
+          document.body.style.overflow = 'hidden'; 
+          document.body.style.paddingRight = `${scrollbarWidth}px`;
+          document.querySelector('nav').style.paddingRight = `${(2.5 * 16) + scrollbarWidth}px`;
+          
+          // Animate Links In (Right to Left, Top to Bottom)
+          const links = document.querySelectorAll('.menu-link');
+          links.forEach((link, index) => {
+              link.style.transitionDelay = `${0.1 + (index * 0.1)}s`;
+              link.classList.add('show');
+          });
+          
+      } else { 
+          // CLOSING SEQUENCE
+          // Animate Links Out (Left to Right, Bottom to Top)
+          const links = document.querySelectorAll('.menu-link');
+          // Reverse loop for delay
+          for (let i = links.length - 1; i >= 0; i--) {
+              let reverseIndex = (links.length - 1) - i;
+              links[i].style.transitionDelay = `${reverseIndex * 0.1}s`;
+              links[i].classList.remove('show');
+          }
+          
+          // Fade overlay after links are gone
+          setTimeout(() => {
+              menuOverlay.classList.remove('open');
+              document.body.style.overflow = 'auto'; 
+              document.body.style.paddingRight = '0px';
+              document.querySelector('nav').style.paddingRight = '2.5rem';
+          }, 600); // Wait for links
+      }
     });
 
     document.querySelectorAll('.menu-link').forEach(link => {
-      link.addEventListener('click', () => {
-        hexBtn.classList.remove('open');
-        menuOverlay.classList.remove('open');
+      link.addEventListener('click', function(e) {
+        e.preventDefault(); 
+        
+        // 1. Close Menu First (Standard Close Logic)
+        const links = document.querySelectorAll('.menu-link');
+        for (let i = links.length - 1; i >= 0; i--) {
+            let reverseIndex = (links.length - 1) - i;
+            links[i].style.transitionDelay = `${reverseIndex * 0.1}s`;
+            links[i].classList.remove('show');
+        }
+        hexBurger.classList.remove('open');
+        
+        setTimeout(() => {
+            menuOverlay.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            document.body.style.paddingRight = '0px';
+            document.querySelector('nav').style.paddingRight = '2.5rem';
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if(targetElement){
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const startPosition = window.pageYOffset;
+                const distance = Math.abs(targetPosition - startPosition);
+                // Custom Slow Scroll Speed
+                let duration = Math.min(4000, Math.max(1500, distance * 0.8));
+                smoothScrollTo(targetPosition, duration);
+            }
+        }, 600);
       });
     });
   }
