@@ -388,6 +388,22 @@ window.addEventListener('scroll', () => {
   document.getElementById('progressBar').style.width = (scrollFraction * 100) + '%';
 });
 
+// NAV LOGO CLICK - Return to top with transition
+navLogoBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  
+  // Get the features section position (01 — Core Systems)
+  const featuresSection = document.getElementById('features');
+  const featuresSectionTop = featuresSection ? featuresSection.offsetTop : 800;
+  
+  // Only trigger if scrolled past the features section
+  if (window.pageYOffset >= featuresSectionTop) {
+    triggerTransition(() => {
+      window.scrollTo(0, 0);
+    });
+  }
+});
+
 // MENU OVERLAY TOGGLE
 hexBurger.addEventListener('click', () => {
   const isOpen = hexBurger.classList.toggle('open');
