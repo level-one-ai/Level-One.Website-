@@ -78,7 +78,7 @@ body {
 }
 
 #splash-logo {
-  height: 120px; 
+  height: 180px; 
   width: auto; 
   opacity: 0; 
   transition: opacity 1s ease-in-out; 
