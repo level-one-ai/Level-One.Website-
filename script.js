@@ -22,9 +22,10 @@ const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
 let websiteFullyLoaded = false;
+let loadingBarComplete = false;
 
 // SPLASH SCREEN SEQUENCE - NEW TIMING
-// Step 1: Show logo immediately (larger)
+// Step 1: Show logo immediately and keep it visible
 setTimeout(() => { 
   splashLogo.style.opacity = '1'; 
 }, 100); 
@@ -34,10 +35,16 @@ setTimeout(() => {
   loaderBox.style.opacity = '1'; 
 }, 2000); 
 
-// Step 3: Start loading bar animation (2-3 seconds to reach 90-95%)
+// Step 3: Start loading bar animation (3 seconds to reach 90-95%)
 setTimeout(() => {
-  loaderBar.style.transition = 'width 2.5s cubic-bezier(0.25, 1, 0.5, 1)';
-  loaderBar.style.width = '92%'; // Stop at 92% and wait
+  loaderBar.style.transition = 'width 3s cubic-bezier(0.25, 1, 0.5, 1)';
+  loaderBar.style.width = '93%'; // Stop at 93% and wait
+  
+  // After 3 seconds, check if website is loaded
+  setTimeout(() => {
+    loadingBarComplete = true;
+    checkIfReadyToComplete();
+  }, 3000);
 }, 2100);
 
 // Load canvas frame images
@@ -46,43 +53,56 @@ for (let i = 1; i <= frameCount; i++) {
   img.src = currentFrame(i);
   img.onload = () => {
     imagesLoaded++;
-    // Don't update progress bar during image loading
     if (imagesLoaded === 1) { 
       loop(); 
       render(0); 
     }
     if (imagesLoaded === frameCount) { 
-      checkVideoAndFinish(); 
+      checkVideoAndMarkLoaded(); 
     }
   };
   img.onerror = () => { 
     imagesLoaded++; 
-    if (imagesLoaded === frameCount) checkVideoAndFinish(); 
+    if (imagesLoaded === frameCount) checkVideoAndMarkLoaded(); 
   };
   images.push(img);
 }
 
-function checkVideoAndFinish() {
-  // Mark website as fully loaded
-  websiteFullyLoaded = true;
-  
+function checkVideoAndMarkLoaded() {
   if (heroVideo && heroVideo.readyState >= 3 && !heroVideo.paused) {
-    completeLoadingBar();
+    websiteFullyLoaded = true;
+    checkIfReadyToComplete();
   } else if (heroVideo) {
     heroVideo.play()
-      .then(() => completeLoadingBar())
-      .catch(() => completeLoadingBar());
+      .then(() => {
+        websiteFullyLoaded = true;
+        checkIfReadyToComplete();
+      })
+      .catch(() => {
+        websiteFullyLoaded = true;
+        checkIfReadyToComplete();
+      });
   } else {
-    completeLoadingBar();
+    websiteFullyLoaded = true;
+    checkIfReadyToComplete();
   }
 }
 
-function completeLoadingBar() {
+function checkIfReadyToComplete() {
+  // Only proceed if BOTH loading bar is complete AND website is fully loaded
+  if (loadingBarComplete && websiteFullyLoaded) {
+    completeLoadingSequence();
+  }
+  // If only loading bar is complete but website isn't ready, 
+  // the bar will stay at 93% and logo stays visible as an indicator
+}
+
+function completeLoadingSequence() {
   // Complete the loading bar to 100%
   loaderBar.style.transition = 'width 0.5s ease-out';
   loaderBar.style.width = '100%';
   
-  // Wait for bar to complete, then fade out logo and bar
+  // Wait for bar to complete, then fade out logo and bar together
   setTimeout(() => {
     fadeOutLogoAndBar();
   }, 500);
