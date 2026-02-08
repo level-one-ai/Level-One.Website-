@@ -21,17 +21,24 @@ const currentFrame = index => `https://res.cloudinary.com/dw5n0wlmr/image/upload
 const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
+let websiteFullyLoaded = false;
 
-// SPLASH SCREEN SEQUENCE
-setTimeout(() => { splashLogo.style.opacity = '1'; }, 500); 
-setTimeout(() => { loaderBox.style.opacity = '1'; }, 1000); 
-
-// Safety timeout if images fail to load
+// SPLASH SCREEN SEQUENCE - NEW TIMING
+// Step 1: Show logo immediately (larger)
 setTimeout(() => { 
-  if (splashScreen.style.display !== 'none') { 
-    finishSplashScreen('intro'); 
-  } 
-}, 8000);
+  splashLogo.style.opacity = '1'; 
+}, 100); 
+
+// Step 2: After 2 seconds, fade in the empty loading bar
+setTimeout(() => { 
+  loaderBox.style.opacity = '1'; 
+}, 2000); 
+
+// Step 3: Start loading bar animation (2-3 seconds to reach 90-95%)
+setTimeout(() => {
+  loaderBar.style.transition = 'width 2.5s cubic-bezier(0.25, 1, 0.5, 1)';
+  loaderBar.style.width = '92%'; // Stop at 92% and wait
+}, 2100);
 
 // Load canvas frame images
 for (let i = 1; i <= frameCount; i++) {
@@ -39,8 +46,7 @@ for (let i = 1; i <= frameCount; i++) {
   img.src = currentFrame(i);
   img.onload = () => {
     imagesLoaded++;
-    const percent = Math.min(95, (imagesLoaded / frameCount) * 100);
-    loaderBar.style.width = percent + '%';
+    // Don't update progress bar during image loading
     if (imagesLoaded === 1) { 
       loop(); 
       render(0); 
@@ -57,34 +63,46 @@ for (let i = 1; i <= frameCount; i++) {
 }
 
 function checkVideoAndFinish() {
+  // Mark website as fully loaded
+  websiteFullyLoaded = true;
+  
   if (heroVideo && heroVideo.readyState >= 3 && !heroVideo.paused) {
-    finishSplashScreen('intro');
+    completeLoadingBar();
   } else if (heroVideo) {
-    heroVideo.play().then(() => finishSplashScreen('intro')).catch(() => finishSplashScreen('intro'));
+    heroVideo.play()
+      .then(() => completeLoadingBar())
+      .catch(() => completeLoadingBar());
   } else {
-    finishSplashScreen('intro');
+    completeLoadingBar();
   }
 }
 
-function finishSplashScreen(mode) {
+function completeLoadingBar() {
+  // Complete the loading bar to 100%
+  loaderBar.style.transition = 'width 0.5s ease-out';
   loaderBar.style.width = '100%';
+  
+  // Wait for bar to complete, then fade out logo and bar
   setTimeout(() => {
-    splashLogo.style.opacity = '0';
-    setTimeout(() => {
-      loaderBox.style.opacity = '0';
-      if (mode === 'intro') {
-        setTimeout(() => {
-          splashText.style.opacity = '1';
-          setTimeout(() => { 
-            splashText.style.opacity = '0'; 
-            revealSite(); 
-          }, 2000);
-        }, 500);
-      } else {
-        revealSite();
-      }
-    }, 800);
+    fadeOutLogoAndBar();
   }, 500);
+}
+
+function fadeOutLogoAndBar() {
+  // Fade out logo and loading bar together
+  splashLogo.style.opacity = '0';
+  loaderBox.style.opacity = '0';
+  
+  // After fade out, show the "LEVEL ONE" glitch text
+  setTimeout(() => {
+    splashText.style.opacity = '1';
+    
+    // Then fade out text and reveal site
+    setTimeout(() => { 
+      splashText.style.opacity = '0'; 
+      revealSite(); 
+    }, 2000);
+  }, 800);
 }
 
 function revealSite() {
@@ -113,6 +131,27 @@ function triggerTransition(callback) {
     callback();
     finishSplashScreen('transition');
   }, 2300);
+}
+
+function finishSplashScreen(mode) {
+  loaderBar.style.width = '100%';
+  setTimeout(() => {
+    splashLogo.style.opacity = '0';
+    setTimeout(() => {
+      loaderBox.style.opacity = '0';
+      if (mode === 'intro') {
+        setTimeout(() => {
+          splashText.style.opacity = '1';
+          setTimeout(() => { 
+            splashText.style.opacity = '0'; 
+            revealSite(); 
+          }, 2000);
+        }, 500);
+      } else {
+        revealSite();
+      }
+    }, 800);
+  }, 500);
 }
 
 // BLOG NAVIGATION
@@ -334,9 +373,6 @@ hexBurger.addEventListener('click', () => {
   const isOpen = hexBurger.classList.toggle('open');
   menuOverlay.classList.toggle('open', isOpen);
   
-  // Prevent scrollbar shift by NOT modifying body overflow
-  // Instead, handle scroll blocking via menu overlay pointer events
-  
   document.querySelectorAll('.menu-link').forEach((link, i) => {
     link.classList.toggle('show', isOpen);
     link.style.transitionDelay = isOpen ? `${0.1 + (i * 0.1)}s` : '0s';
@@ -348,7 +384,7 @@ document.querySelectorAll('.menu-link').forEach(link => {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
-    hexBurger.click(); // Close menu
+    hexBurger.click();
     setTimeout(() => {
       window.scrollTo({ 
         top: target.offsetTop, 
