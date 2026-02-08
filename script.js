@@ -336,7 +336,7 @@ confirmBtn.addEventListener('click', async function() {
     confirmBtn.disabled = true; 
     confirmBtn.textContent = 'Scheduling...';
     
-    const response = await fetch('https://hook.eu2.make.com/ljg9pk80v0l6bons8zu4b7mrl0jhj5td', {
+    const response = await fetch('https://hook.eu2.make.com/iwwwbnzs7o12l1yx8036dd8mx6hiquyx', {
       method: 'POST', 
       headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify(bookingData)
