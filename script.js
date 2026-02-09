@@ -618,6 +618,8 @@ function closeView() {
     document.getElementById('blog-view').style.display = 'none';
     document.getElementById('calendar-view').style.display = 'none';
     document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+    document.getElementById('solutions-view').style.display = 'none'; // ADD THIS LINE
     
     // Show burger menu
     hexBurger.classList.remove('hidden');
