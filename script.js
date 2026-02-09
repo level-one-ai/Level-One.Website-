@@ -655,49 +655,847 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ========================================
-// SOLUTIONS VIEW - FOLDER/DOSSIER SYSTEM
+// ENHANCED SOLUTIONS VIEW SYSTEM
 // ========================================
 
-// Solution data mapping
+// Track scroll position when navigating
+let scrollPositionBeforeNavigation = 0;
+
+// Enhanced solution data with all content
 const solutionData = {
   sales: {
     title: 'Autonomous Sales',
-    tabs: [
-      { icon: '⚡', label: 'Cold Outreach Systems' },
-      { icon: '🔍', label: 'Lead Scrapers' },
-      { icon: '💰', label: 'Revenue Engines' }
+    sections: [
+      {
+        id: 'cold-outreach',
+        name: 'Cold Outreach Systems',
+        icon: '⚡',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Our cold outreach system deploys autonomous agents that scrape targeted business directories, qualify prospects using AI-powered intent analysis, and generate hyper-personalized outreach sequences. The system operates 24/7 without human intervention.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Target Identification</div>
+                  <div class="step-desc">AI agents scrape LinkedIn, company databases, and web directories to identify prospects matching your ICP.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Intent Scoring</div>
+                  <div class="step-desc">LLM-powered qualification engine scores each prospect based on engagement signals, tech stack, and growth indicators.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Personalized Outreach</div>
+                  <div class="step-desc">GPT-4 generates custom messages for each prospect, then executes multi-channel campaigns via email and LinkedIn.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">£34,200/yr</div>
+                <div class="roi-label">Cost Savings</div>
+                <div class="roi-desc">Eliminates manual prospecting labor</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">5x</div>
+                <div class="roi-label">Volume Increase</div>
+                <div class="roi-desc">Process 5x more prospects per month</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">78%</div>
+                <div class="roi-label">Qualification Accuracy</div>
+                <div class="roi-desc">AI scores outperform manual qualification</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'lead-scrapers',
+        name: 'Lead Scrapers',
+        icon: '🔍',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Automated web scraping infrastructure that harvests prospect data from public sources, enriches contact information, and pushes qualified leads directly into your CRM with zero manual data entry.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Multi-Source Scraping</div>
+                  <div class="step-desc">Deploy headless browsers to extract data from LinkedIn, company websites, and business directories.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Data Enrichment</div>
+                  <div class="step-desc">Cross-reference scraped data with third-party APIs to enrich email addresses, phone numbers, and company details.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">CRM Integration</div>
+                  <div class="step-desc">Automatically push validated leads to HubSpot, Salesforce, or your custom CRM with proper field mapping.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">£28,400/yr</div>
+                <div class="roi-label">Labor Savings</div>
+                <div class="roi-desc">No more manual lead entry or research</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">2,400+</div>
+                <div class="roi-label">Leads/Month</div>
+                <div class="roi-desc">Automated pipeline fills continuously</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">99.2%</div>
+                <div class="roi-label">Data Accuracy</div>
+                <div class="roi-desc">Validation layer ensures clean data</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'revenue-engines',
+        name: 'Revenue Engines',
+        icon: '💰',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">End-to-end revenue generation system that orchestrates lead capture, qualification, nurturing, and conversion through interconnected AI agents working in concert to maximize your sales pipeline velocity.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Multi-Channel Capture</div>
+                  <div class="step-desc">Aggregate leads from web forms, scrapers, referrals, and inbound channels into unified pipeline.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Intelligent Routing</div>
+                  <div class="step-desc">AI decisioning engine routes leads to appropriate nurture sequences based on intent signals and fit scores.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Conversion Optimization</div>
+                  <div class="step-desc">Automated A/B testing of messaging, timing, and channels to maximize conversion rates over time.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">£140k+/yr</div>
+                <div class="roi-label">Total Recovery</div>
+                <div class="roi-desc">Combined savings across full revenue stack</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">3.2x</div>
+                <div class="roi-label">Pipeline Velocity</div>
+                <div class="roi-desc">Faster progression from lead to close</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">24/7</div>
+                <div class="roi-label">Operation Time</div>
+                <div class="roi-desc">Revenue generation never sleeps</div>
+              </div>
+            </div>
+          </div>
+        `
+      }
     ]
   },
   support: {
     title: 'Advanced Support',
-    tabs: [
-      { icon: '🤖', label: 'Support Agents' },
-      { icon: '📚', label: 'Auto-Onboarding' },
-      { icon: '❓', label: 'FAQ Resolvers' }
+    sections: [
+      {
+        id: 'support-agents',
+        name: 'Support Agents',
+        icon: '🤖',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Deploy AI support agents trained on your knowledge base to resolve customer queries autonomously. Handles 80%+ of tickets with human-level accuracy.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Knowledge Base Training</div>
+                  <div class="step-desc">Ingest your documentation, FAQs, and historical tickets to train the agent.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Intent Classification</div>
+                  <div class="step-desc">AI classifier routes queries to appropriate resolution paths automatically.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">24/7 Resolution</div>
+                  <div class="step-desc">Agents work around the clock, escalating only complex edge cases to humans.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">£45,600/yr</div>
+                <div class="roi-label">Support Savings</div>
+                <div class="roi-desc">Reduce support team overhead significantly</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">&lt;30s</div>
+                <div class="roi-label">Response Time</div>
+                <div class="roi-desc">Instant answers for common queries</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">80%+</div>
+                <div class="roi-label">Auto-Resolution</div>
+                <div class="roi-desc">Most tickets resolved without human touch</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'auto-onboarding',
+        name: 'Auto-Onboarding',
+        icon: '📚',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Automated onboarding sequences that guide new customers from signup to activation without manual intervention. Personalized journeys based on user behavior.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">User Segmentation</div>
+                  <div class="step-desc">Classify new users by role, company size, and use case automatically.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Dynamic Walkthroughs</div>
+                  <div class="step-desc">Trigger contextual tutorials and tooltips based on user actions.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Progress Tracking</div>
+                  <div class="step-desc">Monitor activation milestones and send nudges to increase completion rates.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">2.5x</div>
+                <div class="roi-label">Activation Rate</div>
+                <div class="roi-desc">More users reach "aha" moment faster</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">-40%</div>
+                <div class="roi-label">Support Volume</div>
+                <div class="roi-desc">Fewer "how do I" tickets</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">85%</div>
+                <div class="roi-label">Completion Rate</div>
+                <div class="roi-desc">Automated sequences see high completion</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'faq-resolvers',
+        name: 'FAQ Resolvers',
+        icon: '❓',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Intelligent FAQ system that detects common questions and surfaces instant answers before users even need to ask. Self-updating knowledge base.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Question Detection</div>
+                  <div class="step-desc">AI analyzes incoming queries to match against FAQ database in real-time.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Instant Answers</div>
+                  <div class="step-desc">Surface relevant KB articles before user submits a ticket.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Auto-Learning</div>
+                  <div class="step-desc">System identifies gaps in FAQ coverage and suggests new articles.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">65%</div>
+                <div class="roi-label">Deflection Rate</div>
+                <div class="roi-desc">Queries resolved before ticket creation</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Instant</div>
+                <div class="roi-label">Resolution Time</div>
+                <div class="roi-desc">No waiting for support agent response</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">£18k/yr</div>
+                <div class="roi-label">Cost Savings</div>
+                <div class="roi-desc">Reduced ticket volume saves labor costs</div>
+              </div>
+            </div>
+          </div>
+        `
+      }
     ]
   },
   consulting: {
     title: 'Systems Consulting',
-    tabs: [
-      { icon: '🔍', label: 'Workflow Audits' },
-      { icon: '📊', label: 'AI Scoring' },
-      { icon: '🔧', label: 'Tool Consolidation' }
+    sections: [
+      {
+        id: 'workflow-audits',
+        name: 'Workflow Audits',
+        icon: '🔍',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Deep-dive analysis of your current operations to identify automation opportunities, bottlenecks, and inefficiencies. Visual workflow mapping included.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Process Documentation</div>
+                  <div class="step-desc">Map every workflow from lead capture to fulfillment in visual diagrams.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Bottleneck Identification</div>
+                  <div class="step-desc">Pinpoint exact steps where manual labor is bleeding time and money.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Automation Roadmap</div>
+                  <div class="step-desc">Prioritized list of automation opportunities ranked by ROI potential.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">2-3 days</div>
+                <div class="roi-label">Audit Timeline</div>
+                <div class="roi-desc">Complete workflow map delivered quickly</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">10x</div>
+                <div class="roi-label">ROI Potential</div>
+                <div class="roi-desc">Average return on automation investments</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Visual</div>
+                <div class="roi-label">Deliverable Format</div>
+                <div class="roi-desc">Miro/Figma diagrams for clarity</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'ai-scoring',
+        name: 'AI Scoring',
+        icon: '📊',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Custom AI readiness assessment to determine which workflows are prime candidates for autonomous agents vs. which need human oversight.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Task Classification</div>
+                  <div class="step-desc">Categorize every business task by repeatability, rule-clarity, and volume.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Automation Score</div>
+                  <div class="step-desc">Assign 0-100 score to each task based on AI suitability factors.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Priority Matrix</div>
+                  <div class="step-desc">Plot tasks on effort vs. impact matrix to guide implementation order.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">0-100</div>
+                <div class="roi-label">Scoring System</div>
+                <div class="roi-desc">Clear metrics for automation readiness</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Visual</div>
+                <div class="roi-label">Matrix Output</div>
+                <div class="roi-desc">2x2 grid shows quick wins vs. long-term plays</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Strategic</div>
+                <div class="roi-label">Decision Framework</div>
+                <div class="roi-desc">Know exactly where to start</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'tool-consolidation',
+        name: 'Tool Consolidation',
+        icon: '🔧',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Audit your current tech stack to eliminate redundant tools, identify integration gaps, and recommend consolidation opportunities to reduce SaaS spend.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Stack Audit</div>
+                  <div class="step-desc">Document every SaaS tool, cost, user count, and utilization rate.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Overlap Analysis</div>
+                  <div class="step-desc">Identify duplicate functionality across tools (e.g., 3 chat apps).</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Migration Plan</div>
+                  <div class="step-desc">Phased approach to consolidate onto fewer, more powerful platforms.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">30-50%</div>
+                <div class="roi-label">SaaS Savings</div>
+                <div class="roi-desc">Typical reduction in monthly tool costs</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Unified</div>
+                <div class="roi-label">Data Layer</div>
+                <div class="roi-desc">Single source of truth post-consolidation</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Faster</div>
+                <div class="roi-label">Onboarding</div>
+                <div class="roi-desc">Fewer tools = simpler training</div>
+              </div>
+            </div>
+          </div>
+        `
+      }
     ]
   },
   workflow: {
     title: 'Workflow Admin',
-    tabs: [
-      { icon: '📋', label: 'Custom CRMs' },
-      { icon: '🎨', label: 'Asset Generation' },
-      { icon: '📧', label: 'Nurture Sequences' }
+    sections: [
+      {
+        id: 'custom-crms',
+        name: 'Custom CRMs',
+        icon: '📋',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Build lightweight, custom CRM interfaces tailored to your exact workflow. No bloat, just the fields and automations you need.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Workflow Mapping</div>
+                  <div class="step-desc">Document your sales stages, required fields, and automation triggers.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Schema Design</div>
+                  <div class="step-desc">Build custom data models that match your business logic exactly.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">UI Development</div>
+                  <div class="step-desc">Deploy clean, fast interface with automation rules baked in.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">£0</div>
+                <div class="roi-label">Per-Seat Cost</div>
+                <div class="roi-desc">No recurring SaaS fees for custom builds</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">100%</div>
+                <div class="roi-label">Workflow Match</div>
+                <div class="roi-desc">Built exactly for your process</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Full</div>
+                <div class="roi-label">Control</div>
+                <div class="roi-desc">Own your data and codebase</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'asset-generation',
+        name: 'Asset Generation',
+        icon: '🎨',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Automated content generation pipelines that create marketing assets, sales collateral, and documentation on-demand using AI.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Template Library</div>
+                  <div class="step-desc">Build reusable templates for decks, one-pagers, and reports.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">AI Content Engine</div>
+                  <div class="step-desc">Connect GPT-4 to auto-populate templates with custom copy.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">Bulk Generation</div>
+                  <div class="step-desc">Trigger asset creation en masse via CSV upload or API.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">10x</div>
+                <div class="roi-label">Speed Increase</div>
+                <div class="roi-desc">Generate 100 assets in minutes</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Consistent</div>
+                <div class="roi-label">Brand Voice</div>
+                <div class="roi-desc">Templates ensure uniformity</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">£12k/yr</div>
+                <div class="roi-label">Design Savings</div>
+                <div class="roi-desc">Reduce reliance on external designers</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'nurture-sequences',
+        name: 'Nurture Sequences',
+        icon: '📧',
+        content: `
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+              Implementation
+            </h3>
+            <p class="dossier-text">Intelligent email drip campaigns that adapt based on prospect engagement. No more one-size-fits-all sequences.</p>
+            
+            <div class="implementation-steps">
+              <div class="impl-step">
+                <div class="step-num">01</div>
+                <div class="step-details">
+                  <div class="step-title">Segmentation Rules</div>
+                  <div class="step-desc">Define audience segments by behavior, firmographics, and intent.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">02</div>
+                <div class="step-details">
+                  <div class="step-title">Dynamic Paths</div>
+                  <div class="step-desc">Branch sequences based on open rates, clicks, and replies.</div>
+                </div>
+              </div>
+              <div class="impl-step">
+                <div class="step-num">03</div>
+                <div class="step-details">
+                  <div class="step-title">A/B Optimization</div>
+                  <div class="step-desc">Auto-test subject lines, CTAs, and send times to maximize conversions.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dossier-section">
+            <h3 class="dossier-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Value & ROI
+            </h3>
+            <div class="roi-grid">
+              <div class="roi-card">
+                <div class="roi-metric">2.8x</div>
+                <div class="roi-label">Reply Rate</div>
+                <div class="roi-desc">Dynamic sequences outperform static drips</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Zero</div>
+                <div class="roi-label">Manual Work</div>
+                <div class="roi-desc">Fully automated from trigger to conversion</div>
+              </div>
+              <div class="roi-card">
+                <div class="roi-metric">Continuous</div>
+                <div class="roi-label">Optimization</div>
+                <div class="roi-desc">A/B tests improve performance over time</div>
+              </div>
+            </div>
+          </div>
+        `
+      }
     ]
   }
 };
 
-// Open solutions view with specific solution
-function openSolutionView(solutionType) {
+// Function to open solutions view with specific solution and section
+function openSolutionView(solutionType, sectionId = null) {
   const data = solutionData[solutionType];
   if (!data) return;
+  
+  // Store scroll position
+  scrollPositionBeforeNavigation = window.pageYOffset;
   
   triggerTransition(() => {
     // Hide other views
@@ -713,18 +1511,34 @@ function openSolutionView(solutionType) {
     // Update folder title
     document.getElementById('solutionFolderTitle').textContent = data.title;
     
-    // Update tabs
-    const tabs = document.querySelectorAll('.folder-content-tab');
-    tabs.forEach((tab, index) => {
-      if (data.tabs[index]) {
-        tab.querySelector('.tab-icon').textContent = data.tabs[index].icon;
-        tab.querySelector('.tab-label').textContent = data.tabs[index].label;
-        tab.dataset.solution = solutionType;
-      }
+    // Build sidebar selectors
+    const sidebar = document.getElementById('solutionsSidebar');
+    sidebar.innerHTML = '';
+    
+    data.sections.forEach((section, index) => {
+      const selector = document.createElement('div');
+      selector.className = 'solution-selector';
+      if (index === 0 && !sectionId) selector.classList.add('active');
+      if (sectionId && section.id === sectionId) selector.classList.add('active');
+      selector.textContent = `${section.icon} ${section.name}`;
+      selector.dataset.sectionId = section.id;
+      selector.dataset.solutionType = solutionType;
+      
+      selector.addEventListener('click', function() {
+        switchSolutionSection(solutionType, section.id);
+      });
+      
+      sidebar.appendChild(selector);
     });
     
-    // Reset to first tab
-    switchSolutionTab('tab1');
+    // Load initial content
+    const targetSection = sectionId 
+      ? data.sections.find(s => s.id === sectionId) 
+      : data.sections[0];
+    
+    if (targetSection) {
+      document.getElementById('solutionContentArea').innerHTML = targetSection.content;
+    }
     
     // Hide burger menu
     hexBurger.classList.add('hidden');
@@ -734,25 +1548,286 @@ function openSolutionView(solutionType) {
   });
 }
 
-// Switch between solution tabs
-function switchSolutionTab(tabId) {
-  // Remove active class from all tabs and content
-  document.querySelectorAll('.folder-content-tab').forEach(tab => {
-    tab.classList.remove('active');
-  });
-  document.querySelectorAll('.tab-content').forEach(content => {
-    content.classList.remove('active');
+// Function to switch between solution sections
+function switchSolutionSection(solutionType, sectionId) {
+  const data = solutionData[solutionType];
+  if (!data) return;
+  
+  const section = data.sections.find(s => s.id === sectionId);
+  if (!section) return;
+  
+  // Update active state in sidebar
+  document.querySelectorAll('.solution-selector').forEach(sel => {
+    sel.classList.remove('active');
   });
   
-  // Add active class to selected tab and content
-  const selectedTab = document.querySelector(`[data-tab="${tabId}"]`);
-  const selectedContent = document.getElementById(tabId);
-  
-  if (selectedTab && selectedContent) {
-    selectedTab.classList.add('active');
-    selectedContent.classList.add('active');
+  const activeSelector = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (activeSelector) {
+    activeSelector.classList.add('active');
   }
+  
+  // Update content
+  const contentArea = document.getElementById('solutionContentArea');
+  contentArea.style.opacity = '0';
+  
+  setTimeout(() => {
+    contentArea.innerHTML = section.content;
+    contentArea.style.opacity = '1';
+  }, 300);
 }
+
+// Enhanced closeView function to return to source position
+function closeViewToSource() {
+  const isFromCalendar = currentView === 'calendar-view';
+  
+  triggerTransition(() => {
+    // Hide all views
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+    document.getElementById('solutions-view').style.display = 'none';
+    
+    // Show burger menu
+    hexBurger.classList.remove('hidden');
+    
+    // Reset current view
+    currentView = 'main';
+    
+    // Scroll to appropriate position
+    if (isFromCalendar) {
+      window.scrollTo(0, 0);
+    } else {
+      // Return to where user was before clicking
+      setTimeout(() => {
+        window.scrollTo(0, scrollPositionBeforeNavigation);
+      }, 100);
+    }
+  });
+}
+
+// Make service cards clickable with section targeting
+document.addEventListener('DOMContentLoaded', function() {
+  const serviceCards = document.querySelectorAll('#services .srv-card');
+  
+  serviceCards.forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    
+    const solutionTypes = ['sales', 'support', 'consulting', 'workflow'];
+    const solutionType = solutionTypes[index];
+    
+    card.addEventListener('click', function() {
+      openSolutionView(solutionType);
+    });
+  });
+});
+
+// ========================================
+// PROCESS CARDS TO BLUEPRINT VIEW
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  const processCards = document.querySelectorAll('#process .process-card');
+  
+  processCards.forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    
+    card.addEventListener('click', function() {
+      openView('blueprint-view');
+    });
+  });
+});
+
+// ========================================
+// ENHANCED MENU OVERLAY WITH SUBSECTIONS
+// ========================================
+
+const menuStructure = {
+  'Systems': {
+    subsections: null,
+    link: '#features'
+  },
+  'Architecture': {
+    subsections: null,
+    link: '#process'
+  },
+  'Entity': {
+    subsections: null,
+    link: '#about'
+  },
+  'Solutions': {
+    subsections: [
+      { name: 'Autonomous Sales', action: () => openSolutionView('sales') },
+      { name: 'Advanced Support', action: () => openSolutionView('support') },
+      { name: 'Systems Consulting', action: () => openSolutionView('consulting') },
+      { name: 'Workflow Admin', action: () => openSolutionView('workflow') }
+    ],
+    link: '#services'
+  },
+  'Insights': {
+    subsections: null,
+    link: '#insights'
+  }
+};
+
+let currentMenuLevel = 'main';
+let currentMenuSection = null;
+
+// Rebuild menu overlay handlers
+document.addEventListener('DOMContentLoaded', function() {
+  const menuLinks = document.querySelectorAll('.menu-link');
+  
+  menuLinks.forEach((link, index) => {
+    const sectionName = link.textContent;
+    const menuData = menuStructure[sectionName];
+    
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      if (menuData && menuData.subsections) {
+        // Show subsections
+        showSubsections(sectionName, menuData.subsections);
+      } else {
+        // Direct navigation
+        const target = document.querySelector(menuData.link);
+        hexBurger.click();
+        setTimeout(() => {
+          smoothScrollTo(target.offsetTop, 2000);
+        }, 600);
+      }
+    });
+  });
+});
+
+function showSubsections(sectionName, subsections) {
+  currentMenuLevel = 'subsection';
+  currentMenuSection = sectionName;
+  
+  const menuOverlay = document.getElementById('menuOverlay');
+  const mainLinks = document.querySelectorAll('.menu-link');
+  
+  // Fade out main links (right to left)
+  mainLinks.forEach((link, index) => {
+    setTimeout(() => {
+      link.style.opacity = '0';
+      link.style.transform = 'translateX(60px)';
+    }, index * 100);
+  });
+  
+  // Wait for fade out, then show subsections
+  setTimeout(() => {
+    // Clear menu
+    menuOverlay.innerHTML = '';
+    
+    // Add back button
+    const backBtn = document.createElement('a');
+    backBtn.className = 'menu-link subsection-back';
+    backBtn.textContent = '← Back';
+    backBtn.style.opacity = '0';
+    backBtn.style.transform = 'translateX(-60px)';
+    backBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      showMainMenu();
+    });
+    menuOverlay.appendChild(backBtn);
+    
+    // Add subsection links
+    subsections.forEach((sub, index) => {
+      const subLink = document.createElement('a');
+      subLink.className = 'menu-link';
+      subLink.textContent = sub.name;
+      subLink.style.opacity = '0';
+      subLink.style.transform = 'translateX(-60px)';
+      
+      subLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        hexBurger.click();
+        setTimeout(() => {
+          sub.action();
+        }, 300);
+      });
+      
+      menuOverlay.appendChild(subLink);
+    });
+    
+    // Fade in subsections (left to right)
+    const newLinks = menuOverlay.querySelectorAll('.menu-link');
+    newLinks.forEach((link, index) => {
+      setTimeout(() => {
+        link.style.opacity = '1';
+        link.style.transform = 'translateX(0)';
+      }, index * 100);
+    });
+  }, mainLinks.length * 100 + 200);
+}
+
+function showMainMenu() {
+  currentMenuLevel = 'main';
+  
+  const menuOverlay = document.getElementById('menuOverlay');
+  const currentLinks = menuOverlay.querySelectorAll('.menu-link');
+  
+  // Fade out subsections (right to left)
+  currentLinks.forEach((link, index) => {
+    setTimeout(() => {
+      link.style.opacity = '0';
+      link.style.transform = 'translateX(60px)';
+    }, index * 100);
+  });
+  
+  // Wait for fade out, then restore main menu
+  setTimeout(() => {
+    menuOverlay.innerHTML = `
+      <a href="#features" class="menu-link">Systems</a>
+      <a href="#process" class="menu-link">Architecture</a>
+      <a href="#about" class="menu-link">Entity</a>
+      <a href="#services" class="menu-link">Solutions</a>
+      <a href="#insights" class="menu-link">Insights</a>
+    `;
+    
+    // Re-attach handlers
+    const menuLinks = document.querySelectorAll('.menu-link');
+    menuLinks.forEach((link, index) => {
+      const sectionName = link.textContent;
+      const menuData = menuStructure[sectionName];
+      
+      link.style.opacity = '0';
+      link.style.transform = 'translateX(-60px)';
+      
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (menuData && menuData.subsections) {
+          showSubsections(sectionName, menuData.subsections);
+        } else {
+          const target = document.querySelector(menuData.link);
+          hexBurger.click();
+          setTimeout(() => {
+            smoothScrollTo(target.offsetTop, 2000);
+          }, 600);
+        }
+      });
+      
+      // Fade in (left to right)
+      setTimeout(() => {
+        link.style.opacity = '1';
+        link.style.transform = 'translateX(0)';
+      }, index * 100);
+    });
+  }, currentLinks.length * 100 + 200);
+}
+
+// Update burger close handler to reset menu
+const originalHexBurgerClick = hexBurger.onclick;
+hexBurger.addEventListener('click', function() {
+  if (menuOverlay.classList.contains('open') && currentMenuLevel === 'subsection') {
+    // If closing and we're in subsection, reset to main
+    setTimeout(() => {
+      showMainMenu();
+    }, 600);
+  }
+});
 
 // ========================================
 // ENHANCED SECTION 04 - SOLUTIONS CARDS
@@ -834,5 +1909,31 @@ document.addEventListener('DOMContentLoaded', function() {
   
   blueprintSections.forEach(section => {
     blueprintObserver.observe(section);
+  });
+});
+
+// ========================================
+// PRICING CARD ENHANCEMENTS
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  const pricingCards = document.querySelectorAll('.pricing-card');
+  
+  pricingCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      // Dim other cards slightly when hovering one
+      pricingCards.forEach(otherCard => {
+        if (otherCard !== card) {
+          otherCard.style.opacity = '0.7';
+        }
+      });
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      // Restore all cards to full opacity
+      pricingCards.forEach(otherCard => {
+        otherCard.style.opacity = '1';
+      });
+    });
   });
 });
