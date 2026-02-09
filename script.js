@@ -651,3 +651,186 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// ========================================
+// SOLUTIONS VIEW - FOLDER/DOSSIER SYSTEM
+// ========================================
+
+// Solution data mapping
+const solutionData = {
+  sales: {
+    title: 'Autonomous Sales',
+    tabs: [
+      { icon: '⚡', label: 'Cold Outreach Systems' },
+      { icon: '🔍', label: 'Lead Scrapers' },
+      { icon: '💰', label: 'Revenue Engines' }
+    ]
+  },
+  support: {
+    title: 'Advanced Support',
+    tabs: [
+      { icon: '🤖', label: 'Support Agents' },
+      { icon: '📚', label: 'Auto-Onboarding' },
+      { icon: '❓', label: 'FAQ Resolvers' }
+    ]
+  },
+  consulting: {
+    title: 'Systems Consulting',
+    tabs: [
+      { icon: '🔍', label: 'Workflow Audits' },
+      { icon: '📊', label: 'AI Scoring' },
+      { icon: '🔧', label: 'Tool Consolidation' }
+    ]
+  },
+  workflow: {
+    title: 'Workflow Admin',
+    tabs: [
+      { icon: '📋', label: 'Custom CRMs' },
+      { icon: '🎨', label: 'Asset Generation' },
+      { icon: '📧', label: 'Nurture Sequences' }
+    ]
+  }
+};
+
+// Open solutions view with specific solution
+function openSolutionView(solutionType) {
+  const data = solutionData[solutionType];
+  if (!data) return;
+  
+  triggerTransition(() => {
+    // Hide other views
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+    
+    // Show solutions view
+    document.getElementById('solutions-view').style.display = 'block';
+    
+    // Update folder title
+    document.getElementById('solutionFolderTitle').textContent = data.title;
+    
+    // Update tabs
+    const tabs = document.querySelectorAll('.folder-content-tab');
+    tabs.forEach((tab, index) => {
+      if (data.tabs[index]) {
+        tab.querySelector('.tab-icon').textContent = data.tabs[index].icon;
+        tab.querySelector('.tab-label').textContent = data.tabs[index].label;
+        tab.dataset.solution = solutionType;
+      }
+    });
+    
+    // Reset to first tab
+    switchSolutionTab('tab1');
+    
+    // Hide burger menu
+    hexBurger.classList.add('hidden');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+  });
+}
+
+// Switch between solution tabs
+function switchSolutionTab(tabId) {
+  // Remove active class from all tabs and content
+  document.querySelectorAll('.folder-content-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-content').forEach(content => {
+    content.classList.remove('active');
+  });
+  
+  // Add active class to selected tab and content
+  const selectedTab = document.querySelector(`[data-tab="${tabId}"]`);
+  const selectedContent = document.getElementById(tabId);
+  
+  if (selectedTab && selectedContent) {
+    selectedTab.classList.add('active');
+    selectedContent.classList.add('active');
+  }
+}
+
+// ========================================
+// ENHANCED SECTION 04 - SOLUTIONS CARDS
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Make service cards clickable
+  const serviceCards = document.querySelectorAll('#services .srv-card');
+  
+  serviceCards.forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    
+    // Map cards to solution types
+    const solutionTypes = ['sales', 'support', 'consulting', 'workflow'];
+    const solutionType = solutionTypes[index];
+    
+    card.addEventListener('click', function() {
+      openSolutionView(solutionType);
+    });
+    
+    // Add visual feedback
+    card.addEventListener('mouseenter', function() {
+      this.style.cursor = 'pointer';
+    });
+  });
+  
+  // Tab click handlers
+  const folderTabs = document.querySelectorAll('.folder-content-tab');
+  folderTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabId = this.dataset.tab;
+      switchSolutionTab(tabId);
+    });
+  });
+  
+  // ========================================
+  // FIX BLUEPRINT VIEW TRAINLINE INTERACTION
+  // ========================================
+  
+  // Trainline station click handlers
+  const trainlineStations = document.querySelectorAll('.trainline-station');
+  trainlineStations.forEach(station => {
+    station.addEventListener('click', function() {
+      const stationIndex = this.dataset.station;
+      const targetSection = document.querySelector(`[data-station="${stationIndex}"]`);
+      
+      if (targetSection) {
+        // Remove active from all stations
+        trainlineStations.forEach(s => s.classList.remove('active'));
+        
+        // Add active to clicked station
+        this.classList.add('active');
+        
+        // Smooth scroll to section
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // Intersection Observer for trainline auto-highlighting
+  const blueprintSections = document.querySelectorAll('.blueprint-section');
+  
+  const blueprintObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+        const sectionStation = entry.target.dataset.station;
+        
+        // Remove active from all stations
+        trainlineStations.forEach(s => s.classList.remove('active'));
+        
+        // Add active to corresponding station
+        const activeStation = document.querySelector(`.trainline-station[data-station="${sectionStation}"]`);
+        if (activeStation) {
+          activeStation.classList.add('active');
+        }
+      }
+    });
+  }, { threshold: [0.3, 0.5, 0.7] });
+  
+  blueprintSections.forEach(section => {
+    blueprintObserver.observe(section);
+  });
+});
