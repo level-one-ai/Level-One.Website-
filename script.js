@@ -481,3 +481,173 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0.05 });
 
 document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+// ========================================
+// TERMINAL DEMO
+// ========================================
+
+document.getElementById('runAnalysis').addEventListener('click', async function() {
+  const input = document.getElementById('terminalInput');
+  const output = document.getElementById('terminalOutput');
+  const btn = this;
+  
+  if (!input.value.trim()) {
+    output.innerHTML = '<span style="color: #e06c75;">Error: Please enter a URL</span>';
+    return;
+  }
+  
+  // Disable button and show loading
+  btn.classList.add('loading');
+  btn.textContent = 'ANALYZING...';
+  btn.disabled = true;
+  
+  // Clear previous output
+  output.innerHTML = '<span class="loading-dots">Running qualification algorithm...</span>';
+  
+  // Simulate processing delay
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  
+  // Generate mock qualification data
+  const mockData = {
+    prospect: input.value.trim(),
+    timestamp: new Date().toISOString(),
+    qualification_score: Math.floor(Math.random() * 30) + 70, // 70-100
+    status: 'qualified',
+    intent_signals: {
+      website_traffic: Math.floor(Math.random() * 50000) + 10000,
+      employee_count: Math.floor(Math.random() * 500) + 50,
+      tech_stack_match: Math.random() > 0.3
+    },
+    recommended_action: 'initiate_outreach',
+    priority: ['high', 'medium'][Math.floor(Math.random() * 2)],
+    estimated_value: '£' + (Math.floor(Math.random() * 80000) + 20000).toLocaleString()
+  };
+  
+  // Format as JSON with syntax highlighting
+  const formattedJSON = JSON.stringify(mockData, null, 2)
+    .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
+    .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>')
+    .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
+    .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
+  
+  output.innerHTML = `<pre>${formattedJSON}</pre>`;
+  
+  // Re-enable button
+  btn.classList.remove('loading');
+  btn.textContent = 'RUN';
+  btn.disabled = false;
+});
+
+// Allow Enter key to trigger analysis
+document.getElementById('terminalInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('runAnalysis').click();
+  }
+});
+
+// ========================================
+// COST CALCULATOR
+// ========================================
+
+const taskSlider = document.getElementById('taskSlider');
+const taskCount = document.getElementById('taskCount');
+const humanCost = document.getElementById('humanCost');
+const aiCost = document.getElementById('aiCost');
+const monthlySavings = document.getElementById('monthlySavings');
+
+// Cost per task constants
+const HUMAN_COST_PER_TASK = 4.20;
+const AI_COST_PER_TASK = 0.18;
+
+function updateCalculator() {
+  const tasks = parseInt(taskSlider.value);
+  
+  // Update task count display
+  taskCount.textContent = tasks.toLocaleString() + ' tasks';
+  
+  // Calculate costs
+  const humanTotal = Math.round(tasks * HUMAN_COST_PER_TASK);
+  const aiTotal = Math.round(tasks * AI_COST_PER_TASK);
+  const savings = humanTotal - aiTotal;
+  
+  // Update displays
+  humanCost.textContent = '£' + humanTotal.toLocaleString() + '/mo';
+  aiCost.textContent = '£' + aiTotal.toLocaleString() + '/mo';
+  monthlySavings.textContent = '£' + savings.toLocaleString();
+}
+
+// Initialize calculator
+updateCalculator();
+
+// Update on slider change
+taskSlider.addEventListener('input', updateCalculator);
+
+// ========================================
+// VIEW MANAGER
+// ========================================
+
+let currentView = 'main';
+
+function openView(viewId) {
+  // Trigger transition with splash screen
+  triggerTransition(() => {
+    // Hide main content
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    
+    // Show target view
+    const targetView = document.getElementById(viewId);
+    if (targetView) {
+      targetView.style.display = 'block';
+      currentView = viewId;
+    }
+    
+    // Hide burger menu
+    hexBurger.classList.add('hidden');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+  });
+}
+
+function closeView() {
+  triggerTransition(() => {
+    // Hide all views
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    
+    // Show burger menu
+    hexBurger.classList.remove('hidden');
+    
+    // Reset current view
+    currentView = 'main';
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+  });
+}
+
+// ========================================
+// SECTION 01 - CORE SYSTEMS INTERACTIVITY
+// ========================================
+
+// Add click handlers to feature cards when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  const featureCards = document.querySelectorAll('#features .feature-card');
+  
+  featureCards.forEach(card => {
+    card.style.cursor = 'pointer';
+    
+    card.addEventListener('click', function() {
+      openView('core-systems-view');
+    });
+    
+    // Add visual feedback
+    card.addEventListener('mouseenter', function() {
+      this.style.cursor = 'pointer';
+    });
+  });
+});
