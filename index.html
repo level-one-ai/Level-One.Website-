@@ -1257,6 +1257,546 @@
     </div>
   </div>
 </div>
+
+  <!-- BLUEPRINT VIEW -->
+<div id="blueprint-view">
+  <div class="view-container blueprint-container">
+    <div class="view-header">
+      <button class="view-back-btn" onclick="closeView()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 1L5 8l6 7"/>
+        </svg>
+        Back to Home
+      </button>
+    </div>
+    
+    <div class="blueprint-layout">
+      
+      <!-- Sticky Trainline Sidebar -->
+      <div class="trainline-sidebar">
+        <div class="trainline-track">
+          <div class="trainline-line"></div>
+          
+          <div class="trainline-station active" data-station="0">
+            <div class="station-dot"></div>
+            <div class="station-label">Design</div>
+          </div>
+          
+          <div class="trainline-station" data-station="1">
+            <div class="station-dot"></div>
+            <div class="station-label">Mapping</div>
+          </div>
+          
+          <div class="trainline-station" data-station="2">
+            <div class="station-dot"></div>
+            <div class="station-label">Implementation</div>
+          </div>
+          
+          <div class="trainline-station" data-station="3">
+            <div class="station-dot"></div>
+            <div class="station-label">Handover</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="blueprint-content">
+        
+        <!-- Header -->
+        <div class="blueprint-header">
+          <div class="spec-badge">
+            <span class="pulse"></span>
+            Systems Architecture
+          </div>
+          <h1 class="blueprint-title">The Blueprint Protocol</h1>
+          <p class="blueprint-subtitle">How we build autonomous systems that scale revenue without human intervention</p>
+        </div>
+        
+        <!-- Station 1: Design -->
+        <div class="blueprint-section" id="station-design" data-station="0">
+          <div class="section-station-marker">
+            <span class="marker-icon">01</span>
+            <span class="marker-label">Design Phase</span>
+          </div>
+          
+          <h2 class="blueprint-section-title">Logic Trains: The Foundation</h2>
+          
+          <p class="blueprint-text">
+            At Level One, we don't build "chatbots." We engineer <strong>Logic Trains</strong>—deterministic 
+            workflows that carry business intent from trigger to resolution. Think of your sales process as a 
+            railway network: every prospect enters at a station (lead capture), travels along predefined tracks 
+            (qualification logic), and arrives at a destination (booked meeting, CRM entry, or nurture sequence).
+          </p>
+          
+          <div class="blueprint-callout">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="callout-content">
+              <strong>Why "Trains"?</strong> Traditional automation breaks when edge cases derail the flow. 
+              Logic Trains run on tracks with switches—decision points that route data to the correct next step, 
+              even when prospects behave unpredictably.
+            </div>
+          </div>
+          
+          <h3 class="blueprint-subsection">The Design Audit</h3>
+          
+          <p class="blueprint-text">
+            We begin every engagement with a <strong>Systems Audit</strong>. This isn't a generic questionnaire. 
+            We map your current data flows in Miro or Figma, identifying:
+          </p>
+          
+          <div class="blueprint-list">
+            <div class="list-item">
+              <div class="list-icon">→</div>
+              <div class="list-content">
+                <strong>Intent Recurrence:</strong> Repetitive tasks that trigger the same response 
+                (e.g., "How do I reset my password?" always routes to the same KB article).
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-icon">→</div>
+              <div class="list-content">
+                <strong>Data Silos:</strong> Where your CRM, email, and support tools fail to communicate, 
+                causing manual copy-paste labor.
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-icon">→</div>
+              <div class="list-content">
+                <strong>Geographic Anchors:</strong> For Edinburgh firms, we identify local market signals 
+                (Morningside demographics, Stockbridge tech density) to hyper-target outreach.
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-icon">→</div>
+              <div class="list-content">
+                <strong>Failure Points:</strong> The exact moments where leads go cold, tickets go unanswered, 
+                or revenue leaks out of your funnel.
+              </div>
+            </div>
+          </div>
+          
+          <div class="blueprint-diagram">
+            <div class="diagram-title">Example: Sales Logic Train</div>
+            <div class="logic-train">
+              <div class="train-car">
+                <div class="car-label">Lead Source</div>
+                <div class="car-desc">LinkedIn scrape</div>
+              </div>
+              <div class="train-connector">→</div>
+              <div class="train-car">
+                <div class="car-label">Qualification</div>
+                <div class="car-desc">Score &gt; 75?</div>
+              </div>
+              <div class="train-connector">→</div>
+              <div class="train-car">
+                <div class="car-label">Personalization</div>
+                <div class="car-desc">GPT-4 outreach</div>
+              </div>
+              <div class="train-connector">→</div>
+              <div class="train-car">
+                <div class="car-label">CRM Sync</div>
+                <div class="car-desc">HubSpot push</div>
+              </div>
+            </div>
+          </div>
+          
+          <p class="blueprint-text">
+            This audit phase typically takes <strong>2-3 days</strong>. By Day 3, you'll have a visual map 
+            of every automation opportunity in your business, ranked by ROI potential.
+          </p>
+        </div>
+        
+        <!-- Station 2: Mapping -->
+        <div class="blueprint-section" id="station-mapping" data-station="1">
+          <div class="section-station-marker">
+            <span class="marker-icon">02</span>
+            <span class="marker-label">Mapping Phase</span>
+          </div>
+          
+          <h2 class="blueprint-section-title">Decision Trees: Routing Intelligence</h2>
+          
+          <p class="blueprint-text">
+            Once we've mapped your Logic Trains, we build <strong>Decision Trees</strong>—the "if/then" 
+            switches that determine which track the train takes at each junction. These aren't simple boolean 
+            checks. They're <strong>probabilistic classifiers</strong> powered by LLMs.
+          </p>
+          
+          <h3 class="blueprint-subsection">How Decision Trees Work</h3>
+          
+          <div class="blueprint-code-block">
+            <div class="code-header">
+              <span class="code-lang">javascript</span>
+              <span class="code-file">decision_tree_example.js</span>
+            </div>
+            <pre class="code-content"><span class="kw">async function</span> <span class="fn">routeProspect</span>(<span class="var">prospect</span>) {
+  <span class="kw">const</span> <span class="var">intent</span> = <span class="kw">await</span> <span class="fn">classifyIntent</span>(<span class="var">prospect</span>.<span class="prop">message</span>);
+  
+  <span class="kw">if</span> (<span class="var">intent</span>.<span class="prop">type</span> === <span class="str">'high_intent'</span> && <span class="var">intent</span>.<span class="prop">score</span> > <span class="num">0.85</span>) {
+    <span class="kw">return</span> <span class="fn">executeAction</span>({
+      <span class="prop">action</span>: <span class="str">'book_meeting'</span>,
+      <span class="prop">priority</span>: <span class="str">'urgent'</span>,
+      <span class="prop">assignTo</span>: <span class="str">'sales_team'</span>
+    });
+  } <span class="kw">else if</span> (<span class="var">intent</span>.<span class="prop">type</span> === <span class="str">'research_phase'</span>) {
+    <span class="kw">return</span> <span class="fn">executeAction</span>({
+      <span class="prop">action</span>: <span class="str">'nurture_sequence'</span>,
+      <span class="prop">cadence</span>: <span class="str">'weekly'</span>,
+      <span class="prop">touchpoints</span>: <span class="num">5</span>
+    });
+  } <span class="kw">else</span> {
+    <span class="kw">return</span> <span class="fn">executeAction</span>({
+      <span class="prop">action</span>: <span class="str">'low_priority_list'</span>,
+      <span class="prop">revisit_in</span>: <span class="str">'30_days'</span>
+    });
+  }
+}</pre>
+          </div>
+          
+          <div class="blueprint-callout warning">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="callout-content">
+              <strong>Critical:</strong> Decision Trees must account for <strong>edge cases</strong>. 
+              What happens when a prospect replies "maybe next quarter"? Traditional automations break. 
+              Our LLM-based classifiers understand nuance and route to the appropriate fallback.
+            </div>
+          </div>
+          
+          <h3 class="blueprint-subsection">The Mapping Process</h3>
+          
+          <p class="blueprint-text">
+            During Days 4-7, we translate your audit findings into executable code. This involves:
+          </p>
+          
+          <div class="mapping-grid">
+            <div class="mapping-card">
+              <div class="mapping-number">Step 1</div>
+              <div class="mapping-title">Intent Classification</div>
+              <div class="mapping-desc">
+                Train a lightweight classifier on your historical data (emails, tickets, CRM notes). 
+                This model learns to detect patterns like "pricing inquiry" vs. "technical support."
+              </div>
+            </div>
+            
+            <div class="mapping-card">
+              <div class="mapping-number">Step 2</div>
+              <div class="mapping-title">API Integration</div>
+              <div class="mapping-desc">
+                Connect to your existing tools (HubSpot, Intercom, Slack) via webhooks and REST APIs. 
+                Every tool becomes a "station" on the Logic Train.
+              </div>
+            </div>
+            
+            <div class="mapping-card">
+              <div class="mapping-number">Step 3</div>
+              <div class="mapping-title">Fallback Logic</div>
+              <div class="mapping-desc">
+                Build escalation paths for edge cases. If the LLM confidence score drops below 0.75, 
+                route to a human agent with full context already logged.
+              </div>
+            </div>
+            
+            <div class="mapping-card">
+              <div class="mapping-number">Step 4</div>
+              <div class="mapping-title">Testing Sandbox</div>
+              <div class="mapping-desc">
+                Deploy to a staging environment. We run 100+ synthetic scenarios to ensure the Decision 
+                Tree handles real-world chaos (typos, slang, multi-intent messages).
+              </div>
+            </div>
+          </div>
+          
+          <div class="tree-diagram">
+            <div class="diagram-title">Decision Tree: Support Ticket Routing</div>
+            <div class="tree-root">
+              <div class="tree-node root">
+                <div class="node-label">Incoming Ticket</div>
+              </div>
+              <div class="tree-branches">
+                <div class="tree-branch">
+                  <div class="branch-line"></div>
+                  <div class="tree-node">
+                    <div class="node-label">Intent: Password Reset</div>
+                    <div class="node-action">→ Auto KB Article</div>
+                  </div>
+                </div>
+                <div class="tree-branch">
+                  <div class="branch-line"></div>
+                  <div class="tree-node">
+                    <div class="node-label">Intent: Bug Report</div>
+                    <div class="node-action">→ Engineering Queue</div>
+                  </div>
+                </div>
+                <div class="tree-branch">
+                  <div class="branch-line"></div>
+                  <div class="tree-node">
+                    <div class="node-label">Intent: Billing Query</div>
+                    <div class="node-action">→ Finance Team</div>
+                  </div>
+                </div>
+                <div class="tree-branch">
+                  <div class="branch-line"></div>
+                  <div class="tree-node uncertain">
+                    <div class="node-label">Intent: Uncertain</div>
+                    <div class="node-action">→ Human Review</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Station 3: Implementation -->
+        <div class="blueprint-section" id="station-implementation" data-station="2">
+          <div class="section-station-marker">
+            <span class="marker-icon">03</span>
+            <span class="marker-label">Implementation Phase</span>
+          </div>
+          
+          <h2 class="blueprint-section-title">Deployment: From Sandbox to Production</h2>
+          
+          <p class="blueprint-text">
+            Days 8-10 are where the Logic Trains leave the station. We deploy your autonomous agents 
+            to production, starting with a <strong>controlled rollout</strong> to minimize risk.
+          </p>
+          
+          <h3 class="blueprint-subsection">The Deployment Pipeline</h3>
+          
+          <div class="deployment-pipeline">
+            <div class="pipeline-stage">
+              <div class="stage-header">
+                <div class="stage-number">Day 8</div>
+                <div class="stage-title">Alpha Deploy</div>
+              </div>
+              <div class="stage-content">
+                <p>Deploy to 10% of traffic. Monitor every decision the agent makes in real-time. 
+                We sit in your Slack channel and watch for false positives.</p>
+                <div class="stage-metrics">
+                  <div class="metric-item">
+                    <div class="metric-label">Traffic Split</div>
+                    <div class="metric-value">10%</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-label">Human Oversight</div>
+                    <div class="metric-value">100%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="pipeline-arrow">↓</div>
+            
+            <div class="pipeline-stage">
+              <div class="stage-header">
+                <div class="stage-number">Day 9</div>
+                <div class="stage-title">Beta Expansion</div>
+              </div>
+              <div class="stage-content">
+                <p>If alpha metrics hit targets (95%+ accuracy), scale to 50% of traffic. 
+                Fine-tune Decision Tree thresholds based on Day 8 learnings.</p>
+                <div class="stage-metrics">
+                  <div class="metric-item">
+                    <div class="metric-label">Traffic Split</div>
+                    <div class="metric-value">50%</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-label">Confidence Threshold</div>
+                    <div class="metric-value">0.85+</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="pipeline-arrow">↓</div>
+            
+            <div class="pipeline-stage">
+              <div class="stage-header">
+                <div class="stage-number">Day 10</div>
+                <div class="stage-title">Full Production</div>
+              </div>
+              <div class="stage-content">
+                <p>Agents handle 100% of qualified traffic autonomously. Human agents only see 
+                escalations and edge cases. You wake up to completed tasks you didn't touch.</p>
+                <div class="stage-metrics">
+                  <div class="metric-item">
+                    <div class="metric-label">Autonomous Coverage</div>
+                    <div class="metric-value">100%</div>
+                  </div>
+                  <div class="metric-item">
+                    <div class="metric-label">Human Intervention</div>
+                    <div class="metric-value">&lt;20%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="blueprint-subsection">Quality Assurance</h3>
+          
+          <p class="blueprint-text">
+            We don't "set and forget." Every agent includes built-in monitoring:
+          </p>
+          
+          <div class="qa-checklist">
+            <div class="qa-item">
+              <div class="qa-checkbox">✓</div>
+              <div class="qa-content">
+                <strong>Confidence Logging:</strong> Every decision includes a confidence score. 
+                If it drops below your threshold, we get an alert.
+              </div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-checkbox">✓</div>
+              <div class="qa-content">
+                <strong>Human Feedback Loop:</strong> When humans override an agent decision, 
+                we log it and retrain the classifier.
+              </div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-checkbox">✓</div>
+              <div class="qa-content">
+                <strong>A/B Testing:</strong> We run experiments on message variants to optimize 
+                conversion rates (e.g., "Book a call" vs. "Schedule a demo").
+              </div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-checkbox">✓</div>
+              <div class="qa-content">
+                <strong>Drift Detection:</strong> If prospect behavior changes (e.g., new objection patterns), 
+                the system flags it for review.
+              </div>
+            </div>
+          </div>
+          
+          <div class="blueprint-callout success">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="callout-content">
+              <strong>Edinburgh Advantage:</strong> For local firms, we tune agents to recognize 
+              Scottish business etiquette, avoiding overly aggressive US-style sales tactics that 
+              alienate Morningside and Stockbridge prospects.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Station 4: Handover -->
+        <div class="blueprint-section" id="station-handover" data-station="3">
+          <div class="section-station-marker">
+            <span class="marker-icon">04</span>
+            <span class="marker-label">Handover Phase</span>
+          </div>
+          
+          <h2 class="blueprint-section-title">The Handover: Autonomous Operations</h2>
+          
+          <p class="blueprint-text">
+            Days 11-14 are about making you <strong>self-sufficient</strong>. We don't want you dependent 
+            on us to tweak a prompt or adjust a threshold. You get full access to the control panel.
+          </p>
+          
+          <h3 class="blueprint-subsection">What You Receive</h3>
+          
+          <div class="handover-deliverables">
+            <div class="deliverable-card">
+              <div class="deliverable-icon">📊</div>
+              <div class="deliverable-title">Real-Time Dashboard</div>
+              <div class="deliverable-desc">
+                See every action your agents take: leads qualified, tickets resolved, meetings booked. 
+                Filterable by date, agent type, and outcome.
+              </div>
+            </div>
+            
+            <div class="deliverable-card">
+              <div class="deliverable-icon">🛠️</div>
+              <div class="deliverable-title">Admin Panel</div>
+              <div class="deliverable-desc">
+                Adjust confidence thresholds, pause/resume agents, update knowledge bases, and modify 
+                Decision Tree logic without touching code.
+              </div>
+            </div>
+            
+            <div class="deliverable-card">
+              <div class="deliverable-icon">📚</div>
+              <div class="deliverable-title">Technical Documentation</div>
+              <div class="deliverable-desc">
+                Complete API reference, deployment guides, and troubleshooting playbooks. 
+                Written in plain English, not engineer-speak.
+              </div>
+            </div>
+            
+            <div class="deliverable-card">
+              <div class="deliverable-icon">🎓</div>
+              <div class="deliverable-title">Training Session</div>
+              <div class="deliverable-desc">
+                A 90-minute live walkthrough where we show your team how to operate, monitor, 
+                and optimize the agents independently.
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="blueprint-subsection">30-Day Support Window</h3>
+          
+          <p class="blueprint-text">
+            After handover, we stay available for 30 days to handle:
+          </p>
+          
+          <div class="support-grid">
+            <div class="support-item">
+              <div class="support-title">Bug Fixes</div>
+              <div class="support-desc">If something breaks, we fix it. No extra charge.</div>
+            </div>
+            <div class="support-item">
+              <div class="support-title">Optimization</div>
+              <div class="support-desc">Weekly reviews to fine-tune performance based on real data.</div>
+            </div>
+            <div class="support-item">
+              <div class="support-title">Slack Access</div>
+              <div class="support-desc">Direct line to our engineers. Response time &lt; 4 hours.</div>
+            </div>
+            <div class="support-item">
+              <div class="support-title">Knowledge Base Updates</div>
+              <div class="support-desc">Add new articles, FAQs, or training data as your business evolves.</div>
+            </div>
+          </div>
+          
+          <div class="blueprint-finale">
+            <h3 class="finale-title">The Result</h3>
+            <p class="finale-text">
+              By Day 14, you have a fully autonomous revenue engine. Your sales agents scrape, qualify, 
+              and outreach without supervision. Your support agents resolve 80%+ of tickets instantly. 
+              Your team focuses on high-leverage work—strategy, creative, and relationship-building—while 
+              the machines handle the repetitive grind.
+            </p>
+            <p class="finale-text">
+              This is the Level One Blueprint. Not a proof-of-concept. Not a pilot. A production-grade 
+              system designed to scale with your Edinburgh firm as you grow from Morningside to global.
+            </p>
+            
+            <div class="finale-cta">
+              <button onclick="openCalendar()" class="finale-btn">Start Your Blueprint</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
   
 <footer><p>© 2026 Level One — AI Systems & Autonomous Agents | Edinburgh, Scotland</p></footer>
 
