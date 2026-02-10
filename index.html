@@ -32,7 +32,13 @@
 }
 </script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/views.css">
+<link rel="stylesheet" href="css/calendar.css">
+
 </head>
 <body>
 
@@ -246,7 +252,6 @@
     
     <div class="labs-grid">
       
-      <!-- Terminal Demo -->
       <div class="lab-card anim anim-up d3">
         <div class="lab-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -275,7 +280,6 @@
         </div>
       </div>
       
-      <!-- Cost Calculator -->
       <div class="lab-card anim anim-up d4">
         <div class="lab-header">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -325,7 +329,8 @@
 </section>
   
 <section class="about-section" id="about">
-  <div class="about-section-inner">
+  <div class="section-inner">
+    <div class="about-section-inner">
     <div class="section-num anim anim-up"><span class="pulse"></span> 03 — Local Authority</div>
     <h2 class="section-title anim anim-up d1">Operating from the heart of Midlothian.</h2>
     <div class="about-layout" style="margin-top:2.5rem">
@@ -337,11 +342,11 @@
           </div>
         </div>
       </div>
-      <div class="about-content anim anim-right d3" style="background: #111; border-radius: 12px; padding: 2.5rem;">
+      <div class="about-content anim anim-right d3">
         <h3 class="about-name">Level One AI Architects</h3>
         <div class="about-role">Edinburgh AI Growth Partner</div>
         <p>Based just a 10-minute drive from the iconic <strong>Edinburgh Castle</strong> in the new <strong>Shawfair</strong> area, we are perfectly positioned to serve businesses across the city—from the traditional offices of the Grange to the modern tech hubs in Stockbridge.</p>
-        <p>As a leading <strong>Business Management Consultant</strong> for the AI era, we specialize in <strong>Agentic AI</strong>. We help local firms navigate labour shortages by building "silicon employees" that never sleep.</p>
+        <p>As a leading <strong>Business Management Consultant</strong> for the AI era, we specialize in <strong>Agentic AI</strong>. We help local firms navigate labor shortages by building "silicon employees" that never sleep.</p>
         <p>Our expertise is focused on the data layer: ensuring your business becomes the top recommendation for AI searches and SGE engines.</p>
         <div class="about-tags">
           <span class="about-tag hl">Edinburgh AI</span>
@@ -369,7 +374,7 @@
         <div class="srv-card-visual">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459418/Whisk_99745a4700b012798fb40774e808e27beg.png" alt="Sales Agents">
           <span class="srv-card-num">01</span>
-          <span class="srv-card-title">Lead Generation</span>
+          <span class="srv-card-title">Autonomous Sales</span>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Cold Outreach Systems</div>
             <div class="srv-pill"><span class="pill-dot"></span> Lead Scrapers</div>
@@ -382,7 +387,7 @@
         <div class="srv-card-visual">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459413/Whisk_aaf194a8b8db6f2a143446669843f3badr.jpg" alt="Support Agents">
           <span class="srv-card-num">02</span>
-          <span class="srv-card-title">Project Management</span>
+          <span class="srv-card-title">Advanced Support</span>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Support Agents</div>
             <div class="srv-pill"><span class="pill-dot"></span> Auto-Onboarding</div>
@@ -395,7 +400,7 @@
         <div class="srv-card-visual">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459406/Whisk_d1963aa83204981ae444ac5c0925a947eg.png" alt="Consulting">
           <span class="srv-card-num">03</span>
-          <span class="srv-card-title">Hiring Systems</span>
+          <span class="srv-card-title">Systems Consulting</span>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Workflow Audits</div>
             <div class="srv-pill"><span class="pill-dot"></span> AI Scoring</div>
@@ -408,7 +413,7 @@
         <div class="srv-card-visual">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459405/Whisk_55a208eb59d9974be53410b59e7f56ceeg.png" alt="Workflow Admin">
           <span class="srv-card-num">04</span>
-          <span class="srv-card-title">Sales Administration</span>
+          <span class="srv-card-title">Workflow Admin</span>
           <div class="srv-pills">
             <div class="srv-pill"><span class="pill-dot"></span> Custom CRMs</div>
             <div class="srv-pill"><span class="pill-dot"></span> Asset Generation</div>
@@ -475,7 +480,6 @@
     
     <div class="pricing-grid">
       
-      <!-- Card 1: THE PROTOTYPE -->
       <div class="pricing-card anim anim-up d3">
         <h3 class="pricing-title">The Prototype</h3>
         <p class="pricing-subtitle">For lean teams who need to validate automation with quick wins.</p>
@@ -500,7 +504,6 @@
         <button onclick="openCalendar()" class="pricing-btn outline">Deploy Prototype</button>
       </div>
       
-      <!-- Card 2: THE PILOT (Featured) -->
       <div class="pricing-card featured anim anim-up d4">
         <h3 class="pricing-title">The Pilot</h3>
         <p class="pricing-subtitle">For growing companies deploying autonomous agents in one department.</p>
@@ -525,7 +528,6 @@
         <button onclick="openCalendar()" class="pricing-btn solid">Start Pilot</button>
       </div>
       
-      <!-- Card 3: THE ARCHITECTURE -->
       <div class="pricing-card anim anim-up d5">
         <h3 class="pricing-title">The Architecture</h3>
         <p class="pricing-subtitle">For scale-ups requiring a full-stack AI ecosystem and dedicated infrastructure.</p>
@@ -551,7 +553,6 @@
       
     </div>
     
-    <!-- Transparency Footer -->
     <div class="pricing-transparency anim anim-up d6">
       <div class="pricing-transparency-title">Transparency Note</div>
       <p class="pricing-transparency-text">
@@ -656,7 +657,6 @@
                 </div>
             </div>
 
-            <div style="margin-top: 3rem;"></div>
             <div class="info-item">
                 <span class="info-emoji"></span>
                 <span class="info-text" id="clientName"></span>
@@ -731,7 +731,6 @@
     </div>
   </div>
 </div>
-<!-- CORE SYSTEMS VIEW -->
 <div id="core-systems-view">
   <div class="view-container">
     <div class="view-header">
@@ -745,7 +744,6 @@
     
     <div class="spec-sheet-container">
       
-      <!-- Header -->
       <div class="spec-header">
         <div class="spec-badge">
           <span class="pulse"></span>
@@ -779,7 +777,6 @@
         </div>
       </div>
 
-      <!-- Table of Contents -->
       <div class="spec-toc">
         <div class="toc-title">Contents</div>
         <div class="toc-grid">
@@ -802,7 +799,6 @@
         </div>
       </div>
 
-      <!-- Section 1: Sales Engine -->
       <div class="spec-section" id="spec-sales">
         <h2 class="spec-section-title">
           <span class="section-number">01</span>
@@ -955,7 +951,6 @@
         </div>
       </div>
 
-      <!-- Section 2: Support Agents -->
       <div class="spec-section" id="spec-support">
         <h2 class="spec-section-title">
           <span class="section-number">02</span>
@@ -1122,7 +1117,6 @@
         </div>
       </div>
 
-      <!-- Section 3: Integration -->
       <div class="spec-section" id="spec-integration">
         <h2 class="spec-section-title">
           <span class="section-number">03</span>
@@ -1185,7 +1179,6 @@
         </div>
       </div>
 
-      <!-- Section 4: Deployment -->
       <div class="spec-section" id="spec-deployment">
         <h2 class="spec-section-title">
           <span class="section-number">04</span>
@@ -1238,7 +1231,6 @@
   </div>
 </div>
   
-<!-- SOLUTIONS VIEW -->
 <div id="solutions-view">
   <div class="view-container">
     <div class="view-header">
@@ -1251,45 +1243,34 @@
     </div>
     
     <div class="solutions-layout">
-      <!-- Left Sidebar - Content Selectors -->
       <div class="solutions-sidebar" id="solutionsSidebar">
-        <!-- Will be populated dynamically -->
-      </div>
+        </div>
       
-      <!-- Main Content Area -->
       <div class="solutions-main-content">
         <div class="folder-container">
-          <!-- Folder Header -->
           <div class="folder-header">
             <div class="folder-tab-visual">
               <div class="folder-tab-label">SOLUTIONS_DOSSIER</div>
             </div>
             <div class="folder-title-bar">
-              <div class="folder-title" id="solutionFolderTitle">Lead Generation</div>
+              <div class="folder-title" id="solutionFolderTitle">Autonomous Sales</div>
               <div class="folder-meta">
                 <span class="folder-status">CLASSIFIED</span>
                 <span class="folder-date">UPDATED: FEB 2026</span>
               </div>
             </div>
+            <div class="folder-tabs" id="solutionFolderTabs"></div>
           </div>
           
-          <!-- Folder Tabs -->
-          <div class="folder-tabs" id="solutionFolderTabs">
-            <!-- Tabs will be populated dynamically -->
-          </div>
-          
-          <!-- Dynamic Content -->
           <div class="folder-body" id="solutionContentArea">
-            <!-- Content will be injected here -->
-          </div>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </div>
   
-  <!-- BLUEPRINT VIEW -->
-<div id="blueprint-view">
+  <div id="blueprint-view">
   <div class="view-container blueprint-container">
     <div class="view-header">
       <button class="view-back-btn" onclick="closeView()">
@@ -1302,7 +1283,6 @@
     
     <div class="blueprint-layout">
       
-      <!-- Sticky Trainline Sidebar -->
       <div class="trainline-sidebar">
         <div class="trainline-track">
           <div class="trainline-line"></div>
@@ -1329,10 +1309,8 @@
         </div>
       </div>
       
-      <!-- Main Content -->
       <div class="blueprint-content">
         
-        <!-- Header -->
         <div class="blueprint-header">
           <div class="spec-badge">
             <span class="pulse"></span>
@@ -1342,7 +1320,6 @@
           <p class="blueprint-subtitle">How we build autonomous systems that scale revenue without human intervention</p>
         </div>
         
-        <!-- Station 1: Design -->
         <div class="blueprint-section" id="station-design" data-station="0">
           <div class="section-station-marker">
             <span class="marker-icon">01</span>
@@ -1442,7 +1419,6 @@
           </p>
         </div>
         
-        <!-- Station 2: Mapping -->
         <div class="blueprint-section" id="station-mapping" data-station="1">
           <div class="section-station-marker">
             <span class="marker-icon">02</span>
@@ -1587,7 +1563,6 @@
           </div>
         </div>
         
-        <!-- Station 3: Implementation -->
         <div class="blueprint-section" id="station-implementation" data-station="2">
           <div class="section-station-marker">
             <span class="marker-icon">03</span>
@@ -1724,7 +1699,6 @@
           </div>
         </div>
         
-        <!-- Station 4: Handover -->
         <div class="blueprint-section" id="station-handover" data-station="3">
           <div class="section-station-marker">
             <span class="marker-icon">04</span>
@@ -1830,6 +1804,12 @@
   
 <footer><p>© 2026 Level One — AI Systems & Autonomous Agents | Edinburgh, Scotland</p></footer>
 
-<script src="script.js"></script>
+<script src="js/data.js"></script>
+<script src="js/splash.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/labs.js"></script>
+<script src="js/solutions.js"></script>
+<script src="js/init.js"></script>
 </body>
 </html>
