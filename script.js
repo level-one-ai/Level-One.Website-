@@ -239,10 +239,29 @@ document.getElementById('nextBtn').addEventListener('click', function() {
   document.getElementById('clientCompany').textContent = clientData.company;
   document.getElementById('clientLocation').textContent = clientData.location;
   
-  document.getElementById('formPage').style.display = 'none';
-  document.getElementById('calendarPage').style.display = 'grid'; 
-  renderCalendar();
-  updateTimeSelection();
+  // Slide transition: form fades out to left, calendar slides in from right
+  const formPage = document.getElementById('formPage');
+  const calendarPage = document.getElementById('calendarPage');
+  
+  formPage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  formPage.style.opacity = '0';
+  formPage.style.transform = 'translateX(-60px)';
+  
+  setTimeout(() => {
+    formPage.style.display = 'none';
+    calendarPage.style.display = 'grid';
+    calendarPage.style.opacity = '0';
+    calendarPage.style.transform = 'translateX(60px)';
+    
+    requestAnimationFrame(() => {
+      calendarPage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      calendarPage.style.opacity = '1';
+      calendarPage.style.transform = 'translateX(0)';
+    });
+    
+    renderCalendar();
+    updateTimeSelection();
+  }, 500);
 });
 
 let currentDate = new Date();
@@ -664,7 +683,7 @@ let scrollPositionBeforeNavigation = 0;
 // Enhanced solution data with all content
 const solutionData = {
   sales: {
-    title: 'Autonomous Sales',
+    title: 'Lead Generation',
     sections: [
       {
         id: 'cold-outreach',
@@ -870,11 +889,11 @@ const solutionData = {
     ]
   },
   support: {
-    title: 'Advanced Support',
+    title: 'Project Management',
     sections: [
       {
         id: 'support-agents',
-        name: 'Support Agents',
+        name: 'AI Automated Fulfilment',
         icon: '🤖',
         content: `
           <div class="dossier-section">
@@ -941,7 +960,7 @@ const solutionData = {
       },
       {
         id: 'auto-onboarding',
-        name: 'Auto-Onboarding',
+        name: 'AI Onboarding Systems',
         icon: '📚',
         content: `
           <div class="dossier-section">
@@ -1008,7 +1027,7 @@ const solutionData = {
       },
       {
         id: 'faq-resolvers',
-        name: 'FAQ Resolvers',
+        name: 'PM Systems',
         icon: '❓',
         content: `
           <div class="dossier-section">
@@ -1076,11 +1095,11 @@ const solutionData = {
     ]
   },
   consulting: {
-    title: 'Systems Consulting',
+    title: 'Hiring Systems',
     sections: [
       {
         id: 'workflow-audits',
-        name: 'Workflow Audits',
+        name: 'Intake Systems',
         icon: '🔍',
         content: `
           <div class="dossier-section">
@@ -1214,7 +1233,7 @@ const solutionData = {
       },
       {
         id: 'tool-consolidation',
-        name: 'Tool Consolidation',
+        name: 'Trial Systems',
         icon: '🔧',
         content: `
           <div class="dossier-section">
@@ -1282,7 +1301,7 @@ const solutionData = {
     ]
   },
   workflow: {
-    title: 'Workflow Admin',
+    title: 'Sales Administration',
     sections: [
       {
         id: 'custom-crms',
@@ -1493,6 +1512,84 @@ const solutionData = {
 function openSolutionView(solutionType, sectionId = null) {
   const data = solutionData[solutionType];
   if (!data) return;
+
+  // Build folder tabs for solution categories
+function buildFolderTabs(activeSolutionType) {
+  const tabContainer = document.getElementById('solutionFolderTabs');
+  if (!tabContainer) return;
+  
+  const tabConfig = [
+    { key: 'sales', label: 'Lead Generation', icon: '⚡' },
+    { key: 'support', label: 'Project Management', icon: '🤖' },
+    { key: 'consulting', label: 'Hiring Systems', icon: '🔍' },
+    { key: 'workflow', label: 'Sales Administration', icon: '📋' }
+  ];
+  
+  tabContainer.innerHTML = '';
+  
+  tabConfig.forEach(tab => {
+    const tabEl = document.createElement('div');
+    tabEl.className = 'folder-content-tab';
+    if (tab.key === activeSolutionType) tabEl.classList.add('active');
+    tabEl.dataset.tab = tab.key;
+    tabEl.innerHTML = `<span class="tab-icon">${tab.icon}</span><span class="tab-label">${tab.label}</span>`;
+    
+    tabEl.addEventListener('click', function() {
+      if (tab.key === activeSolutionType) return;
+      switchSolutionTab(tab.key);
+    });
+    
+    tabContainer.appendChild(tabEl);
+  });
+}
+
+// Switch between solution tabs with fade transition
+function switchSolutionTab(newSolutionType) {
+  const data = solutionData[newSolutionType];
+  if (!data) return;
+  
+  const contentArea = document.getElementById('solutionContentArea');
+  const folderTitle = document.getElementById('solutionFolderTitle');
+  
+  // Fade out current content
+  contentArea.style.transition = 'opacity 0.3s ease';
+  contentArea.style.opacity = '0';
+  
+  setTimeout(() => {
+    // Update folder title
+    folderTitle.textContent = data.title;
+    
+    // Update tabs
+    buildFolderTabs(newSolutionType);
+    
+    // Rebuild sidebar for the new tab
+    const sidebar = document.getElementById('solutionsSidebar');
+    sidebar.innerHTML = '';
+    
+    data.sections.forEach((section, index) => {
+      const selector = document.createElement('div');
+      selector.className = 'solution-selector';
+      if (index === 0) selector.classList.add('active');
+      selector.textContent = `${section.icon} ${section.name}`;
+      selector.dataset.sectionId = section.id;
+      selector.dataset.solutionType = newSolutionType;
+      
+      selector.addEventListener('click', function() {
+        switchSolutionSection(newSolutionType, section.id);
+      });
+      
+      sidebar.appendChild(selector);
+    });
+    
+    // Load first section content
+    contentArea.innerHTML = data.sections[0].content;
+    
+    // Fade in new content
+    requestAnimationFrame(() => {
+      contentArea.style.opacity = '1';
+    });
+  }, 300);
+}
   
   // Store scroll position
   scrollPositionBeforeNavigation = window.pageYOffset;
@@ -1510,6 +1607,9 @@ function openSolutionView(solutionType, sectionId = null) {
     
     // Update folder title
     document.getElementById('solutionFolderTitle').textContent = data.title;
+    
+    // Build folder tabs
+    buildFolderTabs(solutionType);
     
     // Build sidebar selectors
     const sidebar = document.getElementById('solutionsSidebar');
@@ -1577,10 +1677,16 @@ function switchSolutionSection(solutionType, sectionId) {
 }
 
 // Enhanced closeView function to return to source position
-function closeViewToSource() {
-  const isFromCalendar = currentView === 'calendar-view';
-  
+function closeView() {
   triggerTransition(() => {
+    // Determine which section to scroll to based on the view we're closing
+    let targetSectionId = null;
+    const coreSystemsView = document.getElementById('core-systems-view');
+    const blueprintView = document.getElementById('blueprint-view');
+    
+    if (coreSystemsView.style.display === 'block') targetSectionId = 'features';
+    if (blueprintView.style.display === 'block') targetSectionId = 'process';
+    
     // Hide all views
     document.getElementById('main-content').style.display = 'block';
     document.getElementById('blog-view').style.display = 'none';
@@ -1595,14 +1701,16 @@ function closeViewToSource() {
     // Reset current view
     currentView = 'main';
     
-    // Scroll to appropriate position
-    if (isFromCalendar) {
-      window.scrollTo(0, 0);
+    // Scroll to source section
+    if (targetSectionId) {
+      const targetSection = document.getElementById(targetSectionId);
+      if (targetSection) {
+        setTimeout(() => {
+          window.scrollTo(0, targetSection.offsetTop);
+        }, 100);
+      }
     } else {
-      // Return to where user was before clicking
-      setTimeout(() => {
-        window.scrollTo(0, scrollPositionBeforeNavigation);
-      }, 100);
+      window.scrollTo(0, 0);
     }
   });
 }
@@ -1645,11 +1753,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const menuStructure = {
   'Systems': {
-    subsections: null,
+    subsections: [
+      { name: 'Sales & Revenue Generation', action: () => { openView('core-systems-view'); } },
+      { name: 'Advanced Support Agents', action: () => { openView('core-systems-view'); } },
+      { name: 'Business Management Consultant', action: () => { openView('core-systems-view'); } },
+      { name: 'Agentic Workflows', action: () => { openView('core-systems-view'); } }
+    ],
     link: '#features'
   },
   'Architecture': {
-    subsections: null,
+    subsections: [
+      { name: 'Systems Audit', action: () => { openView('blueprint-view'); } },
+      { name: 'Agent Deployment', action: () => { openView('blueprint-view'); } },
+      { name: 'Autonomous Scaling', action: () => { openView('blueprint-view'); } }
+    ],
     link: '#process'
   },
   'Entity': {
@@ -1658,15 +1775,18 @@ const menuStructure = {
   },
   'Solutions': {
     subsections: [
-      { name: 'Autonomous Sales', action: () => openSolutionView('sales') },
-      { name: 'Advanced Support', action: () => openSolutionView('support') },
-      { name: 'Systems Consulting', action: () => openSolutionView('consulting') },
-      { name: 'Workflow Admin', action: () => openSolutionView('workflow') }
+      { name: 'Lead Generation', action: () => openSolutionView('sales') },
+      { name: 'Project Management', action: () => openSolutionView('support') },
+      { name: 'Hiring Systems', action: () => openSolutionView('consulting') },
+      { name: 'Sales Administration', action: () => openSolutionView('workflow') }
     ],
     link: '#services'
   },
   'Insights': {
-    subsections: null,
+    subsections: [
+      { name: 'Agentic Systems', action: () => { openBlog('agentic'); } },
+      { name: 'Hyperautomation', action: () => { openBlog('hyperautomation'); } }
+    ],
     link: '#insights'
   }
 };
