@@ -1,7 +1,6 @@
 /* ========================================
    SOLUTIONS FOLDER VIEW LOGIC
    ======================================== */
-
 function openSolutionView(solutionType, sectionId = null) {
   const data = solutionData[solutionType];
   if (!data) return;
@@ -63,10 +62,10 @@ function buildFolderTabs(activeSolutionType) {
   if (!tabContainer) return; 
   
   const tabConfig = [
-    { key: 'sales', label: 'Lead Generation', icon: '⚡' },
-    { key: 'support', label: 'Project Management', icon: '🤖' },
-    { key: 'consulting', label: 'Hiring Systems', icon: '🔍' },
-    { key: 'workflow', label: 'Sales Administration', icon: '📋' }
+    { key: 'sales', label: 'Autonomous Sales', icon: '⚡' },
+    { key: 'support', label: 'Advanced Support', icon: '🤖' },
+    { key: 'consulting', label: 'Systems Consulting', icon: '🔍' },
+    { key: 'workflow', label: 'Workflow Admin', icon: '📋' }
   ];
   
   tabContainer.innerHTML = '';
@@ -88,8 +87,64 @@ function buildFolderTabs(activeSolutionType) {
 }
 
 function switchSolutionTab(newSolutionType) {
-  // Use openSolutionView to handle the full switch
-  openSolutionView(newSolutionType);
+  const data = solutionData[newSolutionType];
+  if (!data) return;
+  
+  // Update folder title with fade
+  const titleEl = document.getElementById('solutionFolderTitle');
+  titleEl.style.transition = 'opacity 0.2s ease';
+  titleEl.style.opacity = '0';
+  
+  setTimeout(() => {
+    titleEl.textContent = data.title;
+    titleEl.style.opacity = '1';
+  }, 200);
+  
+  // Update active tab
+  document.querySelectorAll('.folder-content-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  const activeTab = document.querySelector(`.folder-content-tab[data-tab="${newSolutionType}"]`);
+  if (activeTab) activeTab.classList.add('active');
+  
+  // Rebuild sidebar selectors
+  const sidebar = document.getElementById('solutionsSidebar');
+  sidebar.style.transition = 'opacity 0.2s ease';
+  sidebar.style.opacity = '0';
+  
+  setTimeout(() => {
+    sidebar.innerHTML = '';
+    
+    data.sections.forEach((section, index) => {
+      const selector = document.createElement('div');
+      selector.className = 'solution-selector';
+      if (index === 0) selector.classList.add('active');
+      selector.textContent = `${section.icon} ${section.name}`;
+      selector.dataset.sectionId = section.id;
+      selector.dataset.solutionType = newSolutionType;
+      
+      selector.addEventListener('click', function() {
+        switchSolutionSection(newSolutionType, section.id);
+      });
+      
+      sidebar.appendChild(selector);
+    });
+    
+    sidebar.style.opacity = '1';
+  }, 200);
+  
+  // Update content with smooth transition
+  const contentArea = document.getElementById('solutionContentArea');
+  contentArea.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+  contentArea.style.opacity = '0';
+  contentArea.style.transform = 'translateY(10px)';
+  
+  setTimeout(() => {
+    contentArea.innerHTML = data.sections[0].content;
+    contentArea.style.opacity = '1';
+    contentArea.style.transform = 'translateY(0)';
+  }, 200);
 }
 
 function switchSolutionSection(solutionType, sectionId) {
@@ -107,12 +162,15 @@ function switchSolutionSection(solutionType, sectionId) {
   const activeSelector = document.querySelector(`[data-section-id="${sectionId}"]`);
   if (activeSelector) activeSelector.classList.add('active');
   
-  // Update content with fade
+  // Update content with smooth fade
   const contentArea = document.getElementById('solutionContentArea');
+  contentArea.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
   contentArea.style.opacity = '0';
+  contentArea.style.transform = 'translateY(10px)';
   
   setTimeout(() => {
     contentArea.innerHTML = section.content;
     contentArea.style.opacity = '1';
-  }, 300);
+    contentArea.style.transform = 'translateY(0)';
+  }, 200);
 }
