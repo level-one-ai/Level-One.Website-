@@ -31,10 +31,10 @@ const menuStructure = {
   },
   'Solutions': {
     subsections: [
-      { name: 'Lead Generation', action: () => openSolutionView('sales') },
-      { name: 'Project Management', action: () => openSolutionView('support') },
-      { name: 'Hiring Systems', action: () => openSolutionView('consulting') },
-      { name: 'Sales Administration', action: () => openSolutionView('workflow') }
+      { name: 'Autonomous Sales', action: () => openSolutionView('sales') },
+      { name: 'Advanced Support', action: () => openSolutionView('support') },
+      { name: 'Systems Consulting', action: () => openSolutionView('consulting') },
+      { name: 'Workflow Admin', action: () => openSolutionView('workflow') }
     ],
     link: '#services'
   },
@@ -272,6 +272,13 @@ function smoothScrollTo(targetY, duration) {
 hexBurger.addEventListener('click', () => {
   const isOpen = hexBurger.classList.toggle('open');
   menuOverlay.classList.toggle('open', isOpen);
+  
+  // Prevent scrolling when menu is open
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
   
   if (!isOpen && currentMenuLevel === 'subsection') {
     setTimeout(showMainMenu, 600);
