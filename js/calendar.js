@@ -1,171 +1,260 @@
 /* ========================================
-   CALENDAR & BOOKING SYSTEM
+   CALENDAR BOOKING SYSTEM
    ======================================== */
 
-let clientData = { name: '', email: '', phone: '', company: '', location: '', website: '' };
-let currentDate = new Date();
+// Global variable to track selected pricing tier
+let selectedPricingTier = null;
+
+// Calendar State
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
 let selectedDate = null;
 let selectedTime = null;
 
-function validateForm() {
-  const name = document.getElementById('formName').value.trim();
-  const email = document.getElementById('formEmail').value.trim();
-  const phone = document.getElementById('formPhone').value.trim();
-  const company = document.getElementById('formCompany').value.trim();
-  const location = document.getElementById('formLocation').value.trim();
-  const isValid = name && email && phone && company && location;
-  document.getElementById('nextBtn').disabled = !isValid;
-}
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
 
-function renderCalendar() {
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  document.getElementById('monthYear').textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  
-  const grid = document.getElementById('calendarGrid');
-  grid.innerHTML = '';
-  
-  const firstDay = new Date(year, month, 1);
-  const startDate = new Date(firstDay);
-  startDate.setDate(startDate.getDate() - firstDay.getDay());
-  
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+// Form Elements
+const formPage = document.getElementById('formPage');
+const calendarPage = document.getElementById('calendarPage');
+const nextBtn = document.getElementById('nextBtn');
+const confirmBtn = document.getElementById('confirmBtn');
+const modalOverlay = document.getElementById('modalOverlay');
+const confirmationSection = document.getElementById('confirmationSection');
+const thankYouSection = document.getElementById('thankYouSection');
+const finishBtn = document.getElementById('finishBtn');
 
-  for (let i = 0; i < 42; i++) {
-    const date = new Date(startDate);
-    date.setDate(startDate.getDate() + i);
-    
-    const dayElement = document.createElement('div');
-    dayElement.className = 'calendar-day';
-    dayElement.textContent = date.getDate();
-    
-    const isCurrentMonth = date.getMonth() === month;
-    const isPast = date < today;
-    
-    if (!isCurrentMonth || isPast) {
-      dayElement.classList.add('disabled');
-    } else {
-      dayElement.addEventListener('click', () => {
-        selectedDate = date;
-        renderCalendar();
-        updateTimeSelection();
-      });
-    }
-    
-    if (date.toDateString() === today.toDateString()) dayElement.classList.add('today');
-    if (selectedDate && date.toDateString() === selectedDate.toDateString()) dayElement.classList.add('selected');
-    
-    grid.appendChild(dayElement);
+// Form Inputs
+const formName = document.getElementById('formName');
+const formEmail = document.getElementById('formEmail');
+const formPhone = document.getElementById('formPhone');
+const formCompany = document.getElementById('formCompany');
+const formLocation = document.getElementById('formLocation');
+const formWebsite = document.getElementById('formWebsite');
+
+// Calendar Navigation
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn2 = document.getElementById('nextBtn2');
+const monthYear = document.getElementById('monthYear');
+const calendarGrid = document.getElementById('calendarGrid');
+const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+
+// Open Calendar Function (can be called with pricing tier)
+function openCalendar(pricingTier = null) {
+  // Store the pricing tier if provided
+  if (pricingTier) {
+    selectedPricingTier = pricingTier;
   }
+  
+  triggerTransition(() => {
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'block';
+    hexBurger.classList.add('hidden');
+    window.scrollTo(0, 0);
+  });
 }
 
-function updateTimeSelection() {
-  const display = document.getElementById('selectedDateDisplay');
-  display.textContent = selectedDate 
-    ? selectedDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) 
-    : 'Select a date';
+// Form Validation
+function validateForm() {
+  const isValid = formName.value && formEmail.value && formPhone.value && 
+                  formCompany.value && formLocation.value;
+  nextBtn.disabled = !isValid;
 }
 
-// Event Listeners
-document.querySelectorAll('.form-input').forEach(input => {
+[formName, formEmail, formPhone, formCompany, formLocation].forEach(input => {
   input.addEventListener('input', validateForm);
 });
 
-document.getElementById('nextBtn').addEventListener('click', function() {
-  clientData.name = document.getElementById('formName').value.trim();
-  clientData.email = document.getElementById('formEmail').value.trim();
-  clientData.phone = document.getElementById('formPhone').value.trim();
-  clientData.company = document.getElementById('formCompany').value.trim();
-  clientData.location = document.getElementById('formLocation').value.trim();
-  clientData.website = document.getElementById('formWebsite').value.trim();
+// Next Button - Move to Calendar
+nextBtn.addEventListener('click', () => {
+  formPage.style.display = 'none';
+  calendarPage.style.display = 'grid';
   
-  document.getElementById('clientName').textContent = clientData.name;
-  document.getElementById('clientEmail').textContent = clientData.email;
-  document.getElementById('clientCompany').textContent = clientData.company;
-  document.getElementById('clientLocation').textContent = clientData.location;
+  // Populate client info
+  document.getElementById('clientName').textContent = formName.value;
+  document.getElementById('clientEmail').textContent = formEmail.value;
+  document.getElementById('clientCompany').textContent = formCompany.value;
+  document.getElementById('clientLocation').textContent = formLocation.value;
   
-  const formPage = document.getElementById('formPage');
-  const calendarPage = document.getElementById('calendarPage');
+  // Display pricing tier if selected
+  if (selectedPricingTier) {
+    document.getElementById('pricingTierDisplay').style.display = 'flex';
+    document.getElementById('selectedTier').textContent = selectedPricingTier;
+  }
   
-  formPage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  formPage.style.opacity = '0';
-  formPage.style.transform = 'translateX(-60px)';
-  
-  setTimeout(() => {
-    formPage.style.display = 'none';
-    calendarPage.style.display = 'grid';
-    calendarPage.style.opacity = '0';
-    calendarPage.style.transform = 'translateX(60px)';
-    
-    requestAnimationFrame(() => {
-      calendarPage.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      calendarPage.style.opacity = '1';
-      calendarPage.style.transform = 'translateX(0)';
-    });
-    
-    renderCalendar();
-    updateTimeSelection();
-  }, 500);
+  renderCalendar();
 });
 
-const timeSlots = document.querySelectorAll('.time-slot');
-const confirmBtn = document.getElementById('confirmBtn');
+// Calendar Rendering
+function renderCalendar() {
+  monthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+  calendarGrid.innerHTML = '';
+  
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  
+  // Empty cells for days before month starts
+  for (let i = 0; i < firstDay; i++) {
+    const emptyCell = document.createElement('div');
+    emptyCell.className = 'calendar-day empty';
+    calendarGrid.appendChild(emptyCell);
+  }
+  
+  // Days of the month
+  const today = new Date();
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayCell = document.createElement('div');
+    dayCell.className = 'calendar-day';
+    dayCell.textContent = day;
+    
+    const cellDate = new Date(currentYear, currentMonth, day);
+    
+    // Disable past dates and weekends
+    if (cellDate < today || cellDate.getDay() === 0 || cellDate.getDay() === 6) {
+      dayCell.classList.add('disabled');
+    } else {
+      dayCell.addEventListener('click', () => selectDate(day));
+    }
+    
+    calendarGrid.appendChild(dayCell);
+  }
+}
 
-timeSlots.forEach(slot => {
-  slot.addEventListener('click', function() {
-    if (!selectedDate) return;
-    timeSlots.forEach(s => s.classList.remove('selected'));
-    this.classList.add('selected');
-    selectedTime = this.dataset.time;
+function selectDate(day) {
+  selectedDate = new Date(currentYear, currentMonth, day);
+  
+  // Update visual selection
+  document.querySelectorAll('.calendar-day').forEach(cell => {
+    cell.classList.remove('selected');
+  });
+  event.target.classList.add('selected');
+  
+  // Update display
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  selectedDateDisplay.textContent = selectedDate.toLocaleDateString('en-GB', options);
+  
+  // Reset time selection
+  selectedTime = null;
+  document.querySelectorAll('.time-slot').forEach(slot => {
+    slot.classList.remove('selected');
+  });
+  confirmBtn.disabled = true;
+}
+
+// Time Slot Selection
+document.querySelectorAll('.time-slot').forEach(slot => {
+  slot.addEventListener('click', () => {
+    selectedTime = slot.dataset.time;
+    
+    document.querySelectorAll('.time-slot').forEach(s => {
+      s.classList.remove('selected');
+    });
+    slot.classList.add('selected');
+    
     confirmBtn.disabled = false;
   });
 });
 
-document.getElementById('prevBtn').addEventListener('click', () => { 
-  currentDate.setMonth(currentDate.getMonth() - 1); 
-  renderCalendar(); 
+// Calendar Navigation
+prevBtn.addEventListener('click', () => {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar();
 });
 
-document.getElementById('nextBtn2').addEventListener('click', () => { 
-  currentDate.setMonth(currentDate.getMonth() + 1); 
-  renderCalendar(); 
+nextBtn2.addEventListener('click', () => {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  renderCalendar();
 });
 
-confirmBtn.addEventListener('click', async function() {
-  if (!selectedDate || !selectedTime) return;
+// Confirm Booking
+confirmBtn.addEventListener('click', () => {
+  const appointmentDate = selectedDate.toLocaleDateString('en-GB', { 
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+  });
   
-  const formattedNewDate = selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  const bookingData = { 
-    ...clientData, 
-    kickoffDate: formattedNewDate, 
-    kickoffTime: selectedTime 
+  document.getElementById('modalName').textContent = formName.value;
+  document.getElementById('modalNewDate').textContent = appointmentDate;
+  document.getElementById('modalNewTime').textContent = selectedTime;
+  
+  modalOverlay.style.display = 'flex';
+  confirmationSection.style.display = 'block';
+  thankYouSection.style.display = 'none';
+  
+  // Send data to Make.com webhook
+  sendToWebhook();
+});
+
+// Send to Make.com Webhook
+function sendToWebhook() {
+  const webhookData = {
+    name: formName.value,
+    email: formEmail.value,
+    phone: formPhone.value,
+    company: formCompany.value,
+    location: formLocation.value,
+    website: formWebsite.value || 'Not provided',
+    appointmentDate: selectedDate.toLocaleDateString('en-GB'),
+    appointmentTime: selectedTime,
+    pricingTier: selectedPricingTier || 'Not specified',
+    timestamp: new Date().toISOString()
   };
   
-  try {
-    confirmBtn.disabled = true; 
-    confirmBtn.textContent = 'Scheduling...';
+  // Make.com webhook URL - replace with your actual webhook URL
+  const webhookURL = 'https://hook.eu2.make.com/YOUR_WEBHOOK_ID';
+  
+  fetch(webhookURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(webhookData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Webhook sent successfully:', data);
+  })
+  .catch(error => {
+    console.error('Webhook error:', error);
+  });
+}
+
+// Finish Button
+finishBtn.addEventListener('click', () => {
+  confirmationSection.style.display = 'none';
+  thankYouSection.style.display = 'block';
+  
+  setTimeout(() => {
+    modalOverlay.style.display = 'none';
     
-    // MAKE.COM WEBHOOK
-    const response = await fetch('https://hook.eu2.make.com/iwwwbnzs7o12l1yx8036dd8mx6hiquyx', {
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify(bookingData)
+    // Reset and return to home
+    triggerTransition(() => {
+      document.getElementById('calendar-view').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      hexBurger.classList.remove('hidden');
+      
+      // Reset form
+      formPage.style.display = 'grid';
+      calendarPage.style.display = 'none';
+      document.getElementById('clientForm').reset();
+      selectedDate = null;
+      selectedTime = null;
+      selectedPricingTier = null;
+      validateForm();
+      
+      window.scrollTo(0, 0);
     });
-    
-    if (response.ok) {
-      document.getElementById('modalName').textContent = bookingData.name;
-      document.getElementById('modalNewDate').textContent = formattedNewDate;
-      document.getElementById('modalNewTime').textContent = selectedTime;
-      document.getElementById('modalOverlay').classList.add('active');
-    }
-  } catch (e) { 
-    confirmBtn.textContent = 'Error'; 
-  }
+  }, 3000);
 });
 
-document.getElementById('finishBtn').addEventListener('click', () => {
-  document.getElementById('confirmationSection').style.display = 'none';
-  document.getElementById('thankYouSection').classList.add('active');
-  setTimeout(() => { location.reload(); }, 3000);
-});
+// Initialize
+renderCalendar();
+validateForm();
