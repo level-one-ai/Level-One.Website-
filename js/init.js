@@ -1,97 +1,87 @@
 /* ========================================
-   INITIALIZATION & EVENT LISTENERS
+   INITIALIZATION AND HELPER FUNCTIONS
    ======================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
+// Blueprint Phase Opening Function
+function openBlueprintPhase(phaseIndex, section = 'process') {
+  sourceSection = section;
   
-  // Initialize Menu Overlay (Main Links)
-  const menuLinks = document.querySelectorAll('.menu-link');
-  menuLinks.forEach(link => {
-    const sectionName = link.textContent;
-    const menuData = menuStructure[sectionName];
+  triggerTransition(() => {
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('solutions-view').style.display = 'none';
     
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (menuData && menuData.subsections) {
-        showSubsections(sectionName, menuData.subsections);
-      } else {
-        const target = document.querySelector(menuData.link);
-        document.getElementById('hexBurger').click();
-        setTimeout(() => {
-          smoothScrollTo(target.offsetTop, 2000);
-        }, 600);
-      }
-    });
+    const blueprintView = document.getElementById('blueprint-view');
+    if (blueprintView) {
+      blueprintView.style.display = 'block';
+      currentView = 'blueprint-view';
+      
+      // Initialize blueprint and select phase
+      setTimeout(() => {
+        if (typeof initBlueprint === 'function') {
+          initBlueprint();
+          if (typeof selectPhase === 'function') {
+            selectPhase(phaseIndex);
+          }
+        }
+      }, 100);
+    }
+    
+    hexBurger.classList.add('hidden');
+    window.scrollTo(0, 0);
   });
+}
 
-  // Feature Cards -> Core Systems View
-  const featureCards = document.querySelectorAll('#features .feature-card');
-  featureCards.forEach(card => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => openView('core-systems-view'));
-  });
-
-  // Process Cards -> Blueprint View
-  const processCards = document.querySelectorAll('#process .process-card');
-  processCards.forEach(card => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => openView('blueprint-view'));
-  });
-
-  // Service Cards -> Solutions View
-  const serviceCards = document.querySelectorAll('#services .srv-card');
-  const solutionTypes = ['sales', 'support', 'consulting', 'workflow'];
-  serviceCards.forEach((card, index) => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => openSolutionView(solutionTypes[index]));
-  });
-
-  // Pricing Cards Hover Effect
-  const pricingCards = document.querySelectorAll('.pricing-card');
-  pricingCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      pricingCards.forEach(other => {
-        if (other !== card) other.style.opacity = '0.7';
-      });
-    });
-    card.addEventListener('mouseleave', () => {
-      pricingCards.forEach(other => other.style.opacity = '1');
-    });
-  });
-
-  // Blueprint Trainline Logic
-  const trainlineStations = document.querySelectorAll('.trainline-station');
-  trainlineStations.forEach(station => {
-    station.addEventListener('click', function() {
-      const stationIndex = this.dataset.station;
-      const targetSection = document.querySelector(`[data-station="${stationIndex}"]`);
-      if (targetSection) {
-        trainlineStations.forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // Blueprint Intersection Observer
-  const blueprintSections = document.querySelectorAll('.blueprint-section');
-  const blueprintObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-        const sectionStation = entry.target.dataset.station;
-        trainlineStations.forEach(s => s.classList.remove('active'));
-        const activeStation = document.querySelector(`.trainline-station[data-station="${sectionStation}"]`);
-        if (activeStation) activeStation.classList.add('active');
-      }
-    });
-  }, { threshold: [0.3, 0.5, 0.7] });
-  blueprintSections.forEach(s => blueprintObserver.observe(s));
-
-  // Global Animation Observer
-  const obs = new IntersectionObserver((entries) => { 
-    entries.forEach(e => { 
-      if (e.isIntersecting) e.target.classList.add('vis'); 
-    }); 
-  }, { threshold: 0.05 });
-  document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const progressBar = document.getElementById('progressBar');
+  if (!progressBar) return;
+  
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight - windowHeight;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollPercentage = (scrollTop / documentHeight) * 100;
+  
+  progressBar.style.width = scrollPercentage + '%';
 });
+
+// Animation on Scroll
+const animateOnScroll = () => {
+  const elements = document.querySelectorAll('.anim');
+  
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    if (rect.top < windowHeight * 0.85) {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0) translateX(0)';
+    }
+  });
+};
+
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('load', animateOnScroll);
+
+// Newsletter Form Handler
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+    const btn = document.getElementById('subscribeBtn');
+    
+    btn.textContent = 'Subscribed ✓';
+    btn.style.background = 'var(--white)';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+      newsletterForm.reset();
+      btn.textContent = 'Subscribe';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
+  });
+}
