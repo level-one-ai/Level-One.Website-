@@ -310,7 +310,7 @@
           <div class="pricing-feature">No Lock-In Contracts</div>
         </div>
         
-        <button onclick="openCalendar()" class="pricing-btn outline">Deploy Prototype</button>
+        <button onclick="openCalendar('The Prototype')" class="pricing-btn outline">Deploy Prototype</button>
       </div>
       
       <div class="pricing-card featured anim anim-up d4">
@@ -334,7 +334,7 @@
           <div class="pricing-feature">14-Day Deployment Sprint</div>
         </div>
         
-        <button onclick="openCalendar()" class="pricing-btn solid">Deploy Pilot</button>
+        <button onclick="openCalendar('The Pilot')" class="pricing-btn solid">Deploy Pilot</button>
       </div>
       
       <div class="pricing-card anim anim-up d5">
@@ -357,7 +357,7 @@
           <div class="pricing-feature">Custom Security Protocols</div>
         </div>
         
-        <button onclick="openCalendar()" class="pricing-btn outline">Schedule Architecture Call</button>
+        <button onclick="openCalendar('The Architecture')" class="pricing-btn outline">Schedule Architecture Call</button>
       </div>
       
     </div>
@@ -458,7 +458,7 @@
         </div>
 
         <div class="form-center-panel">
-            <h1 class="form-header">Growth Audit</h1>
+            <h1 class="form-header">Book A Call</h1>
             <p class="form-subheader">Schedule your revenue infrastructure assessment.</p>
             
             <form id="clientForm" onsubmit="event.preventDefault();">
@@ -529,6 +529,11 @@
             <div class="info-item">
                 <span class="info-emoji"></span>
                 <span class="info-text" id="clientLocation"></span>
+            </div>
+
+            <div class="info-item" id="pricingTierDisplay" style="display: none;">
+                <span class="info-emoji">📦</span>
+                <span class="info-text" id="selectedTier"></span>
             </div>
         </div>
 
