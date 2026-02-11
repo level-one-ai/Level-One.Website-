@@ -38,6 +38,8 @@
 <link rel="stylesheet" href="css/sections.css">
 <link rel="stylesheet" href="css/views.css">
 <link rel="stylesheet" href="css/calendar.css">
+<link rel="stylesheet" href="css/calendar-fixed.css">
+<link rel="stylesheet" href="css/solution-styles.css">
 <link rel="stylesheet" href="css/responsive.css">
 
 </head>
@@ -113,7 +115,7 @@
     <h2 class="section-title anim anim-up d1">Four systems.<br>One outcome: high-performance growth.</h2>
     <p class="section-desc anim anim-up d2">We install revenue infrastructure that increases acquisition, reduces overhead, and eliminates manual bottlenecks across your operations.</p>
     <div class="feature-grid">
-      <div class="feature-card anim anim-up d1">
+      <div class="feature-card anim anim-up d1" onclick="openSolutionView('sales', 'features')" style="cursor: pointer;">
         <div class="feature-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" class="card-img-fill" alt="Sales Systems">
         </div>
@@ -121,7 +123,7 @@
         <h3>Revenue Engines</h3>
         <p>Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.</p>
       </div>
-      <div class="feature-card anim anim-up d2">
+      <div class="feature-card anim anim-up d2" onclick="openSolutionView('support', 'features')" style="cursor: pointer;">
         <div class="feature-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" class="card-img-fill" alt="Support Systems">
         </div>
@@ -129,7 +131,7 @@
         <h3>Resolution Systems</h3>
         <p>Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.</p>
       </div>
-      <div class="feature-card anim anim-up d3">
+      <div class="feature-card anim anim-up d3" onclick="openSolutionView('consulting', 'features')" style="cursor: pointer;">
         <div class="feature-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" class="card-img-fill" alt="AI Strategy">
         </div>
@@ -137,7 +139,7 @@
         <h3>Systems Architecture</h3>
         <p>We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.</p>
       </div>
-      <div class="feature-card anim anim-up d4">
+      <div class="feature-card anim anim-up d4" onclick="openSolutionView('workflow', 'features')" style="cursor: pointer;">
         <div class="feature-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" class="card-img-fill" alt="Agentic Flows">
         </div>
@@ -155,7 +157,7 @@
     <h2 class="section-title anim anim-up d1">Three phases.<br>Measurable commercial impact.</h2>
     <p class="section-desc anim anim-up d2">We follow a structured deployment protocol focused on revenue growth, cost reduction, and operational efficiency across Scotland and the UK.</p>
     <div class="process-grid">
-      <div class="process-card anim anim-left d1">
+      <div class="process-card anim anim-left d1" onclick="openBlueprintPhase(0, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459429/Whisk_2d3cf369b4c88a8a8f941b53648eb51deg.png" class="card-img-fill" alt="Audit">
         </div>
@@ -163,7 +165,7 @@
         <h3>Systems Audit</h3>
         <p>We map your current workflow and quantify where inefficiency costs you revenue or margin. Every recommendation targets measurable commercial impact.</p>
       </div>
-      <div class="process-card anim anim-up d2">
+      <div class="process-card anim anim-up d2" onclick="openBlueprintPhase(1, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459428/Whisk_5349c90e685b97fae1c4144eb7f7fb57eg.png" class="card-img-fill" alt="Building">
         </div>
@@ -171,7 +173,7 @@
         <h3>Infrastructure Deployment</h3>
         <p>We install revenue infrastructure designed to increase acquisition, reduce costs, and eliminate manual overhead. Every system is tested before handover.</p>
       </div>
-      <div class="process-card anim anim-right d3">
+      <div class="process-card anim anim-right d3" onclick="openBlueprintPhase(2, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459420/Whisk_7741b67544eeaef8cd14c8fb31b59fcdeg.png" class="card-img-fill" alt="Scaling">
         </div>
@@ -532,7 +534,7 @@
             </div>
 
             <div class="info-item" id="pricingTierDisplay" style="display: none;">
-                <span class="info-emoji">📦</span>
+                <span class="info-emoji"></span>
                 <span class="info-text" id="selectedTier"></span>
             </div>
         </div>
@@ -791,9 +793,11 @@
   
 <footer><p>© 2026 Level One — Premier Systems Partner | Edinburgh, Scotland</p></footer>
 
-<script src="js/data.js"></script>
+<script src="js/data-updated.js"></script>
+<script src="js/blog-data.js"></script>
 <script src="js/splash.js"></script>
 <script src="js/navigation.js"></script>
+<script src="js/blueprint.js"></script>
 <script src="js/calendar.js"></script>
 <script src="js/solutions.js"></script>
 <script src="js/init.js"></script>
