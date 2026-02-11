@@ -2,6 +2,22 @@
    NAVIGATION & VIEW MANAGER
    ======================================== */
 
+// Calculate scrollbar width and set CSS variable to prevent layout shift
+function getScrollbarWidth() {
+  const outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.overflow = 'scroll';
+  document.body.appendChild(outer);
+  const inner = document.createElement('div');
+  outer.appendChild(inner);
+  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+  outer.parentNode.removeChild(outer);
+  return scrollbarWidth;
+}
+
+// Set CSS variable for scrollbar width
+document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
+
 let currentView = 'main';
 let currentMenuLevel = 'main';
 const hexBurger = document.getElementById('hexBurger');
@@ -38,16 +54,16 @@ const menuStructure = {
     ],
     link: '#services'
   },
+  'Pricing': {
+    subsections: null,
+    link: '#pricing'
+  },
   'Insights': {
     subsections: [
       { name: 'Agentic Systems', action: () => { openBlog('agentic'); } },
       { name: 'Hyperautomation', action: () => { openBlog('hyperautomation'); } }
     ],
     link: '#insights'
-  },
-  'Pricing': {
-    subsections: null,
-    link: '#pricing'
   }
 };
 
