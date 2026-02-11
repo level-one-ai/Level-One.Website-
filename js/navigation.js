@@ -4,24 +4,25 @@
 
 let currentView = 'main';
 let currentMenuLevel = 'main';
+let sourceSection = null; // Track which section opened the view
 const hexBurger = document.getElementById('hexBurger');
 const menuOverlay = document.getElementById('menuOverlay');
 
 const menuStructure = {
   'Systems': {
     subsections: [
-      { name: 'Sales & Revenue Generation', action: () => { openView('core-systems-view'); } },
-      { name: 'Advanced Support Agents', action: () => { openView('core-systems-view'); } },
-      { name: 'Business Management Consultant', action: () => { openView('core-systems-view'); } },
-      { name: 'Agentic Workflows', action: () => { openView('core-systems-view'); } }
+      { name: 'Revenue Engines', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Resolution Systems', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Systems Architecture', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Operational Autonomy', action: () => { openView('core-systems-view', 'features'); } }
     ],
     link: '#features'
   },
   'Architecture': {
     subsections: [
-      { name: 'Systems Audit', action: () => { openView('blueprint-view'); } },
-      { name: 'Agent Deployment', action: () => { openView('blueprint-view'); } },
-      { name: 'Autonomous Scaling', action: () => { openView('blueprint-view'); } }
+      { name: 'Systems Audit', action: () => { openView('blueprint-view', 'process'); } },
+      { name: 'Infrastructure Deployment', action: () => { openView('blueprint-view', 'process'); } },
+      { name: 'Performance Monitoring', action: () => { openView('blueprint-view', 'process'); } }
     ],
     link: '#process'
   },
@@ -31,10 +32,10 @@ const menuStructure = {
   },
   'Solutions': {
     subsections: [
-      { name: 'Autonomous Sales', action: () => openSolutionView('sales') },
-      { name: 'Advanced Support', action: () => openSolutionView('support') },
-      { name: 'Systems Consulting', action: () => openSolutionView('consulting') },
-      { name: 'Workflow Admin', action: () => openSolutionView('workflow') }
+      { name: 'Revenue Engines', action: () => openSolutionView('sales', 'services') },
+      { name: 'Resolution Systems', action: () => openSolutionView('support', 'services') },
+      { name: 'Systems Architecture', action: () => openSolutionView('consulting', 'services') },
+      { name: 'Operational Autonomy', action: () => openSolutionView('workflow', 'services') }
     ],
     link: '#services'
   },
@@ -52,7 +53,12 @@ const menuStructure = {
 };
 
 // View Management
-function openView(viewId) {
+function openView(viewId, section = null) {
+  // Store the source section
+  if (section) {
+    sourceSection = section;
+  }
+  
   triggerTransition(() => {
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('blog-view').style.display = 'none';
@@ -81,7 +87,22 @@ function closeView() {
     
     hexBurger.classList.remove('hidden');
     currentView = 'main';
-    window.scrollTo(0, 0);
+    
+    // Scroll to source section if available
+    if (sourceSection) {
+      const targetSection = document.getElementById(sourceSection);
+      if (targetSection) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: targetSection.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+      sourceSection = null; // Reset
+    } else {
+      window.scrollTo(0, 0);
+    }
   });
 }
 
