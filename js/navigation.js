@@ -2,22 +2,6 @@
    NAVIGATION & VIEW MANAGER
    ======================================== */
 
-// Calculate scrollbar width and set CSS variable to prevent layout shift
-function getScrollbarWidth() {
-  const outer = document.createElement('div');
-  outer.style.visibility = 'hidden';
-  outer.style.overflow = 'scroll';
-  document.body.appendChild(outer);
-  const inner = document.createElement('div');
-  outer.appendChild(inner);
-  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-  outer.parentNode.removeChild(outer);
-  return scrollbarWidth;
-}
-
-// Set CSS variable for scrollbar width
-document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
-
 let currentView = 'main';
 let currentMenuLevel = 'main';
 const hexBurger = document.getElementById('hexBurger');
@@ -294,11 +278,14 @@ hexBurger.addEventListener('click', () => {
   const isOpen = hexBurger.classList.toggle('open');
   menuOverlay.classList.toggle('open', isOpen);
   
-  // Prevent scrolling when menu is open
+  // Prevent scrolling when menu is open and compensate for scrollbar
   if (isOpen) {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
   } else {
     document.body.style.overflow = 'auto';
+    document.body.style.paddingRight = '0px';
   }
   
   if (!isOpen && currentMenuLevel === 'subsection') {
