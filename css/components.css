@@ -285,6 +285,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 2.5rem;
+  margin-right: -15%;
 }
 
 .about-content p {
@@ -292,6 +293,11 @@
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: 1rem;
+}
+
+.about-content p strong {
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .about-tags {
@@ -561,6 +567,9 @@
 @media (max-width: 768px) {
   .blog-grid {
     grid-template-columns: 1fr;
+  }
+  .about-content {
+    margin-right: 0;
   }
 }
 
