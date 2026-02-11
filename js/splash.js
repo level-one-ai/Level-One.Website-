@@ -24,30 +24,21 @@ const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
 
-// SPLASH SEQUENCE
-// Step 1: Show logo
+// INITIAL SPLASH SEQUENCE (Logo and Loader hidden, only show text)
+// Step 1: Hide logo and loader for initial load
+if(splashLogo) splashLogo.style.display = 'none';
+if(loaderBox) loaderBox.style.display = 'none';
+
+// Step 2: Show glitchy text immediately
 setTimeout(() => { 
-  if(splashLogo) splashLogo.style.opacity = '1'; 
+  if(splashText) splashText.style.opacity = '1'; 
 }, 100); 
 
-// Step 2: Show loader box
-setTimeout(() => { 
-  if(loaderBox) loaderBox.style.opacity = '1'; 
-}, 2000); 
-
-// Step 3: Animate loader to 93%
+// Step 3: Mark loading as complete after 2 seconds
 setTimeout(() => {
-  if(loaderBar) {
-    loaderBar.style.transition = 'width 3s cubic-bezier(0.25, 1, 0.5, 1)';
-    loaderBar.style.width = '93%';
-  }
-  
-  // Check completion after animation
-  setTimeout(() => {
-    loadingBarComplete = true;
-    checkIfReadyToComplete();
-  }, 3000);
-}, 2100);
+  loadingBarComplete = true;
+  checkIfReadyToComplete();
+}, 2000);
 
 // Load Canvas Images
 for (let i = 1; i <= frameCount; i++) {
@@ -97,25 +88,11 @@ function checkIfReadyToComplete() {
 }
 
 function completeLoadingSequence() {
-  loaderBar.style.transition = 'width 0.5s ease-out';
-  loaderBar.style.width = '100%';
-  
-  setTimeout(() => {
-    fadeOutLogoAndBar();
-  }, 500);
-}
-
-function fadeOutLogoAndBar() {
-  splashLogo.style.opacity = '0';
-  loaderBox.style.opacity = '0';
-  
-  setTimeout(() => {
-    splashText.style.opacity = '1';
-    setTimeout(() => { 
-      splashText.style.opacity = '0'; 
-      revealSite(); 
-    }, 2000);
-  }, 800);
+  // Fade out text
+  setTimeout(() => { 
+    splashText.style.opacity = '0'; 
+    revealSite(); 
+  }, 1000);
 }
 
 function revealSite() {
@@ -127,14 +104,16 @@ function revealSite() {
   if(!isViewOpen) document.body.style.overflow = 'auto'; 
   
   setTimeout(() => { 
-    splashScreen.style.display = 'none'; 
-    loaderBar.style.width = '0%';
-    loaderBar.style.transition = 'none';
+    splashScreen.style.display = 'none';
   }, 1500);
 }
 
-// Global transition trigger (used by Navigation)
+// Global transition trigger (used by Navigation) - Logo and loader ARE shown here
 function triggerTransition(callback) {
+  // Show logo and loader for transitions
+  if(splashLogo) splashLogo.style.display = 'block';
+  if(loaderBox) loaderBox.style.display = 'block';
+  
   splashScreen.style.display = 'flex';
   requestAnimationFrame(() => {
     splashScreen.style.opacity = '1';
@@ -158,6 +137,9 @@ function finishSplashScreen(mode) {
     setTimeout(() => {
       loaderBox.style.opacity = '0';
       revealSite();
+      // Reset for next transition
+      loaderBar.style.width = '0%';
+      loaderBar.style.transition = 'none';
     }, 800);
   }, 500);
 }
