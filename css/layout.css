@@ -88,6 +88,7 @@ nav {
   background: rgba(5,5,7,0.6);
   backdrop-filter: blur(24px) saturate(1.2);
   border-bottom: 1px solid var(--border);
+  padding-right: calc(2.5rem + var(--scrollbar-width, 0px));
 }
 
 .nav-logo {
