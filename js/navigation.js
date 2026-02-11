@@ -44,6 +44,10 @@ const menuStructure = {
       { name: 'Hyperautomation', action: () => { openBlog('hyperautomation'); } }
     ],
     link: '#insights'
+  },
+  'Pricing': {
+    subsections: null,
+    link: '#pricing'
   }
 };
 
@@ -213,6 +217,7 @@ function showMainMenu() {
       <a href="#about" class="menu-link">Entity</a>
       <a href="#services" class="menu-link">Solutions</a>
       <a href="#insights" class="menu-link">Insights</a>
+      <a href="#pricing" class="menu-link">Pricing</a>
     `;
     
     // Re-attach handlers
