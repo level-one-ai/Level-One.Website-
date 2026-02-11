@@ -62,10 +62,10 @@ function buildFolderTabs(activeSolutionType) {
   if (!tabContainer) return; 
   
   const tabConfig = [
-    { key: 'sales', label: 'Autonomous Sales', icon: '⚡' },
-    { key: 'support', label: 'Advanced Support', icon: '🤖' },
-    { key: 'consulting', label: 'Systems Consulting', icon: '🔍' },
-    { key: 'workflow', label: 'Workflow Admin', icon: '📋' }
+    { key: 'sales', label: 'Revenue Engines', icon: '' },
+    { key: 'support', label: 'Resolution Systems', icon: '' },
+    { key: 'consulting', label: 'Systems Architecture', icon: '' },
+    { key: 'workflow', label: 'Operational Autonomy', icon: '' }
   ];
   
   tabContainer.innerHTML = '';
