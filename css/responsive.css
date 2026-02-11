@@ -1,0 +1,691 @@
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   All devices including tablets, phones, and foldables
+   ======================================== */
+
+/* Tablet Landscape (1024px and below) */
+@media (max-width: 1024px) {
+  .section-inner {
+    max-width: 90%;
+    padding: 3rem 1.5rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+  }
+
+  .feature-grid,
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .about-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+  }
+
+  .about-content {
+    margin-right: -20%;
+    padding: 2rem;
+  }
+}
+
+/* Tablet Portrait (768px and below) */
+@media (max-width: 768px) {
+  /* Navigation */
+  nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-logo-text {
+    font-size: 0.85rem;
+  }
+
+  .menu-overlay {
+    padding: 2rem;
+  }
+
+  .menu-link {
+    font-size: 1.8rem;
+    margin: 0.8rem 0;
+  }
+
+  /* Hero Section */
+  .hero-content {
+    padding: 0 1.5rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+  }
+
+  .hero-nodes {
+    display: none;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-desc {
+    font-size: 0.9rem;
+  }
+
+  .section-num {
+    font-size: 0.65rem;
+  }
+
+  /* Feature & Process Grids */
+  .feature-grid,
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .feature-card-icon,
+  .process-card-icon {
+    height: 200px;
+  }
+
+  /* About Section */
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-photo {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    margin-right: 0;
+    padding: 2rem;
+  }
+
+  /* Services Grid */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .srv-card-visual {
+    height: 320px;
+  }
+
+  /* Blog Grid */
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-image {
+    height: 200px;
+  }
+
+  /* Pricing Grid */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Newsletter */
+  .newsletter-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .newsletter-input {
+    width: 100%;
+  }
+
+  /* Calendar View */
+  .main-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .left-panel {
+    padding: 1.5rem;
+  }
+
+  .calendar-panel {
+    padding: 1.5rem;
+  }
+
+  .right-panel {
+    padding: 1.5rem;
+  }
+
+  .form-container {
+    grid-template-columns: 1fr;
+  }
+
+  .form-left-panel {
+    display: none;
+  }
+
+  .form-right-panel {
+    grid-column: 1;
+  }
+
+  /* Solutions View */
+  .solutions-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+
+  /* Spec Sheet */
+  .spec-toc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Blueprint View */
+  .blueprint-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .trainline-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+
+  .trainline-track {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .trainline-line {
+    width: 100%;
+    height: 2px;
+    top: 50%;
+  }
+
+  .trainline-station {
+    flex-direction: column;
+  }
+}
+
+/* Mobile Landscape (640px and below) */
+@media (max-width: 640px) {
+  .section-inner {
+    padding: 2.5rem 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-sub {
+    font-size: 0.85rem;
+  }
+
+  .btn-primary {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-desc {
+    font-size: 0.85rem;
+  }
+
+  .feature-card h3,
+  .process-card h3 {
+    font-size: 1rem;
+  }
+
+  .feature-card p,
+  .process-card p {
+    font-size: 0.82rem;
+  }
+
+  .about-name {
+    font-size: 1.2rem;
+  }
+
+  .about-content {
+    padding: 1.5rem;
+  }
+
+  .about-content p {
+    font-size: 0.85rem;
+  }
+
+  .srv-card-visual {
+    height: 280px;
+  }
+
+  .srv-card-num,
+  .srv-card-title {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  .srv-pill {
+    font-size: 0.58rem;
+    padding: 0.32rem 0.7rem;
+  }
+
+  .blog-title {
+    font-size: 1.2rem;
+  }
+
+  .blog-excerpt {
+    font-size: 0.85rem;
+  }
+
+  .pricing-title {
+    font-size: 1.3rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+
+  .pricing-feature {
+    font-size: 0.8rem;
+  }
+
+  .newsletter-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .newsletter-content p {
+    font-size: 0.85rem;
+  }
+
+  .menu-link {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile Portrait (480px and below) */
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero-sub {
+    font-size: 0.8rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .section-desc {
+    font-size: 0.8rem;
+  }
+
+  .feature-card-icon,
+  .process-card-icon {
+    height: 160px;
+  }
+
+  .srv-card-visual {
+    height: 240px;
+  }
+
+  .blog-image {
+    height: 180px;
+  }
+
+  .about-content {
+    padding: 1.2rem;
+  }
+
+  .about-tags {
+    gap: 0.35rem;
+  }
+
+  .about-tag {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .card-code {
+    font-size: 0.62rem;
+    padding: 1rem;
+  }
+
+  .pricing-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-transparency {
+    padding: 1.2rem;
+  }
+
+  .calendar-grid {
+    gap: 0.3rem;
+  }
+
+  .time-slot {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .form-center-panel {
+    padding: 1.5rem;
+  }
+
+  .form-input {
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-logo img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-logo-text {
+    font-size: 0.75rem;
+  }
+
+  .hex-burger {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Foldable/Narrow Devices (360px and below - Samsung Fold, etc.) */
+@media (max-width: 360px) {
+  .section-inner {
+    padding: 2rem 0.8rem;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .hero-sub {
+    font-size: 0.75rem;
+  }
+
+  .hero-badge {
+    font-size: 0.6rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .btn-primary {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .section-desc {
+    font-size: 0.75rem;
+  }
+
+  .section-num {
+    font-size: 0.6rem;
+  }
+
+  .feature-card h3,
+  .process-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .feature-card p,
+  .process-card p {
+    font-size: 0.75rem;
+  }
+
+  .feature-label {
+    font-size: 0.55rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .about-name {
+    font-size: 1.1rem;
+  }
+
+  .about-role {
+    font-size: 0.7rem;
+  }
+
+  .about-content {
+    padding: 1rem;
+  }
+
+  .about-content p {
+    font-size: 0.78rem;
+  }
+
+  .about-tag {
+    font-size: 0.55rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .srv-card-visual {
+    height: 200px;
+  }
+
+  .srv-card-num,
+  .srv-card-title {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .srv-pill {
+    font-size: 0.55rem;
+    padding: 0.28rem 0.6rem;
+  }
+
+  .blog-title {
+    font-size: 1.05rem;
+  }
+
+  .blog-excerpt {
+    font-size: 0.78rem;
+  }
+
+  .blog-content {
+    padding: 1.5rem;
+  }
+
+  .pricing-title {
+    font-size: 1.15rem;
+  }
+
+  .price-amount {
+    font-size: 1.8rem;
+  }
+
+  .pricing-feature {
+    font-size: 0.75rem;
+  }
+
+  .pricing-btn {
+    font-size: 0.75rem;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .newsletter-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .newsletter-content p {
+    font-size: 0.78rem;
+  }
+
+  .menu-link {
+    font-size: 1.3rem;
+  }
+
+  .nav-logo img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-logo-text {
+    font-size: 0.7rem;
+  }
+
+  .hex-burger {
+    width: 32px;
+    height: 32px;
+  }
+
+  .card-code {
+    font-size: 0.58rem;
+    padding: 0.8rem;
+  }
+
+  .form-input {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .form-label {
+    font-size: 0.75rem;
+  }
+
+  .time-slot {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .weekday {
+    font-size: 0.6rem;
+  }
+}
+
+/* Landscape Orientation Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+  }
+
+  .hero-content {
+    padding-top: 6rem;
+  }
+
+  .hero-nodes {
+    display: none;
+  }
+
+  .section-inner {
+    padding: 2rem 1rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary,
+  .btn-outline,
+  .menu-link,
+  .blog-card,
+  .srv-card,
+  .feature-card,
+  .process-card,
+  .pricing-btn,
+  .time-slot,
+  .nav-btn,
+  .back-btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Increase tap targets for better mobile UX */
+  .hex-burger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .menu-link {
+    padding: 0.5rem 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-primary {
+    min-height: 44px;
+  }
+
+  .time-slot {
+    min-height: 44px;
+  }
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: env(safe-area-inset-top)) {
+  nav {
+    padding-top: max(1.2rem, env(safe-area-inset-top));
+  }
+
+  .hero-content {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
+  }
+
+  .section-inner {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
+  }
+}
