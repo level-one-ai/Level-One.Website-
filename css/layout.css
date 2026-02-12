@@ -204,8 +204,20 @@ nav {
 }
 
 .subsection-back {
-  font-size: 1.1rem !important;
+  font-size: 0.85rem !important;
   font-weight: 500 !important;
+  cursor: pointer !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.subsection-back:hover {
+  opacity: 1;
+}
+
+.menu-link {
+  cursor: pointer !important;
 }
 
 /* HERO SECTION */
