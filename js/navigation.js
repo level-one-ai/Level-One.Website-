@@ -11,10 +11,10 @@ const menuOverlay = document.getElementById('menuOverlay');
 const menuStructure = {
   'Systems': {
     subsections: [
-      { name: 'Revenue Engines', action: () => { openView('core-systems-view', 'features'); } },
-      { name: 'Resolution Systems', action: () => { openView('core-systems-view', 'features'); } },
-      { name: 'Systems Architecture', action: () => { openView('core-systems-view', 'features'); } },
-      { name: 'Operational Autonomy', action: () => { openView('core-systems-view', 'features'); } }
+      { name: 'Revenue Engines', action: () => { openCoreSystemsView('sales'); } },
+      { name: 'Resolution Systems', action: () => { openCoreSystemsView('support'); } },
+      { name: 'Systems Architecture', action: () => { openCoreSystemsView('consulting'); } },
+      { name: 'Operational Autonomy', action: () => { openCoreSystemsView('workflow'); } }
     ],
     link: '#features'
   },
