@@ -238,6 +238,36 @@ const animateOnScroll = () => {
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', animateOnScroll);
 
+// Initialize menu links on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const menuLinks = document.querySelectorAll('.menu-link');
+  menuLinks.forEach(link => {
+    const sectionName = link.textContent.trim();
+    const menuData = menuStructure[sectionName];
+    
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (menuData && menuData.subsections) {
+        showSubsections(sectionName, menuData.subsections);
+      } else if (menuData && menuData.link) {
+        const target = document.querySelector(menuData.link);
+        if (target) {
+          hexBurger.click();
+          setTimeout(() => {
+            window.scrollTo({
+              top: target.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }, 600);
+        }
+      }
+    });
+  });
+});
+
+
 // Newsletter Form Handler
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
