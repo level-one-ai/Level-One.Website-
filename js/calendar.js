@@ -66,24 +66,37 @@ function validateForm() {
   input.addEventListener('input', validateForm);
 });
 
-// Next Button - Move to Calendar
+// Next Button - Move to Calendar with fade
 nextBtn.addEventListener('click', () => {
-  formPage.style.display = 'none';
-  calendarPage.style.display = 'grid';
+  // Fade out form page
+  formPage.style.transition = 'opacity 0.3s ease';
+  formPage.style.opacity = '0';
   
-  // Populate client info
-  document.getElementById('clientName').textContent = formName.value;
-  document.getElementById('clientEmail').textContent = formEmail.value;
-  document.getElementById('clientCompany').textContent = formCompany.value;
-  document.getElementById('clientLocation').textContent = formLocation.value;
-  
-  // Display pricing tier if selected
-  if (selectedPricingTier) {
-    document.getElementById('pricingTierDisplay').style.display = 'flex';
-    document.getElementById('selectedTier').textContent = selectedPricingTier;
-  }
-  
-  renderCalendar();
+  setTimeout(() => {
+    formPage.style.display = 'none';
+    calendarPage.style.display = 'grid';
+    calendarPage.style.opacity = '0';
+    
+    // Populate client info
+    document.getElementById('clientName').textContent = formName.value;
+    document.getElementById('clientEmail').textContent = formEmail.value;
+    document.getElementById('clientCompany').textContent = formCompany.value;
+    document.getElementById('clientLocation').textContent = formLocation.value;
+    
+    // Display pricing tier if selected
+    if (selectedPricingTier) {
+      document.getElementById('pricingTierDisplay').style.display = 'flex';
+      document.getElementById('selectedTier').textContent = selectedPricingTier;
+    }
+    
+    renderCalendar();
+    
+    // Fade in calendar page
+    setTimeout(() => {
+      calendarPage.style.transition = 'opacity 0.3s ease';
+      calendarPage.style.opacity = '1';
+    }, 50);
+  }, 300);
 });
 
 // Calendar Rendering
