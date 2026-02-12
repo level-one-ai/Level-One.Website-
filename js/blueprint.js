@@ -5,83 +5,67 @@
 let currentPhase = 0;
 
 function initBlueprint() {
-  renderBlueprintPhases();
-  loadPhaseContent(0);
+  // Load all 3 phases immediately
+  loadAllPhases();
   
-  // Station click handlers
+  // Set up scroll observer for trainline animation
+  setupScrollObserver();
+  
+  // Station click handlers (still allow manual navigation)
   document.querySelectorAll('.trainline-station').forEach((station, index) => {
     station.addEventListener('click', () => {
-      selectPhase(index);
+      scrollToPhase(index);
     });
   });
 }
 
-function renderBlueprintPhases() {
-  const trainlineTrack = document.querySelector('.trainline-track');
-  if (!trainlineTrack) return;
-  
-  // Clear existing stations
-  const existingStations = trainlineTrack.querySelectorAll('.trainline-station');
-  existingStations.forEach(station => station.remove());
-  
-  // Create 3 stations
+function loadAllPhases() {
   blueprintData.phases.forEach((phase, index) => {
-    const station = document.createElement('div');
-    station.className = 'trainline-station';
-    station.dataset.station = index;
-    if (index === 0) station.classList.add('active');
-    
-    station.innerHTML = `
-      <div class="station-dot"></div>
-      <div class="station-label">${phase.title}</div>
-    `;
-    
-    trainlineTrack.appendChild(station);
+    const sectionElement = document.querySelector(`.blueprint-section[data-station="${index}"] .blueprint-sections`);
+    if (sectionElement) {
+      sectionElement.innerHTML = phase.content;
+    }
   });
 }
 
-function selectPhase(phaseIndex) {
-  if (phaseIndex === currentPhase) return;
+function setupScrollObserver() {
+  const sections = document.querySelectorAll('.blueprint-section');
   
-  currentPhase = phaseIndex;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+        const stationIndex = parseInt(entry.target.dataset.station);
+        updateActiveStation(stationIndex);
+      }
+    });
+  }, {
+    threshold: [0.2, 0.4, 0.6],
+    rootMargin: '-20% 0px -20% 0px'
+  });
   
-  // Update active station
+  sections.forEach(section => observer.observe(section));
+}
+
+function updateActiveStation(stationIndex) {
+  if (currentPhase === stationIndex) return;
+  
+  currentPhase = stationIndex;
+  
+  // Update station active states
   document.querySelectorAll('.trainline-station').forEach((station, index) => {
-    station.classList.toggle('active', index === phaseIndex);
+    if (index === stationIndex) {
+      station.classList.add('active');
+    } else {
+      station.classList.remove('active');
+    }
   });
-  
-  // Load content with fade transition
-  loadPhaseContent(phaseIndex);
 }
 
-function loadPhaseContent(phaseIndex) {
-  const phase = blueprintData.phases[phaseIndex];
-  if (!phase) return;
-  
-  const contentContainer = document.querySelector('.blueprint-content');
-  if (!contentContainer) return;
-  
-  // Find or create the sections container
-  let sectionsContainer = contentContainer.querySelector('.blueprint-sections');
-  if (!sectionsContainer) {
-    sectionsContainer = document.createElement('div');
-    sectionsContainer.className = 'blueprint-sections';
-    contentContainer.appendChild(sectionsContainer);
+function scrollToPhase(phaseIndex) {
+  const section = document.querySelector(`.blueprint-section[data-station="${phaseIndex}"]`);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  
-  // Fade out
-  sectionsContainer.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-  sectionsContainer.style.opacity = '0';
-  sectionsContainer.style.transform = 'translateY(20px)';
-  
-  setTimeout(() => {
-    // Update content
-    sectionsContainer.innerHTML = phase.content;
-    
-    // Fade in
-    sectionsContainer.style.opacity = '1';
-    sectionsContainer.style.transform = 'translateY(0)';
-  }, 300);
 }
 
 // Initialize when blueprint view opens
