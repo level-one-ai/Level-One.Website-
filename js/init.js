@@ -32,6 +32,45 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   window.scrollTo(0, 0);
 }
 
+// Core Systems View Opening Function (01 — Revenue Infrastructure)
+function openCoreSystemsView(systemType) {
+  triggerTransition(() => {
+    // Hide other views
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('solutions-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+    
+    // Show core systems view
+    document.getElementById('core-systems-view').style.display = 'block';
+    currentView = 'core-systems-view';
+    
+    // Scroll to the appropriate section if systemType is provided
+    if (systemType) {
+      setTimeout(() => {
+        const sectionMap = {
+          'sales': 'spec-sales',
+          'support': 'spec-support',
+          'consulting': 'spec-integration',
+          'workflow': 'spec-deployment'
+        };
+        
+        const targetId = sectionMap[systemType];
+        if (targetId) {
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }, 300);
+    }
+    
+    hexBurger.classList.add('hidden');
+    window.scrollTo(0, 0);
+  });
+}
+
 // Infrastructure View Opening Function
 function openInfrastructureView(type, section = 'services') {
   sourceSection = section;
