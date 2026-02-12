@@ -37,9 +37,7 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/sections.css">
 <link rel="stylesheet" href="css/views.css">
-<link rel="stylesheet" href="css/calendar.css">
-<link rel="stylesheet" href="css/calendar-fixed.css">
-<link rel="stylesheet" href="css/solution-styles.css">
+<link rel="stylesheet" href="css/calendar-styles.css">
 <link rel="stylesheet" href="css/responsive.css">
 
 </head>
@@ -684,22 +682,17 @@
           
           <div class="trainline-station active" data-station="0">
             <div class="station-dot"></div>
-            <div class="station-label">Audit</div>
+            <div class="station-label">Systems Audit</div>
           </div>
           
           <div class="trainline-station" data-station="1">
             <div class="station-dot"></div>
-            <div class="station-label">Architecture</div>
+            <div class="station-label">Infrastructure Deployment</div>
           </div>
           
           <div class="trainline-station" data-station="2">
             <div class="station-dot"></div>
-            <div class="station-label">Deployment</div>
-          </div>
-          
-          <div class="trainline-station" data-station="3">
-            <div class="station-dot"></div>
-            <div class="station-label">ROI Tracking</div>
+            <div class="station-label">Performance Monitoring</div>
           </div>
         </div>
       </div>
@@ -715,34 +708,39 @@
           <p class="blueprint-subtitle">How we install revenue infrastructure that increases acquisition, reduces costs, and scales operations</p>
         </div>
         
-        <div class="blueprint-section" id="station-design" data-station="0">
+        <!-- Phase 1: Systems Audit -->
+        <div class="blueprint-section" data-station="0">
           <div class="section-station-marker">
             <span class="marker-icon">01</span>
-            <span class="marker-label">Audit Phase</span>
+            <span class="marker-label">Phase 1: Systems Audit</span>
           </div>
           
-          <h2 class="blueprint-section-title">Logic Trains: Revenue-Generating Workflows</h2>
+          <div class="blueprint-sections">
+            <!-- Content will be injected by blueprint.js -->
+          </div>
+        </div>
+        
+        <!-- Phase 2: Infrastructure Deployment -->
+        <div class="blueprint-section" data-station="1">
+          <div class="section-station-marker">
+            <span class="marker-icon">02</span>
+            <span class="marker-label">Phase 2: Infrastructure Deployment</span>
+          </div>
           
-          <p class="blueprint-text">
-            We engineer <strong>Logic Trains</strong>—deterministic workflows that drive commercial outcomes 
-            from trigger to completion. Every prospect enters at a defined station (lead capture), travels along 
-            revenue-optimized tracks (qualification and conversion logic), and arrives at a measurable destination 
-            (closed revenue, scheduled meeting, or automated nurture sequence).
-          </p>
+          <div class="blueprint-sections">
+            <!-- Content will be injected by blueprint.js -->
+          </div>
+        </div>
+        
+        <!-- Phase 3: Performance Monitoring -->
+        <div class="blueprint-section" data-station="2">
+          <div class="section-station-marker">
+            <span class="marker-icon">03</span>
+            <span class="marker-label">Phase 3: Performance Monitoring</span>
+          </div>
           
-          <div class="blueprint-callout">
-            <div class="callout-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-            <div class="callout-content">
-              <strong>Why "Logic Trains"?</strong> Traditional automation fails when edge cases derail execution. 
-              Logic Trains operate on revenue-optimized tracks with decision switches—routing data to maximize 
-              conversion and minimize cost at every stage.
-            </div>
+          <div class="blueprint-sections">
+            <!-- Content will be injected by blueprint.js -->
           </div>
         </div>
         
@@ -793,8 +791,7 @@
   
 <footer><p>© 2026 Level One — Premier Systems Partner | Edinburgh, Scotland</p></footer>
 
-<script src="js/data-updated.js"></script>
-<script src="js/infrastructure-data.js"></script>
+<script src="js/data.js"></script>
 <script src="js/blog-data.js"></script>
 <script src="js/splash.js"></script>
 <script src="js/navigation.js"></script>
