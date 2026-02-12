@@ -107,7 +107,7 @@ function buildInfrastructureTabs(activeType) {
     tabEl.innerHTML = `<span class="tab-icon">${tab.icon}</span><span class="tab-label">${tab.label}</span>`;
     
     tabEl.addEventListener('click', function() {
-      if (tab.key === activeType) return;
+      // Allow clicking the same tab to refresh
       switchInfrastructureTab(tab.key);
     });
     
