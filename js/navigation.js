@@ -11,18 +11,18 @@ const menuOverlay = document.getElementById('menuOverlay');
 const menuStructure = {
   'Systems': {
     subsections: [
-      { name: 'Revenue Engines', action: () => { triggerTransition(() => openSolutionView('sales', 'features')); } },
-      { name: 'Resolution Systems', action: () => { triggerTransition(() => openSolutionView('support', 'features')); } },
-      { name: 'Systems Architecture', action: () => { triggerTransition(() => openSolutionView('consulting', 'features')); } },
-      { name: 'Operational Autonomy', action: () => { triggerTransition(() => openSolutionView('workflow', 'features')); } }
+      { name: 'Revenue Engines', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Resolution Systems', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Systems Architecture', action: () => { openView('core-systems-view', 'features'); } },
+      { name: 'Operational Autonomy', action: () => { openView('core-systems-view', 'features'); } }
     ],
     link: '#features'
   },
   'Architecture': {
     subsections: [
-      { name: 'Systems Audit', action: () => { triggerTransition(() => openBlueprintPhase(0, 'process')); } },
-      { name: 'Infrastructure Deployment', action: () => { triggerTransition(() => openBlueprintPhase(1, 'process')); } },
-      { name: 'Performance Monitoring', action: () => { triggerTransition(() => openBlueprintPhase(2, 'process')); } }
+      { name: 'Systems Audit', action: () => { openView('blueprint-view', 'process'); } },
+      { name: 'Infrastructure Deployment', action: () => { openView('blueprint-view', 'process'); } },
+      { name: 'Performance Monitoring', action: () => { openView('blueprint-view', 'process'); } }
     ],
     link: '#process'
   },
@@ -32,10 +32,10 @@ const menuStructure = {
   },
   'Solutions': {
     subsections: [
-      { name: 'Lead Generation', action: () => { triggerTransition(() => openInfrastructureView('sales', 'services')); } },
-      { name: 'Project Management', action: () => { triggerTransition(() => openInfrastructureView('support', 'services')); } },
-      { name: 'Hiring Systems', action: () => { triggerTransition(() => openInfrastructureView('consulting', 'services')); } },
-      { name: 'Sales Administration', action: () => { triggerTransition(() => openInfrastructureView('workflow', 'services')); } }
+      { name: 'Revenue Engines', action: () => openSolutionView('sales', 'services') },
+      { name: 'Resolution Systems', action: () => openSolutionView('support', 'services') },
+      { name: 'Systems Architecture', action: () => openSolutionView('consulting', 'services') },
+      { name: 'Operational Autonomy', action: () => openSolutionView('workflow', 'services') }
     ],
     link: '#services'
   },
@@ -202,7 +202,7 @@ function showSubsections(sectionName, subsections) {
       subLink.addEventListener('click', function(e) {
         e.preventDefault();
         hexBurger.click();
-        setTimeout(() => { sub.action(); }, 700);
+        setTimeout(() => { sub.action(); }, 300);
       });
       
       menuOverlay.appendChild(subLink);
@@ -296,45 +296,30 @@ function smoothScrollTo(targetY, duration) {
 
 // Burger Toggle
 hexBurger.addEventListener('click', () => {
-  const isOpen = hexBurger.classList.contains('open');
+  const isOpen = hexBurger.classList.toggle('open');
+  menuOverlay.classList.toggle('open', isOpen);
   
+  // Prevent scrolling when menu is open and compensate for scrollbar
   if (isOpen) {
-    // Closing menu - fade out links first
-    const menuLinks = document.querySelectorAll('.menu-link');
-    menuLinks.forEach((link, i) => {
-      link.style.transitionDelay = `${i * 0.05}s`;
-      link.style.opacity = '0';
-      link.style.transform = 'translateX(60px)';
-    });
-    
-    // Then close menu overlay after links fade
-    setTimeout(() => {
-      hexBurger.classList.remove('open');
-      menuOverlay.classList.remove('open', isOpen);
-      document.body.style.overflow = 'auto';
-      document.body.style.paddingRight = '0px';
-      
-      if (currentMenuLevel === 'subsection') {
-        setTimeout(showMainMenu, 100);
-      }
-    }, menuLinks.length * 50 + 200);
-    
-  } else {
-    // Opening menu
-    hexBurger.classList.add('open');
-    menuOverlay.classList.add('open');
-    
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = 'hidden';
     document.body.style.paddingRight = `${scrollbarWidth}px`;
-    
-    // Fade in links
-    const menuLinks = document.querySelectorAll('.menu-link');
-    menuLinks.forEach((link, i) => {
-      link.style.transitionDelay = `${0.1 + (i * 0.1)}s`;
-      link.classList.add('show');
-    });
+    // Also apply padding to fixed elements to prevent shift
+    document.querySelector('nav').style.paddingRight = `calc(2.5rem + ${scrollbarWidth}px)`;
+  } else {
+    document.body.style.overflow = 'auto';
+    document.body.style.paddingRight = '0px';
+    document.querySelector('nav').style.paddingRight = '2.5rem';
   }
+  
+  if (!isOpen && currentMenuLevel === 'subsection') {
+    setTimeout(showMainMenu, 600);
+  }
+  
+  document.querySelectorAll('.menu-link').forEach((link, i) => {
+    link.classList.toggle('show', isOpen);
+    link.style.transitionDelay = isOpen ? `${0.1 + (i * 0.1)}s` : '0s';
+  });
 });
 
 // Nav Logo Click
