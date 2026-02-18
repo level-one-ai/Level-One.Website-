@@ -80,10 +80,10 @@ nav {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 0 2.5rem;
-  height: 56px;
+  padding: 10px 2.5rem 0;
+  height: 68px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   background: rgba(5,5,7,0.6);
   backdrop-filter: blur(24px) saturate(1.2);
@@ -233,7 +233,7 @@ nav {
   align-items: flex-end;
   justify-content: flex-start;
   padding: 0;
-  margin-top: 56px;
+  margin-top: 68px;
   z-index: 5;
   background: var(--bg);
 }
