@@ -204,15 +204,17 @@ const webhookURL = 'https://hook.eu2.make.com/YOUR_WEBHOOK_ID';
 
 ## Known Issues / Technical Debt
 
-1. **Duplicate `data.js` script tag** — `index.html` loads `js/data.js` twice (lines 794–795). This causes `infrastructureData` to be declared twice but JavaScript silently allows `const` re-declaration via duplicate script loads. Remove the duplicate `<script src="js/data.js"></script>` line.
+All previously identified issues have been resolved:
 
-2. **`infrastructureData` declared twice in `data.js`** — The object is defined at line 234 and again at line 676. The second declaration overwrites the first. The first (incomplete) block should be removed.
+1. ~~Duplicate `data.js` script tag~~ — Fixed: removed duplicate `<script>` in `index.html`.
+2. ~~`infrastructureData` declared twice~~ — Fixed: removed the first broken declaration from `data.js`; only the complete declaration remains.
+3. ~~Newsletter form had no backend~~ — Fixed: `sendNewsletterToWebhook()` in `init.js` now POSTs to a Make.com webhook on submit. Replace `YOUR_NEWSLETTER_WEBHOOK_ID` in the URL with the real webhook ID.
+4. ~~Duplicate `openCalendar` function~~ — Fixed: removed the version in `navigation.js`; only `calendar.js`'s version (with `pricingTier` parameter) remains.
+5. ~~`selectPhase` not defined~~ — Fixed: `openBlueprintPhase()` in `init.js` now correctly calls `scrollToPhase()`.
 
-3. **Newsletter form has no backend** — The form in `#insights` only shows UI feedback (`Subscribed ✓`) but does not submit anywhere. Wire up to an email service or Make.com webhook if real subscriptions are needed.
-
-4. **Duplicate `openCalendar` function** — Defined in both `navigation.js` and `calendar.js`. The `calendar.js` version (with `pricingTier` parameter) takes precedence due to script load order. The `navigation.js` version can be removed.
-
-5. **`selectPhase` referenced in `init.js` but not defined** — `openBlueprintPhase()` calls `selectPhase(phaseIndex)` but this function does not exist; it should be `scrollToPhase()` (defined in `blueprint.js`).
+### Remaining configuration needed
+- **Calendar webhook**: Replace `YOUR_WEBHOOK_ID` in `js/calendar.js` with the real Make.com webhook ID.
+- **Newsletter webhook**: Replace `YOUR_NEWSLETTER_WEBHOOK_ID` in `js/init.js` with the real Make.com webhook ID.
 
 ---
 

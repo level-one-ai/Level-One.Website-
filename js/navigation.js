@@ -32,10 +32,10 @@ const menuStructure = {
   },
   'Solutions': {
     subsections: [
-      { name: 'Revenue Engines', action: () => openSolutionView('sales', 'services') },
-      { name: 'Resolution Systems', action: () => openSolutionView('support', 'services') },
-      { name: 'Systems Architecture', action: () => openSolutionView('consulting', 'services') },
-      { name: 'Operational Autonomy', action: () => openSolutionView('workflow', 'services') }
+      { name: 'Lead Generation', action: () => openSolutionView('sales', 'services') },
+      { name: 'Project Management', action: () => openSolutionView('support', 'services') },
+      { name: 'Hiring Systems', action: () => openSolutionView('consulting', 'services') },
+      { name: 'Sales Administration', action: () => openSolutionView('workflow', 'services') }
     ],
     link: '#services'
   },
@@ -112,16 +112,6 @@ function openBlog(type) {
     document.getElementById('calendar-view').style.display = 'none';
     document.getElementById('blog-view').style.display = 'block';
     document.getElementById('blog-content-injection').innerHTML = blogPosts[type];
-    hexBurger.classList.add('hidden'); 
-    window.scrollTo(0,0);
-  });
-}
-
-function openCalendar() {
-  triggerTransition(() => {
-    document.getElementById('main-content').style.display = 'none';
-    document.getElementById('blog-view').style.display = 'none';
-    document.getElementById('calendar-view').style.display = 'block';
     hexBurger.classList.add('hidden'); 
     window.scrollTo(0,0);
   });
