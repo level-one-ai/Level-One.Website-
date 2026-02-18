@@ -4,60 +4,62 @@
 function openSolutionView(solutionType, sectionId = null) {
   const data = solutionData[solutionType];
   if (!data) return;
-  
+
   // Store source section for back button
   if (sectionId) {
     sourceSection = sectionId;
   }
-  
-  // Hide other views
-  document.getElementById('main-content').style.display = 'none';
-  document.getElementById('blog-view').style.display = 'none';
-  document.getElementById('calendar-view').style.display = 'none';
-  document.getElementById('core-systems-view').style.display = 'none';
-  document.getElementById('blueprint-view').style.display = 'none';
-  
-  // Show solutions view
-  document.getElementById('solutions-view').style.display = 'block';
-  
-  // Update folder title
-  document.getElementById('solutionFolderTitle').textContent = data.title;
-  
-  // Build folder tabs
-  buildFolderTabs(solutionType);
-  
-  // Build sidebar selectors
-  const sidebar = document.getElementById('solutionsSidebar');
-  sidebar.innerHTML = '';
-  
-  data.sections.forEach((section, index) => {
-    const selector = document.createElement('div');
-    selector.className = 'solution-selector';
-    if (index === 0 && !sectionId) selector.classList.add('active');
-    if (sectionId && section.id === sectionId) selector.classList.add('active');
-    selector.textContent = `${section.icon} ${section.name}`;
-    selector.dataset.sectionId = section.id;
-    selector.dataset.solutionType = solutionType;
-    
-    selector.addEventListener('click', function() {
-      switchSolutionSection(solutionType, section.id);
+
+  triggerTransition(() => {
+    // Hide other views
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+
+    // Show solutions view
+    document.getElementById('solutions-view').style.display = 'block';
+
+    // Update folder title
+    document.getElementById('solutionFolderTitle').textContent = data.title;
+
+    // Build folder tabs
+    buildFolderTabs(solutionType);
+
+    // Build sidebar selectors
+    const sidebar = document.getElementById('solutionsSidebar');
+    sidebar.innerHTML = '';
+
+    data.sections.forEach((section, index) => {
+      const selector = document.createElement('div');
+      selector.className = 'solution-selector';
+      if (index === 0 && !sectionId) selector.classList.add('active');
+      if (sectionId && section.id === sectionId) selector.classList.add('active');
+      selector.textContent = `${section.icon} ${section.name}`;
+      selector.dataset.sectionId = section.id;
+      selector.dataset.solutionType = solutionType;
+
+      selector.addEventListener('click', function() {
+        switchSolutionSection(solutionType, section.id);
+      });
+
+      sidebar.appendChild(selector);
     });
-    
-    sidebar.appendChild(selector);
+
+    // Load initial content
+    const targetSection = sectionId
+      ? data.sections.find(s => s.id === sectionId)
+      : data.sections[0];
+
+    if (targetSection) {
+      document.getElementById('solutionContentArea').innerHTML = targetSection.content;
+    }
+
+    // Hide burger menu
+    document.getElementById('hexBurger').classList.add('hidden');
+    window.scrollTo(0, 0);
   });
-  
-  // Load initial content
-  const targetSection = sectionId 
-    ? data.sections.find(s => s.id === sectionId) 
-    : data.sections[0];
-  
-  if (targetSection) {
-    document.getElementById('solutionContentArea').innerHTML = targetSection.content;
-  }
-  
-  // Hide burger menu
-  document.getElementById('hexBurger').classList.add('hidden');
-  window.scrollTo(0, 0);
 }
 
 function buildFolderTabs(activeSolutionType) {

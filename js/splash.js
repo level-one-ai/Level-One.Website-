@@ -24,21 +24,26 @@ const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
 
-// INITIAL SPLASH SEQUENCE (Logo and Loader hidden, only show text)
-// Step 1: Hide logo and loader for initial load
-if(splashLogo) splashLogo.style.display = 'none';
-if(loaderBox) loaderBox.style.display = 'none';
+// INITIAL SPLASH SEQUENCE - Show logo and loading bar
+splashScreen.style.display = 'flex';
+splashScreen.style.opacity = '1';
 
-// Step 2: Show glitchy text immediately
-setTimeout(() => { 
-  if(splashText) splashText.style.opacity = '1'; 
-}, 100); 
+if(splashLogo) splashLogo.style.display = 'block';
+if(loaderBox) loaderBox.style.display = 'block';
 
-// Step 3: Mark loading as complete after 2 seconds
+// Fade in logo and loader, then animate the loading bar
+setTimeout(() => {
+  if(splashLogo) splashLogo.style.opacity = '1';
+  if(loaderBox) loaderBox.style.opacity = '1';
+  loaderBar.style.transition = 'width 2s cubic-bezier(0.25, 1, 0.5, 1)';
+  setTimeout(() => { loaderBar.style.width = '80%'; }, 100);
+}, 300);
+
+// Mark loading as complete after minimum display time
 setTimeout(() => {
   loadingBarComplete = true;
   checkIfReadyToComplete();
-}, 2000);
+}, 2500);
 
 // Load Canvas Images
 for (let i = 1; i <= frameCount; i++) {
@@ -88,11 +93,18 @@ function checkIfReadyToComplete() {
 }
 
 function completeLoadingSequence() {
-  // Fade out text
-  setTimeout(() => { 
-    splashText.style.opacity = '0'; 
-    revealSite(); 
-  }, 1000);
+  // Complete the loading bar, then fade out logo and loader
+  loaderBar.style.transition = 'width 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+  loaderBar.style.width = '100%';
+  setTimeout(() => {
+    if(splashLogo) splashLogo.style.opacity = '0';
+    setTimeout(() => {
+      if(loaderBox) loaderBox.style.opacity = '0';
+      revealSite();
+      loaderBar.style.width = '0%';
+      loaderBar.style.transition = 'none';
+    }, 600);
+  }, 400);
 }
 
 function revealSite() {
