@@ -80,10 +80,10 @@ nav {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 0 2.5rem;
-  height: 80px;
+  padding: 10px 2.5rem 0;
+  height: 68px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   background: rgba(5,5,7,0.6);
   backdrop-filter: blur(24px) saturate(1.2);
@@ -98,24 +98,56 @@ nav {
 }
 
 .nav-logo img {
+  display: block;
   height: 36px;
   width: auto;
   filter: brightness(1.2);
+  margin-top: -4px;
 }
 
 .nav-logo-text {
   font-family: var(--heading);
   font-weight: 700;
   font-size: 1.3rem;
+  line-height: 1;
   color: var(--white);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   position: relative;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: -4px;
+}
+
+.btn-book-call {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.45rem 1.1rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.btn-book-call:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.4);
+  color: var(--white);
+}
+
 .hex-burger {
   width: 42px;
   height: 42px;
+  padding: 0;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +262,7 @@ nav {
   align-items: flex-end;
   justify-content: flex-start;
   padding: 0;
-  margin-top: 80px;
+  margin-top: 68px;
   z-index: 5;
   background: var(--bg);
 }
