@@ -24,17 +24,17 @@ const videoState = { targetFrame: 0, smoothFrame: 0 };
 setTimeout(revealSite, 3000);
 
 function revealSite() {
-  // Step 1: fade out "LEVEL ONE" text
-  splashText.style.transition = 'opacity 0.5s ease';
+  // Step 1: fade out "LEVEL ONE" text (1s)
+  splashText.style.transition = 'opacity 1s ease';
   splashText.style.opacity = '0';
 
-  // Step 2: after text is gone, fade the black screen to reveal the website
+  // Step 2: after text is gone, fade the black screen to reveal the website (4s)
   setTimeout(() => {
-    splashScreen.style.transition = 'opacity 1.5s ease-in-out';
+    splashScreen.style.transition = 'opacity 4s ease-in-out';
     splashScreen.style.opacity = '0';
     document.body.style.overflow = 'auto';
-    setTimeout(() => { splashScreen.style.display = 'none'; }, 1500);
-  }, 500);
+    setTimeout(() => { splashScreen.style.display = 'none'; }, 4000);
+  }, 1000);
 }
 
 // View transition trigger (used by Navigation for blog/calendar/etc.)
