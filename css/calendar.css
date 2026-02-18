@@ -32,6 +32,15 @@
   opacity: 1;
   position: relative;
   text-align: center;
+  animation: text-glitch 1.5s infinite;
+}
+
+@keyframes text-glitch {
+  0%, 78%, 100% { transform: translate(0, 0) skewX(0deg); }
+  80% { transform: translate(-3px, 0) skewX(-1.5deg); }
+  82% { transform: translate(3px, 0) skewX(0deg); }
+  84% { transform: translate(-2px, 0) skewX(1deg); }
+  86% { transform: translate(0, 0) skewX(0deg); }
 }
 
 .glitch-active {
@@ -46,38 +55,40 @@
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
 }
 
 .glitch-active::before {
-  color: rgba(180, 240, 255, 0.7);
+  color: #0ff;
+  opacity: 0.85;
   z-index: -1;
-  left: 1px;
   clip-path: inset(100% 0 0 0);
-  animation: glitch-anim-1 4s infinite linear;
+  animation: glitch-anim-1 2s infinite;
 }
 
 .glitch-active::after {
-  color: rgba(255, 180, 240, 0.6);
+  color: #f0f;
+  opacity: 0.8;
   z-index: -2;
-  left: -1px;
   clip-path: inset(100% 0 0 0);
-  animation: glitch-anim-2 3.5s infinite linear;
+  animation: glitch-anim-2 1.2s infinite;
 }
 
 @keyframes glitch-anim-1 {
   0%, 74%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
-  75% { clip-path: inset(15% 0 70% 0); transform: translate(-1px, 0); }
-  77% { clip-path: inset(55% 0 25% 0); transform: translate(1px, 0); }
-  79% { clip-path: inset(35% 0 50% 0); transform: translate(-1px, 0); }
-  81% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+  75% { clip-path: inset(8% 0 76% 0); transform: translate(-4px, 0); }
+  77% { clip-path: inset(50% 0 36% 0); transform: translate(4px, 0); }
+  79% { clip-path: inset(70% 0 16% 0); transform: translate(-3px, 0); }
+  82% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+  90% { clip-path: inset(30% 0 56% 0); transform: translate(3px, 0); }
+  92% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
 }
 
 @keyframes glitch-anim-2 {
-  0%, 39%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
-  40% { clip-path: inset(65% 0 20% 0); transform: translate(1px, 0); }
-  42% { clip-path: inset(30% 0 55% 0); transform: translate(-1px, 0); }
-  44% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+  0%, 58%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+  60% { clip-path: inset(60% 0 24% 0); transform: translate(4px, 0); }
+  62% { clip-path: inset(20% 0 64% 0); transform: translate(-4px, 0); }
+  64% { clip-path: inset(40% 0 44% 0); transform: translate(3px, 0); }
+  66% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
 }
 
 /* FORM & CALENDAR LAYOUT */
