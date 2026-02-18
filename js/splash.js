@@ -2,62 +2,70 @@
    SPLASH SCREEN & CANVAS ANIMATION
    ======================================== */
 
-// Initial state
+// Lock scroll during splash
 document.body.style.overflow = 'hidden';
 
 // Element references
 const splashScreen = document.getElementById('splash-screen');
+const splashText = document.getElementById('splash-text');
 const heroVideo = document.querySelector('.hero-video-bg video');
 const canvas = document.getElementById("hero-lightpass");
 const context = canvas.getContext("2d");
 
-// State
+// Canvas state
 const frameCount = 120;
-const currentFrame = index => `https://res.cloudinary.com/dw5n0wlmr/image/upload/f_auto,q_auto/v1770458357/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const currentFrame = index =>
+  `https://res.cloudinary.com/dw5n0wlmr/image/upload/f_auto,q_auto/v1770458357/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
 
-// Show splash immediately
-splashScreen.style.display = 'flex';
-splashScreen.style.opacity = '1';
-
-// Reveal site after 2 seconds
+// After 2 seconds: text fades out, then black screen fades revealing website
 setTimeout(revealSite, 2000);
 
 function revealSite() {
-  splashScreen.style.opacity = '0';
-  const isViewOpen = document.getElementById('blog-view').style.display === 'block' ||
-                     document.getElementById('calendar-view').style.display === 'block';
-  if (!isViewOpen) document.body.style.overflow = 'auto';
-  setTimeout(() => { splashScreen.style.display = 'none'; }, 1000);
+  // Step 1: fade out "LEVEL ONE" text
+  splashText.style.transition = 'opacity 0.5s ease';
+  splashText.style.opacity = '0';
+
+  // Step 2: after text is gone, fade the black screen to reveal the website
+  setTimeout(() => {
+    splashScreen.style.transition = 'opacity 1s ease';
+    splashScreen.style.opacity = '0';
+    document.body.style.overflow = 'auto';
+    setTimeout(() => { splashScreen.style.display = 'none'; }, 1000);
+  }, 500);
 }
 
-// Global transition trigger (used by Navigation)
+// View transition trigger (used by Navigation for blog/calendar/etc.)
 function triggerTransition(callback) {
+  // Immediately show splash with text (no transition — instant black screen)
+  splashText.style.transition = 'none';
+  splashText.style.opacity = '1';
+  splashScreen.style.transition = 'none';
   splashScreen.style.display = 'flex';
-  requestAnimationFrame(() => {
-    splashScreen.style.opacity = '1';
+  splashScreen.style.opacity = '1';
+
+  // Two rAFs ensure the browser has committed the above paint before we proceed
+  requestAnimationFrame(() => requestAnimationFrame(() => {
     setTimeout(() => {
       callback();
       setTimeout(() => {
+        splashScreen.style.transition = 'opacity 0.8s ease';
         splashScreen.style.opacity = '0';
         setTimeout(() => { splashScreen.style.display = 'none'; }, 800);
-      }, 400);
-    }, 300);
-  });
+      }, 300);
+    }, 200);
+  }));
 }
 
-// Load Canvas Images in background
+// Load canvas frames in the background
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
   img.src = currentFrame(i);
   img.onload = () => {
     imagesLoaded++;
-    if (imagesLoaded === 1) {
-      loop();
-      render(0);
-    }
+    if (imagesLoaded === 1) { loop(); render(0); }
   };
   img.onerror = () => { imagesLoaded++; };
   images.push(img);
@@ -66,7 +74,7 @@ for (let i = 1; i <= frameCount; i++) {
 // Start video immediately
 if (heroVideo) { heroVideo.play().catch(() => {}); }
 
-// Canvas Loop & Scroll
+// Canvas render loop
 function loop() {
   videoState.smoothFrame += (videoState.targetFrame - videoState.smoothFrame) * 0.025;
   render(Math.floor(videoState.smoothFrame));
