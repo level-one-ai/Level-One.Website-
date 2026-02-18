@@ -116,11 +116,38 @@ nav {
   position: relative;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: -4px;
+}
+
+.btn-book-call {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.45rem 1.1rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.btn-book-call:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.4);
+  color: var(--white);
+}
+
 .hex-burger {
   width: 42px;
   height: 42px;
   padding: 0;
-  margin-top: -4px;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;

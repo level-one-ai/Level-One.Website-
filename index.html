@@ -64,9 +64,12 @@
     <img src="https://github.com/level-one-ai/Level-One.Website-/blob/main/images/Whisk_krwz0utmjzjyjbtotqwywgtlxedo00smhjdmtqm%20(1).png?raw=true" alt="Level One">
     <span class="nav-logo-text glitch-effect" data-text="LEVEL ONE">LEVEL ONE</span>
   </a>
-  <button class="hex-burger" id="hexBurger" aria-label="Menu">
-    <svg class="hex-border" viewBox="0 0 42 42"><polygon points="21,1 39,11 39,31 21,41 3,31 3,11"/></svg>
-  </button>
+  <div class="nav-right">
+    <button onclick="openCalendar()" class="btn-book-call">Book a Call</button>
+    <button class="hex-burger" id="hexBurger" aria-label="Menu">
+      <svg class="hex-border" viewBox="0 0 42 42"><polygon points="21,1 39,11 39,31 21,41 3,31 3,11"/></svg>
+    </button>
+  </div>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -75,7 +78,6 @@
   <a href="#about" class="menu-link">Entity</a>
   <a href="#services" class="menu-link">Solutions</a>
   <a href="#pricing" class="menu-link">Pricing</a>
-  <a href="#insights" class="menu-link">Insights</a>
 </div>
 
 <div id="main-content">
@@ -152,7 +154,7 @@
     <h2 class="section-title anim anim-up d1">Three phases.<br>Measurable commercial impact.</h2>
     <p class="section-desc anim anim-up d2">We follow a structured deployment protocol focused on revenue growth, cost reduction, and operational efficiency across Scotland and the UK.</p>
     <div class="process-grid">
-      <div class="process-card anim anim-left d1" onclick="openBlueprintPhase(0, 'process')" style="cursor: pointer;">
+      <div class="process-card anim anim-up d1" onclick="openBlueprintPhase(0, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459429/Whisk_2d3cf369b4c88a8a8f941b53648eb51deg.png" class="card-img-fill" alt="Audit">
         </div>
@@ -160,7 +162,7 @@
         <h3>Systems Audit</h3>
         <p>We map your current workflow and quantify where inefficiency costs you revenue or margin. Every recommendation targets measurable commercial impact.</p>
       </div>
-      <div class="process-card anim anim-up d2" onclick="openBlueprintPhase(1, 'process')" style="cursor: pointer;">
+      <div class="process-card anim anim-up d3" onclick="openBlueprintPhase(1, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459428/Whisk_5349c90e685b97fae1c4144eb7f7fb57eg.png" class="card-img-fill" alt="Building">
         </div>
@@ -168,7 +170,7 @@
         <h3>Infrastructure Deployment</h3>
         <p>We install revenue infrastructure designed to increase acquisition, reduce costs, and eliminate manual overhead. Every system is tested before handover.</p>
       </div>
-      <div class="process-card anim anim-right d3" onclick="openBlueprintPhase(2, 'process')" style="cursor: pointer;">
+      <div class="process-card anim anim-up d5" onclick="openBlueprintPhase(2, 'process')" style="cursor: pointer;">
         <div class="process-card-icon">
           <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459420/Whisk_7741b67544eeaef8cd14c8fb31b59fcdeg.png" class="card-img-fill" alt="Scaling">
         </div>
@@ -370,51 +372,6 @@
   </div>
 </section>
 
-<section class="blog-section" id="insights">
-  <div class="section-inner">
-    <div class="section-num anim anim-up"><span class="pulse"></span> 06 — Growth Intelligence</div>
-    <h2 class="section-title anim anim-up d1">Revenue infrastructure.<br>Measurable commercial outcomes.</h2>
-    <p class="section-desc anim anim-up d2">Case studies and methodology from businesses across Scotland and the UK that have increased revenue, reduced costs, and scaled operations through systems deployment.</p>
-    
-    <div class="blog-grid">
-      <div class="blog-card anim anim-up d1" onclick="openBlog('agentic')">
-        <div class="blog-image">
-          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1932&auto=format&fit=crop" alt="Edinburgh AI">
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">Revenue Infrastructure • Edinburgh</div>
-          <h3 class="blog-title">From Manual to Scalable: Revenue Growth Infrastructure</h3>
-          <p class="blog-excerpt">How high-growth businesses are replacing manual processes with revenue-generating systems that increase acquisition and reduce overhead.</p>
-          <div class="blog-link">Read Case Study <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></div>
-        </div>
-      </div>
-
-      <div class="blog-card anim anim-up d2" onclick="openBlog('hyperautomation')">
-        <div class="blog-image">
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1740&auto=format&fit=crop" alt="Stockbridge Automation">
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">Growth Architecture • Scotland</div>
-          <h3 class="blog-title">Cost Reduction Through Operational Infrastructure</h3>
-          <p class="blog-excerpt">The methodology behind connecting revenue, operations, and delivery into unified growth systems across Scotland and the UK.</p>
-          <div class="blog-link">Read Methodology <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="newsletter-container anim anim-up d3">
-      <div class="newsletter-content">
-        <h3>Growth intelligence delivered weekly.</h3>
-        <p>Revenue infrastructure case studies and ROI methodology updates from across Scotland and the UK.</p>
-      </div>
-      <form class="newsletter-form" id="newsletterForm">
-        <input type="email" id="emailInput" placeholder="Enter your business email" required class="newsletter-input">
-        <button type="submit" class="btn-primary" id="subscribeBtn">Subscribe <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
-      </form>
-    </div>
-
-  </div>
-</section>
   
 <section class="cta-section">
   <div style="max-width:600px;margin:0 auto">

@@ -42,13 +42,6 @@ const menuStructure = {
   'Pricing': {
     subsections: null,
     link: '#pricing'
-  },
-  'Insights': {
-    subsections: [
-      { name: 'Agentic Systems', action: () => { openBlog('agentic'); } },
-      { name: 'Hyperautomation', action: () => { openBlog('hyperautomation'); } }
-    ],
-    link: '#insights'
   }
 };
 
@@ -227,7 +220,6 @@ function showMainMenu() {
       <a href="#process" class="menu-link">Architecture</a>
       <a href="#about" class="menu-link">Entity</a>
       <a href="#services" class="menu-link">Solutions</a>
-      <a href="#insights" class="menu-link">Insights</a>
       <a href="#pricing" class="menu-link">Pricing</a>
     `;
     
