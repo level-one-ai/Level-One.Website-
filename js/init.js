@@ -21,8 +21,8 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
     setTimeout(() => {
       if (typeof initBlueprint === 'function') {
         initBlueprint();
-        if (typeof selectPhase === 'function') {
-          selectPhase(phaseIndex);
+        if (typeof scrollToPhase === 'function') {
+          scrollToPhase(phaseIndex);
         }
       }
     }, 100);
@@ -307,6 +307,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Newsletter Webhook Submission
+function sendNewsletterToWebhook(email) {
+  const webhookURL = 'https://hook.eu2.make.com/YOUR_NEWSLETTER_WEBHOOK_ID';
+
+  fetch(webhookURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      timestamp: new Date().toISOString(),
+      source: 'website-newsletter'
+    })
+  })
+  .then(response => response.json())
+  .then(data => { console.log('Newsletter webhook sent:', data); })
+  .catch(error => { console.error('Newsletter webhook error:', error); });
+}
+
 // Newsletter Form Handler
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
@@ -314,11 +332,13 @@ if (newsletterForm) {
     e.preventDefault();
     const email = document.getElementById('emailInput').value;
     const btn = document.getElementById('subscribeBtn');
-    
+
+    sendNewsletterToWebhook(email);
+
     btn.textContent = 'Subscribed ✓';
     btn.style.background = 'var(--white)';
     btn.disabled = true;
-    
+
     setTimeout(() => {
       newsletterForm.reset();
       btn.textContent = 'Subscribe';

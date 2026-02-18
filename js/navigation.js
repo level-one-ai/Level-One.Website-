@@ -117,16 +117,6 @@ function openBlog(type) {
   });
 }
 
-function openCalendar() {
-  triggerTransition(() => {
-    document.getElementById('main-content').style.display = 'none';
-    document.getElementById('blog-view').style.display = 'none';
-    document.getElementById('calendar-view').style.display = 'block';
-    hexBurger.classList.add('hidden'); 
-    window.scrollTo(0,0);
-  });
-}
-
 function closeBlog() {
   closeView();
 }
