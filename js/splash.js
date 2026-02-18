@@ -20,8 +20,8 @@ const images = [];
 let imagesLoaded = 0;
 const videoState = { targetFrame: 0, smoothFrame: 0 };
 
-// After 2 seconds: text fades out, then black screen fades revealing website
-setTimeout(revealSite, 2000);
+// After 3 seconds: text fades out, then black screen fades revealing website
+setTimeout(revealSite, 3000);
 
 function revealSite() {
   // Step 1: fade out "LEVEL ONE" text
@@ -30,10 +30,10 @@ function revealSite() {
 
   // Step 2: after text is gone, fade the black screen to reveal the website
   setTimeout(() => {
-    splashScreen.style.transition = 'opacity 1s ease';
+    splashScreen.style.transition = 'opacity 1.5s ease-in-out';
     splashScreen.style.opacity = '0';
     document.body.style.overflow = 'auto';
-    setTimeout(() => { splashScreen.style.display = 'none'; }, 1000);
+    setTimeout(() => { splashScreen.style.display = 'none'; }, 1500);
   }, 500);
 }
 
