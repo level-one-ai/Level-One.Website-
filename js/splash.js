@@ -24,22 +24,26 @@ const videoState = { targetFrame: 0, smoothFrame: 0 };
 setTimeout(revealSite, 3000);
 
 function revealSite() {
-  // Step 1: fade out "LEVEL ONE" text (1s)
-  splashText.style.transition = 'opacity 1s ease';
+  // Stop the CSS animation so the inline opacity transition takes full control
+  splashText.style.animation = 'none';
+
+  // Step 1: fade out "LEVEL ONE" text (0.7s)
+  splashText.style.transition = 'opacity 0.7s ease';
   splashText.style.opacity = '0';
 
-  // Step 2: after text is gone, fade the black screen to reveal the website (2.2s)
+  // Step 2: after text has faded, fade the black screen to reveal the website (2.2s)
   setTimeout(() => {
     splashScreen.style.transition = 'opacity 2.2s ease-in-out';
     splashScreen.style.opacity = '0';
     document.body.style.overflow = 'auto';
     setTimeout(() => { splashScreen.style.display = 'none'; }, 2200);
-  }, 1000);
+  }, 750);
 }
 
 // View transition trigger (used by Navigation for blog/calendar/etc.)
 function triggerTransition(callback) {
   // Immediately show splash with text (no transition — instant black screen)
+  splashText.style.animation = 'none';
   splashText.style.transition = 'none';
   splashText.style.opacity = '1';
   splashScreen.style.transition = 'none';
@@ -50,10 +54,16 @@ function triggerTransition(callback) {
   requestAnimationFrame(() => requestAnimationFrame(() => {
     setTimeout(() => {
       callback();
+      // Step 1: fade out text first (0.35s)
       setTimeout(() => {
-        splashScreen.style.transition = 'opacity 0.8s ease';
-        splashScreen.style.opacity = '0';
-        setTimeout(() => { splashScreen.style.display = 'none'; }, 800);
+        splashText.style.transition = 'opacity 0.35s ease';
+        splashText.style.opacity = '0';
+        // Step 2: then fade the black screen (0.8s), starting just after text fade begins
+        setTimeout(() => {
+          splashScreen.style.transition = 'opacity 0.8s ease';
+          splashScreen.style.opacity = '0';
+          setTimeout(() => { splashScreen.style.display = 'none'; }, 800);
+        }, 250);
       }, 300);
     }, 200);
   }));
