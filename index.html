@@ -547,79 +547,69 @@
 </div>
 
 <div id="core-systems-view">
-  <div class="view-container">
-    <div class="view-header">
-      <button class="view-back-btn" onclick="closeView()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M11 1L5 8l6 7"/>
-        </svg>
-        Back to Home
-      </button>
-    </div>
 
-    <div class="spec-sheet-container">
+  <div class="cs-top-bar">
+    <button class="view-back-btn" onclick="closeView()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 1L5 8l6 7"/>
+      </svg>
+      Back to Home
+    </button>
+  </div>
 
-      <div class="spec-header">
-        <div class="spec-badge">
+  <div class="cs-layout">
+
+    <!-- STATIONARY LEFT SIDEBAR -->
+    <div class="cs-sidebar">
+      <div class="cs-sidebar-header">
+        <div class="spec-badge" style="margin-bottom:1.5rem;">
           <span class="pulse"></span>
           Technical Specification
         </div>
-        <h1 class="spec-title">Revenue Infrastructure Architecture</h1>
-        <p class="spec-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
-        <div class="spec-meta">
-          <span class="meta-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="3" y1="9" x2="21" y2="9"></line>
-              <line x1="9" y1="21" x2="9" y2="9"></line>
-            </svg>
-            Version 2.1.0
-          </span>
-          <span class="meta-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            Last Updated: Feb 2026
-          </span>
-          <span class="meta-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-            Level One
-          </span>
+        <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
+        <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
+      </div>
+      <nav class="cs-nav">
+        <button class="cs-nav-btn" data-panel="spec-sales" onclick="selectCoreSection('spec-sales', this)">
+          <span class="cs-nav-num">01</span>
+          <span class="cs-nav-label">Revenue Engines</span>
+          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-support" onclick="selectCoreSection('spec-support', this)">
+          <span class="cs-nav-num">02</span>
+          <span class="cs-nav-label">Resolution Systems</span>
+          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-integration" onclick="selectCoreSection('spec-integration', this)">
+          <span class="cs-nav-num">03</span>
+          <span class="cs-nav-label">Systems Architecture</span>
+          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-deployment" onclick="selectCoreSection('spec-deployment', this)">
+          <span class="cs-nav-num">04</span>
+          <span class="cs-nav-label">Operational Autonomy</span>
+          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- SCROLLABLE RIGHT CONTENT PANELS -->
+    <div class="cs-content">
+
+      <!-- Placeholder: shown when no section is selected -->
+      <div class="cs-placeholder" id="cs-placeholder">
+        <div class="cs-placeholder-icon">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" opacity="0.3"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
         </div>
+        <p class="cs-placeholder-text">Select a system from the left to explore its infrastructure</p>
       </div>
 
-      <div class="spec-toc">
-        <div class="toc-title">Contents</div>
-        <div class="toc-grid">
-          <a href="#spec-sales" class="toc-item">
-            <span class="toc-number">01</span>
-            <span class="toc-label">Revenue Engines</span>
-          </a>
-          <a href="#spec-support" class="toc-item">
-            <span class="toc-number">02</span>
-            <span class="toc-label">Resolution Systems</span>
-          </a>
-          <a href="#spec-integration" class="toc-item">
-            <span class="toc-number">03</span>
-            <span class="toc-label">Systems Architecture</span>
-          </a>
-          <a href="#spec-deployment" class="toc-item">
-            <span class="toc-number">04</span>
-            <span class="toc-label">Operational Autonomy</span>
-          </a>
+      <!-- PANEL 1: REVENUE ENGINES -->
+      <div class="cs-panel" id="cs-panel-spec-sales">
+        <div class="cs-panel-header">
+          <span class="cs-panel-num">01</span>
+          <h2 class="cs-panel-title">Revenue Engines</h2>
         </div>
-      </div>
-
-      <!-- CARD 1: REVENUE ENGINES -->
-      <div class="spec-section" id="spec-sales">
-        <h2 class="spec-section-title">
-          <span class="section-number">01</span>
-          Revenue Engines
-        </h2>
         <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
@@ -641,17 +631,21 @@
               <li><strong>Smart Lead Scoring AI:</strong> Analyzes past sales data to figure out which new leads have the highest mathematical chance of buying.</li>
             </ul>
           </div>
-          <div class="spec-impact-card">
-            <div class="spec-impact-header">
-              <span class="spec-block-label">Real-World Impact</span>
-              <span class="spec-impact-hint">&#x2197; Hover to Reveal</span>
-            </div>
-            <div class="spec-impact-metrics">
-              <ul class="spec-list">
-                <li>+35% average increase in lead-to-opportunity conversion rates.</li>
-                <li>-50% reduction in manual lead qualification time.</li>
-                <li>-30% drop in overall Customer Acquisition Costs (CAC).</li>
-              </ul>
+          <div class="spec-block">
+            <div class="spec-block-label">Real-World Impact</div>
+            <div class="spec-stat-grid">
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">+35%</div>
+                <div class="spec-stat-desc">average increase in lead-to-opportunity conversion rates</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-50%</div>
+                <div class="spec-stat-desc">reduction in manual lead qualification time</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-30%</div>
+                <div class="spec-stat-desc">drop in overall Customer Acquisition Costs (CAC)</div>
+              </div>
             </div>
           </div>
           <div class="spec-block">
@@ -680,12 +674,12 @@
         </div>
       </div>
 
-      <!-- CARD 2: RESOLUTION SYSTEMS -->
-      <div class="spec-section" id="spec-support">
-        <h2 class="spec-section-title">
-          <span class="section-number">02</span>
-          Resolution Systems
-        </h2>
+      <!-- PANEL 2: RESOLUTION SYSTEMS -->
+      <div class="cs-panel" id="cs-panel-spec-support">
+        <div class="cs-panel-header">
+          <span class="cs-panel-num">02</span>
+          <h2 class="cs-panel-title">Resolution Systems</h2>
+        </div>
         <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
@@ -707,17 +701,21 @@
               <li><strong>Automated Helpers:</strong> Digital assistants that grab info from emails or chats, find the answer in your database, and reply independently.</li>
             </ul>
           </div>
-          <div class="spec-impact-card">
-            <div class="spec-impact-header">
-              <span class="spec-block-label">Real-World Impact</span>
-              <span class="spec-impact-hint">&#x2197; Hover to Reveal</span>
-            </div>
-            <div class="spec-impact-metrics">
-              <ul class="spec-list">
-                <li>60–80% of routine support tickets successfully deflected.</li>
-                <li>-30% average reduction in customer support operational costs.</li>
-                <li>-50% decrease in ticket handling times.</li>
-              </ul>
+          <div class="spec-block">
+            <div class="spec-block-label">Real-World Impact</div>
+            <div class="spec-stat-grid">
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">60–80%</div>
+                <div class="spec-stat-desc">of routine support tickets successfully deflected</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-30%</div>
+                <div class="spec-stat-desc">average reduction in customer support operational costs</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-50%</div>
+                <div class="spec-stat-desc">decrease in ticket handling times</div>
+              </div>
             </div>
           </div>
           <div class="spec-block">
@@ -746,12 +744,12 @@
         </div>
       </div>
 
-      <!-- CARD 3: SYSTEMS ARCHITECTURE -->
-      <div class="spec-section" id="spec-integration">
-        <h2 class="spec-section-title">
-          <span class="section-number">03</span>
-          Systems Architecture
-        </h2>
+      <!-- PANEL 3: SYSTEMS ARCHITECTURE -->
+      <div class="cs-panel" id="cs-panel-spec-integration">
+        <div class="cs-panel-header">
+          <span class="cs-panel-num">03</span>
+          <h2 class="cs-panel-title">Systems Architecture</h2>
+        </div>
         <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
@@ -773,17 +771,21 @@
               <li><strong>Bottleneck Spotting AI:</strong> Watches how data moves to find loops of repetitive data entry, highlighting quick ways to save money.</li>
             </ul>
           </div>
-          <div class="spec-impact-card">
-            <div class="spec-impact-header">
-              <span class="spec-block-label">Real-World Impact</span>
-              <span class="spec-impact-hint">&#x2197; Hover to Reveal</span>
-            </div>
-            <div class="spec-impact-metrics">
-              <ul class="spec-list">
-                <li>46% of organizations achieve significantly faster process execution.</li>
-                <li>41% successful reduction in manual administrative effort.</li>
-                <li>80% of adopters report immediate, measurable operational ROI.</li>
-              </ul>
+          <div class="spec-block">
+            <div class="spec-block-label">Real-World Impact</div>
+            <div class="spec-stat-grid">
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">46%</div>
+                <div class="spec-stat-desc">of organizations achieve significantly faster process execution</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">41%</div>
+                <div class="spec-stat-desc">successful reduction in manual administrative effort</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">80%</div>
+                <div class="spec-stat-desc">of adopters report immediate, measurable operational ROI</div>
+              </div>
             </div>
           </div>
           <div class="spec-block">
@@ -812,12 +814,12 @@
         </div>
       </div>
 
-      <!-- CARD 4: OPERATIONAL AUTONOMY -->
-      <div class="spec-section" id="spec-deployment">
-        <h2 class="spec-section-title">
-          <span class="section-number">04</span>
-          Operational Autonomy
-        </h2>
+      <!-- PANEL 4: OPERATIONAL AUTONOMY -->
+      <div class="cs-panel" id="cs-panel-spec-deployment">
+        <div class="cs-panel-header">
+          <span class="cs-panel-num">04</span>
+          <h2 class="cs-panel-title">Operational Autonomy</h2>
+        </div>
         <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
@@ -839,17 +841,21 @@
               <li><strong>Built-in AI Assistants:</strong> Agents that live inside your main database and do multi-step chores completely on their own.</li>
             </ul>
           </div>
-          <div class="spec-impact-card">
-            <div class="spec-impact-header">
-              <span class="spec-block-label">Real-World Impact</span>
-              <span class="spec-impact-hint">&#x2197; Hover to Reveal</span>
-            </div>
-            <div class="spec-impact-metrics">
-              <ul class="spec-list">
-                <li>-30% reduction in overall operational and administrative costs.</li>
-                <li>-60% cost savings per transaction (e.g., manual invoice processing).</li>
-                <li>&lt;12 months to achieve full return on investment for over 50% of businesses.</li>
-              </ul>
+          <div class="spec-block">
+            <div class="spec-block-label">Real-World Impact</div>
+            <div class="spec-stat-grid">
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-30%</div>
+                <div class="spec-stat-desc">reduction in overall operational and administrative costs</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">-60%</div>
+                <div class="spec-stat-desc">cost savings per transaction vs. manual invoice processing</div>
+              </div>
+              <div class="spec-stat-box">
+                <div class="spec-stat-value">&lt;12mo</div>
+                <div class="spec-stat-desc">to achieve full ROI for over 50% of businesses</div>
+              </div>
             </div>
           </div>
           <div class="spec-block">
@@ -878,9 +884,10 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </div><!-- /cs-content -->
+  </div><!-- /cs-layout -->
 </div>
+
   
 <div id="blueprint-view">
   <div class="view-container blueprint-container">
