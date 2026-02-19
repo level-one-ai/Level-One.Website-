@@ -411,21 +411,26 @@
   font-weight: 600;
 }
 
-.cs-nav-chevron {
+/* Up/down arrow — chevron-down by default, rotates to up when section is active */
+.cs-nav-arrow {
+  flex-shrink: 0;
   color: var(--text-secondary);
   opacity: 0.4;
-  flex-shrink: 0;
-  transition: opacity 0.2s, transform 0.2s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s, color 0.2s;
 }
 
-.cs-nav-btn.active .cs-nav-chevron,
-.cs-nav-btn:hover .cs-nav-chevron {
-  opacity: 0.8;
+.cs-nav-btn.active .cs-nav-arrow {
+  transform: rotate(180deg);
+  opacity: 1;
   color: var(--orange);
-  transform: translateX(2px);
 }
 
-/* Right content area */
+.cs-nav-btn:hover .cs-nav-arrow {
+  opacity: 0.7;
+  color: var(--orange);
+}
+
+/* Right content area — scrollable independently via page scroll (sidebar stays sticky) */
 .cs-content {
   padding: 2.5rem;
   min-height: calc(100vh - 68px);
@@ -736,14 +741,14 @@
 
 /* Responsive */
 @media(max-width:900px) {
-  .cs-header { padding: 2rem 1.5rem; }
-  .cs-accordion { padding: 1.5rem; }
+  .cs-layout { grid-template-columns: 1fr; }
+  .cs-sidebar { position: relative; top: 0; border-right: none; border-bottom: 1px solid var(--border); }
   .spec-stat-grid { grid-template-columns: 1fr; }
 }
 @media(max-width:768px) {
   .cs-top-bar { padding: 1rem 1.5rem; }
-  .cs-acc-btn { padding: 1.1rem 1.3rem; }
-  .cs-acc-label { font-size: 1rem; }
+  .cs-content { padding: 1.5rem; }
+  .cs-panel-title { font-size: 1.6rem; }
   .spec-stat-grid { grid-template-columns: 1fr 1fr; }
 }
 

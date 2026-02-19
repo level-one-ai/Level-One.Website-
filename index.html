@@ -557,29 +557,48 @@
     </button>
   </div>
 
-  <div class="cs-body">
+  <div class="cs-layout">
 
-    <div class="cs-header">
-      <div class="spec-badge" style="margin-bottom:1.5rem;">
-        <span class="pulse"></span>
-        Technical Specification
+    <!-- STATIONARY LEFT SIDEBAR -->
+    <div class="cs-sidebar">
+      <div class="cs-sidebar-header">
+        <div class="spec-badge" style="margin-bottom:1.5rem;">
+          <span class="pulse"></span>
+          Technical Specification
+        </div>
+        <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
+        <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
       </div>
-      <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
-      <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
+      <nav class="cs-nav">
+        <button class="cs-nav-btn active" data-panel="spec-sales" onclick="selectCoreSection('spec-sales', this)">
+          <span class="cs-nav-num">01</span>
+          <span class="cs-nav-label">Revenue Engines</span>
+          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-support" onclick="selectCoreSection('spec-support', this)">
+          <span class="cs-nav-num">02</span>
+          <span class="cs-nav-label">Resolution Systems</span>
+          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-integration" onclick="selectCoreSection('spec-integration', this)">
+          <span class="cs-nav-num">03</span>
+          <span class="cs-nav-label">Systems Architecture</span>
+          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button class="cs-nav-btn" data-panel="spec-deployment" onclick="selectCoreSection('spec-deployment', this)">
+          <span class="cs-nav-num">04</span>
+          <span class="cs-nav-label">Operational Autonomy</span>
+          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </nav>
     </div>
 
-    <div class="cs-accordion">
+    <!-- SCROLLABLE RIGHT CONTENT PANELS -->
+    <div class="cs-content">
 
-      <!-- ACCORDION ITEM 1: REVENUE ENGINES -->
-      <div class="cs-acc-item" data-panel="spec-sales">
-        <button class="cs-acc-btn" onclick="selectCoreSection('spec-sales', this)">
-          <span class="cs-acc-num">01</span>
-          <span class="cs-acc-label">Revenue Engines</span>
-          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="cs-acc-content">
-
-          <div class="spec-card">
+      <!-- PANEL 1: REVENUE ENGINES (shown by default) -->
+      <div class="cs-panel" id="cs-panel-spec-sales" style="display:block;opacity:1;">
+        <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">A Revenue Engine is a system that automatically collects, checks, and organizes your leads. Instead of having your team guess who to talk to or waste time doing manual data entry, this setup uses clear rules to manage the whole process. The main goal is to drive revenue growth by making your acquisition smoother and mathematically improving your conversion.</p>
@@ -641,18 +660,11 @@
             </div>
           </div>
         </div>
-        </div><!-- /cs-acc-content -->
-      </div><!-- /cs-acc-item spec-sales -->
+      </div>
 
-      <!-- ACCORDION ITEM 2: RESOLUTION SYSTEMS -->
-      <div class="cs-acc-item" data-panel="spec-support">
-        <button class="cs-acc-btn" onclick="selectCoreSection('spec-support', this)">
-          <span class="cs-acc-num">02</span>
-          <span class="cs-acc-label">Resolution Systems</span>
-          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="cs-acc-content">
-          <div class="spec-card">
+      <!-- PANEL 2: RESOLUTION SYSTEMS -->
+      <div class="cs-panel" id="cs-panel-spec-support">
+        <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Resolution Systems handle your incoming support messages automatically. This setup is all about cost reduction and operational efficiency. It acts as a smart filter, answering routine questions instantly so your team only steps in for complex issues.</p>
@@ -714,18 +726,11 @@
             </div>
           </div>
         </div>
-        </div><!-- /cs-acc-content -->
-      </div><!-- /cs-acc-item spec-support -->
+      </div>
 
-      <!-- ACCORDION ITEM 3: SYSTEMS ARCHITECTURE -->
-      <div class="cs-acc-item" data-panel="spec-integration">
-        <button class="cs-acc-btn" onclick="selectCoreSection('spec-integration', this)">
-          <span class="cs-acc-num">03</span>
-          <span class="cs-acc-label">Systems Architecture</span>
-          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="cs-acc-content">
-          <div class="spec-card">
+      <!-- PANEL 3: SYSTEMS ARCHITECTURE -->
+      <div class="cs-panel" id="cs-panel-spec-integration">
+        <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Systems Architecture is the blueprint of how your software and tools work together. By looking at the big picture of your operations, this process enables profit identification (finding where clunky manual tasks eat your money) and accurate ROI mapping for automation.</p>
@@ -787,18 +792,11 @@
             </div>
           </div>
         </div>
-        </div><!-- /cs-acc-content -->
-      </div><!-- /cs-acc-item spec-integration -->
+      </div>
 
-      <!-- ACCORDION ITEM 4: OPERATIONAL AUTONOMY -->
-      <div class="cs-acc-item" data-panel="spec-deployment">
-        <button class="cs-acc-btn" onclick="selectCoreSection('spec-deployment', this)">
-          <span class="cs-acc-num">04</span>
-          <span class="cs-acc-label">Operational Autonomy</span>
-          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="cs-acc-content">
-          <div class="spec-card">
+      <!-- PANEL 4: OPERATIONAL AUTONOMY -->
+      <div class="cs-panel" id="cs-panel-spec-deployment">
+        <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Operational Autonomy means setting up software to run your daily tasks in the background without human help. By making sure the end of one task automatically starts the next, your business achieves massive scale while driving total cost elimination for admin work.</p>
@@ -860,13 +858,11 @@
             </div>
           </div>
         </div>
-        </div><!-- /cs-acc-content -->
-      </div><!-- /cs-acc-item spec-deployment -->
+      </div>
 
-    </div><!-- /cs-accordion -->
-  </div><!-- /cs-body -->
+    </div><!-- /cs-content -->
+  </div><!-- /cs-layout -->
 </div>
-
 
 <div id="blueprint-view">
   <div class="view-container blueprint-container">
