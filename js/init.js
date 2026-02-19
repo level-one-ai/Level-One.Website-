@@ -32,6 +32,45 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   window.scrollTo(0, 0);
 }
 
+// Panel selector for core-systems-view split-panel layout
+function selectCoreSection(panelKey, navBtn) {
+  // Update nav button active states
+  document.querySelectorAll('.cs-nav-btn').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+  if (navBtn) {
+    navBtn.classList.add('active');
+  } else {
+    var matchBtn = document.querySelector('.cs-nav-btn[data-panel="' + panelKey + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+  }
+
+  // Hide placeholder
+  var placeholder = document.getElementById('cs-placeholder');
+  if (placeholder) placeholder.style.display = 'none';
+
+  // Hide all panels instantly
+  document.querySelectorAll('.cs-panel').forEach(function(p) {
+    p.style.display = 'none';
+    p.style.opacity = '0';
+    p.style.transition = 'none';
+  });
+
+  // Show and fade in the selected panel
+  var panel = document.getElementById('cs-panel-' + panelKey);
+  if (panel) {
+    panel.style.display = 'block';
+    panel.style.opacity = '0';
+    panel.style.transition = 'none';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        panel.style.transition = 'opacity 0.35s ease';
+        panel.style.opacity = '1';
+      });
+    });
+  }
+}
+
 // Core Systems View Opening Function (01 — Revenue Infrastructure)
 function openCoreSystemsView(systemType) {
   triggerTransition(() => {
@@ -41,33 +80,27 @@ function openCoreSystemsView(systemType) {
     document.getElementById('calendar-view').style.display = 'none';
     document.getElementById('solutions-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
-    
+
     // Show core systems view
     document.getElementById('core-systems-view').style.display = 'block';
     currentView = 'core-systems-view';
-    
-    // Scroll to the appropriate section if systemType is provided
-    if (systemType) {
-      setTimeout(() => {
-        const sectionMap = {
-          'sales': 'spec-sales',
-          'support': 'spec-support',
-          'consulting': 'spec-integration',
-          'workflow': 'spec-deployment'
-        };
-        
-        const targetId = sectionMap[systemType];
-        if (targetId) {
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      }, 300);
-    }
-    
+
     hexBurger.classList.add('hidden');
     window.scrollTo(0, 0);
+
+    // Select the appropriate panel directly (no scroll needed in new layout)
+    if (systemType) {
+      var sectionMap = {
+        'sales': 'spec-sales',
+        'support': 'spec-support',
+        'consulting': 'spec-integration',
+        'workflow': 'spec-deployment'
+      };
+      var panelKey = sectionMap[systemType];
+      if (panelKey) {
+        selectCoreSection(panelKey, null);
+      }
+    }
   });
 }
 
