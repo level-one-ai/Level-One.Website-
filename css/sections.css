@@ -27,11 +27,11 @@
 /* Two-column layout: text left, cards right */
 .pricing-layout {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 5rem;
-  align-items: center;
+  grid-template-columns: 1fr 2.2fr;
+  gap: 4rem;
+  align-items: start;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -45,12 +45,34 @@
   padding: 1.5rem;
 }
 
-/* Cards stacked vertically in right column */
+/* Cards grid: top two side by side, Architecture full width below */
 .pricing-right .pricing-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 0;
+}
+
+/* Prototype and Pilot: vertical card layout */
+.pricing-right .pricing-grid .pricing-card:nth-child(-n+2) {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(-n+2) .pricing-card-meta {
+  border-right: none;
+  padding-right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.25rem;
+}
+
+.pricing-right .pricing-grid .pricing-card.featured:nth-child(-n+2) .pricing-card-meta {
+  border-bottom-color: rgba(255, 102, 0, 0.2);
+}
+
+/* Architecture: spans full width, keeps horizontal layout */
+.pricing-right .pricing-grid .pricing-card:nth-child(3) {
+  grid-column: 1 / -1;
 }
 
 /* Horizontal card layout: meta left, detail right */
@@ -293,6 +315,12 @@
 }
 
 @media (max-width: 768px) {
+  .pricing-right .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-right .pricing-grid .pricing-card:nth-child(3) {
+    grid-column: auto;
+  }
   .pricing-card {
     grid-template-columns: 1fr;
     gap: 1.25rem;
