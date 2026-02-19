@@ -277,6 +277,27 @@ const animateOnScroll = () => {
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', animateOnScroll);
 
+// Q&A Accordion for core-systems-view
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.spec-qa-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.spec-qa-item');
+      var isOpen = item.classList.contains('open');
+      // Close all others in the same group
+      var group = item.closest('.spec-qa');
+      if (group) {
+        group.querySelectorAll('.spec-qa-item').forEach(function(i) {
+          i.classList.remove('open');
+        });
+      }
+      // Toggle the clicked one
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    });
+  });
+});
+
 // Initialize menu links on page load
 document.addEventListener('DOMContentLoaded', function() {
   const menuLinks = document.querySelectorAll('.menu-link');
