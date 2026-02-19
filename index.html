@@ -557,60 +557,29 @@
     </button>
   </div>
 
-  <div class="cs-layout">
+  <div class="cs-body">
 
-    <!-- STATIONARY LEFT SIDEBAR -->
-    <div class="cs-sidebar">
-      <div class="cs-sidebar-header">
-        <div class="spec-badge" style="margin-bottom:1.5rem;">
-          <span class="pulse"></span>
-          Technical Specification
-        </div>
-        <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
-        <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
+    <div class="cs-header">
+      <div class="spec-badge" style="margin-bottom:1.5rem;">
+        <span class="pulse"></span>
+        Technical Specification
       </div>
-      <nav class="cs-nav">
-        <button class="cs-nav-btn" data-panel="spec-sales" onclick="selectCoreSection('spec-sales', this)">
-          <span class="cs-nav-num">01</span>
-          <span class="cs-nav-label">Revenue Engines</span>
-          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <button class="cs-nav-btn" data-panel="spec-support" onclick="selectCoreSection('spec-support', this)">
-          <span class="cs-nav-num">02</span>
-          <span class="cs-nav-label">Resolution Systems</span>
-          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <button class="cs-nav-btn" data-panel="spec-integration" onclick="selectCoreSection('spec-integration', this)">
-          <span class="cs-nav-num">03</span>
-          <span class="cs-nav-label">Systems Architecture</span>
-          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <button class="cs-nav-btn" data-panel="spec-deployment" onclick="selectCoreSection('spec-deployment', this)">
-          <span class="cs-nav-num">04</span>
-          <span class="cs-nav-label">Operational Autonomy</span>
-          <svg class="cs-nav-chevron" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </nav>
+      <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
+      <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
     </div>
 
-    <!-- SCROLLABLE RIGHT CONTENT PANELS -->
-    <div class="cs-content">
+    <div class="cs-accordion">
 
-      <!-- Placeholder: shown when no section is selected -->
-      <div class="cs-placeholder" id="cs-placeholder">
-        <div class="cs-placeholder-icon">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" opacity="0.3"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-        </div>
-        <p class="cs-placeholder-text">Select a system from the left to explore its infrastructure</p>
-      </div>
+      <!-- ACCORDION ITEM 1: REVENUE ENGINES -->
+      <div class="cs-acc-item" data-panel="spec-sales">
+        <button class="cs-acc-btn" onclick="selectCoreSection('spec-sales', this)">
+          <span class="cs-acc-num">01</span>
+          <span class="cs-acc-label">Revenue Engines</span>
+          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="cs-acc-content">
 
-      <!-- PANEL 1: REVENUE ENGINES -->
-      <div class="cs-panel" id="cs-panel-spec-sales">
-        <div class="cs-panel-header">
-          <span class="cs-panel-num">01</span>
-          <h2 class="cs-panel-title">Revenue Engines</h2>
-        </div>
-        <div class="spec-card">
+          <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">A Revenue Engine is a system that automatically collects, checks, and organizes your leads. Instead of having your team guess who to talk to or waste time doing manual data entry, this setup uses clear rules to manage the whole process. The main goal is to drive revenue growth by making your acquisition smoother and mathematically improving your conversion.</p>
@@ -672,15 +641,18 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /cs-acc-content -->
+      </div><!-- /cs-acc-item spec-sales -->
 
-      <!-- PANEL 2: RESOLUTION SYSTEMS -->
-      <div class="cs-panel" id="cs-panel-spec-support">
-        <div class="cs-panel-header">
-          <span class="cs-panel-num">02</span>
-          <h2 class="cs-panel-title">Resolution Systems</h2>
-        </div>
-        <div class="spec-card">
+      <!-- ACCORDION ITEM 2: RESOLUTION SYSTEMS -->
+      <div class="cs-acc-item" data-panel="spec-support">
+        <button class="cs-acc-btn" onclick="selectCoreSection('spec-support', this)">
+          <span class="cs-acc-num">02</span>
+          <span class="cs-acc-label">Resolution Systems</span>
+          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="cs-acc-content">
+          <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Resolution Systems handle your incoming support messages automatically. This setup is all about cost reduction and operational efficiency. It acts as a smart filter, answering routine questions instantly so your team only steps in for complex issues.</p>
@@ -742,15 +714,18 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /cs-acc-content -->
+      </div><!-- /cs-acc-item spec-support -->
 
-      <!-- PANEL 3: SYSTEMS ARCHITECTURE -->
-      <div class="cs-panel" id="cs-panel-spec-integration">
-        <div class="cs-panel-header">
-          <span class="cs-panel-num">03</span>
-          <h2 class="cs-panel-title">Systems Architecture</h2>
-        </div>
-        <div class="spec-card">
+      <!-- ACCORDION ITEM 3: SYSTEMS ARCHITECTURE -->
+      <div class="cs-acc-item" data-panel="spec-integration">
+        <button class="cs-acc-btn" onclick="selectCoreSection('spec-integration', this)">
+          <span class="cs-acc-num">03</span>
+          <span class="cs-acc-label">Systems Architecture</span>
+          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="cs-acc-content">
+          <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Systems Architecture is the blueprint of how your software and tools work together. By looking at the big picture of your operations, this process enables profit identification (finding where clunky manual tasks eat your money) and accurate ROI mapping for automation.</p>
@@ -812,15 +787,18 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /cs-acc-content -->
+      </div><!-- /cs-acc-item spec-integration -->
 
-      <!-- PANEL 4: OPERATIONAL AUTONOMY -->
-      <div class="cs-panel" id="cs-panel-spec-deployment">
-        <div class="cs-panel-header">
-          <span class="cs-panel-num">04</span>
-          <h2 class="cs-panel-title">Operational Autonomy</h2>
-        </div>
-        <div class="spec-card">
+      <!-- ACCORDION ITEM 4: OPERATIONAL AUTONOMY -->
+      <div class="cs-acc-item" data-panel="spec-deployment">
+        <button class="cs-acc-btn" onclick="selectCoreSection('spec-deployment', this)">
+          <span class="cs-acc-num">04</span>
+          <span class="cs-acc-label">Operational Autonomy</span>
+          <svg class="cs-acc-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="cs-acc-content">
+          <div class="spec-card">
           <div class="spec-block">
             <div class="spec-block-label">System Overview</div>
             <p class="spec-text">Operational Autonomy means setting up software to run your daily tasks in the background without human help. By making sure the end of one task automatically starts the next, your business achieves massive scale while driving total cost elimination for admin work.</p>
@@ -882,13 +860,14 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /cs-acc-content -->
+      </div><!-- /cs-acc-item spec-deployment -->
 
-    </div><!-- /cs-content -->
-  </div><!-- /cs-layout -->
+    </div><!-- /cs-accordion -->
+  </div><!-- /cs-body -->
 </div>
 
-  
+
 <div id="blueprint-view">
   <div class="view-container blueprint-container">
     <div class="view-header">

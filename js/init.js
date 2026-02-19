@@ -32,42 +32,29 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   window.scrollTo(0, 0);
 }
 
-// Panel selector for core-systems-view split-panel layout
-function selectCoreSection(panelKey, navBtn) {
-  // Update nav button active states
-  document.querySelectorAll('.cs-nav-btn').forEach(function(btn) {
-    btn.classList.remove('active');
+// Panel selector for core-systems-view accordion layout
+function selectCoreSection(panelKey, clickedBtn, forceOpen) {
+  var items = document.querySelectorAll('.cs-acc-item');
+  var targetItem = null;
+  items.forEach(function(item) {
+    if (item.getAttribute('data-panel') === panelKey) {
+      targetItem = item;
+    }
   });
-  if (navBtn) {
-    navBtn.classList.add('active');
+  if (!targetItem) return;
+
+  if (forceOpen) {
+    // Force open (called from openCoreSystemsView via hexagon nav)
+    items.forEach(function(i) { i.classList.remove('active'); });
+    targetItem.classList.add('active');
   } else {
-    var matchBtn = document.querySelector('.cs-nav-btn[data-panel="' + panelKey + '"]');
-    if (matchBtn) matchBtn.classList.add('active');
-  }
-
-  // Hide placeholder
-  var placeholder = document.getElementById('cs-placeholder');
-  if (placeholder) placeholder.style.display = 'none';
-
-  // Hide all panels instantly
-  document.querySelectorAll('.cs-panel').forEach(function(p) {
-    p.style.display = 'none';
-    p.style.opacity = '0';
-    p.style.transition = 'none';
-  });
-
-  // Show and fade in the selected panel
-  var panel = document.getElementById('cs-panel-' + panelKey);
-  if (panel) {
-    panel.style.display = 'block';
-    panel.style.opacity = '0';
-    panel.style.transition = 'none';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        panel.style.transition = 'opacity 0.35s ease';
-        panel.style.opacity = '1';
-      });
-    });
+    // Toggle on direct user click
+    if (targetItem.classList.contains('active')) {
+      targetItem.classList.remove('active');
+    } else {
+      items.forEach(function(i) { i.classList.remove('active'); });
+      targetItem.classList.add('active');
+    }
   }
 }
 
@@ -98,7 +85,7 @@ function openCoreSystemsView(systemType) {
       };
       var panelKey = sectionMap[systemType];
       if (panelKey) {
-        selectCoreSection(panelKey, null);
+        selectCoreSection(panelKey, null, true);
       }
     }
   });
