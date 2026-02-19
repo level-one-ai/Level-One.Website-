@@ -32,10 +32,15 @@
   color: var(--white);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 1;
+  opacity: 0;
   position: relative;
   text-align: center;
-  animation: text-glitch 1.5s infinite;
+  animation: text-fadein 0.7s ease 0.3s forwards, text-glitch 1.5s ease 1s infinite;
+}
+
+@keyframes text-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Main text body jitter */
