@@ -350,15 +350,15 @@
 .cs-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 
 .cs-nav-btn {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.9rem 1rem;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 10px;

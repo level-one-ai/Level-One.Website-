@@ -56,22 +56,22 @@ function triggerTransition(callback) {
     // Swap views immediately — screen is black so the DOM change is invisible
     callback();
 
-    // Step 1: fade text out (0.5s) after brief pause
+    // Step 1: fade text out (0.7s) after brief pause
     setTimeout(() => {
-      splashText.style.transition = 'opacity 0.5s ease';
+      splashText.style.transition = 'opacity 0.7s ease';
       splashText.style.opacity = '0';
-    }, 200);
+    }, 300);
 
-    // Step 2: fade screen out after text is gone (0.8s ease-in-out for seamless reveal)
+    // Step 2: fade screen out after text is gone (1.5s ease-in-out for seamless reveal)
     setTimeout(() => {
-      splashScreen.style.transition = 'opacity 0.8s ease-in-out';
+      splashScreen.style.transition = 'opacity 1.5s ease-in-out';
       splashScreen.style.opacity = '0';
-    }, 700);
+    }, 1000);
 
     // Step 3: hide screen completely
     setTimeout(() => {
       splashScreen.style.display = 'none';
-    }, 1550);
+    }, 2600);
   }));
 }
 
