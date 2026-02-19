@@ -28,12 +28,12 @@ function revealSite() {
   splashText.style.transition = 'opacity 1s ease';
   splashText.style.opacity = '0';
 
-  // Step 2: after text is gone, fade the black screen to reveal the website (1.5s)
+  // Step 2: after text is gone, fade the black screen to reveal the website (2.2s)
   setTimeout(() => {
-    splashScreen.style.transition = 'opacity 1.5s ease-in-out';
+    splashScreen.style.transition = 'opacity 2.2s ease-in-out';
     splashScreen.style.opacity = '0';
     document.body.style.overflow = 'auto';
-    setTimeout(() => { splashScreen.style.display = 'none'; }, 1500);
+    setTimeout(() => { splashScreen.style.display = 'none'; }, 2200);
   }, 1000);
 }
 
