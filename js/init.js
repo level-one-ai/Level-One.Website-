@@ -32,29 +32,34 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   window.scrollTo(0, 0);
 }
 
-// Panel selector for core-systems-view accordion layout
+// Panel selector for core-systems-view — always switches to target, one always open
 function selectCoreSection(panelKey, clickedBtn, forceOpen) {
-  var items = document.querySelectorAll('.cs-acc-item');
-  var targetItem = null;
-  items.forEach(function(item) {
-    if (item.getAttribute('data-panel') === panelKey) {
-      targetItem = item;
-    }
+  // Update nav button active states
+  document.querySelectorAll('.cs-nav-btn').forEach(function(btn) {
+    btn.classList.remove('active');
   });
-  if (!targetItem) return;
+  var targetBtn = clickedBtn || document.querySelector('.cs-nav-btn[data-panel="' + panelKey + '"]');
+  if (targetBtn) targetBtn.classList.add('active');
 
-  if (forceOpen) {
-    // Force open (called from openCoreSystemsView via hexagon nav)
-    items.forEach(function(i) { i.classList.remove('active'); });
-    targetItem.classList.add('active');
-  } else {
-    // Toggle on direct user click
-    if (targetItem.classList.contains('active')) {
-      targetItem.classList.remove('active');
-    } else {
-      items.forEach(function(i) { i.classList.remove('active'); });
-      targetItem.classList.add('active');
-    }
+  // Hide all panels instantly
+  document.querySelectorAll('.cs-panel').forEach(function(p) {
+    p.style.display = 'none';
+    p.style.opacity = '0';
+    p.style.transition = 'none';
+  });
+
+  // Fade in the target panel
+  var panel = document.getElementById('cs-panel-' + panelKey);
+  if (panel) {
+    panel.style.display = 'block';
+    panel.style.opacity = '0';
+    panel.style.transition = 'none';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        panel.style.transition = 'opacity 0.3s ease';
+        panel.style.opacity = '1';
+      });
+    });
   }
 }
 
@@ -75,19 +80,15 @@ function openCoreSystemsView(systemType) {
     hexBurger.classList.add('hidden');
     window.scrollTo(0, 0);
 
-    // Select the appropriate panel directly (no scroll needed in new layout)
-    if (systemType) {
-      var sectionMap = {
-        'sales': 'spec-sales',
-        'support': 'spec-support',
-        'consulting': 'spec-integration',
-        'workflow': 'spec-deployment'
-      };
-      var panelKey = sectionMap[systemType];
-      if (panelKey) {
-        selectCoreSection(panelKey, null, true);
-      }
-    }
+    // Select the appropriate panel (defaults to Revenue Engines if none specified)
+    var sectionMap = {
+      'sales': 'spec-sales',
+      'support': 'spec-support',
+      'consulting': 'spec-integration',
+      'workflow': 'spec-deployment'
+    };
+    var panelKey = (systemType && sectionMap[systemType]) || 'spec-sales';
+    selectCoreSection(panelKey, null);
   });
 }
 
