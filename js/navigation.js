@@ -240,7 +240,7 @@ function showMainMenu() {
           const target = document.querySelector(menuData.link);
           hexBurger.click();
           setTimeout(() => {
-            smoothScrollTo(target.offsetTop, 2000);
+            smoothScrollTo(target.offsetTop - 68, 3000);
           }, 600);
         }
       });

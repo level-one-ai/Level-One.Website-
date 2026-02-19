@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (target) {
           hexBurger.click();
           setTimeout(() => {
-            smoothScrollTo(target.offsetTop - 100, 1800);
+            smoothScrollTo(target.offsetTop - 68, 3000);
           }, 600);
         }
       }
