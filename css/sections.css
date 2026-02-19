@@ -254,6 +254,14 @@
   border-top: 1px solid var(--border);
 }
 
+.cta-section .section-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.cta-section .section-desc {
+  font-size: 1.05rem;
+}
+
 .glow-line {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
