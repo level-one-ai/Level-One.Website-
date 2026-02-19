@@ -24,12 +24,15 @@ const videoState = { targetFrame: 0, smoothFrame: 0 };
 setTimeout(revealSite, 3000);
 
 function revealSite() {
-  // Stop the CSS animation so the inline opacity transition takes full control
+  // Lock opacity at 1 inline BEFORE clearing animation — prevents snap to CSS opacity:0
+  splashText.style.opacity = '1';
   splashText.style.animation = 'none';
 
-  // Step 1: fade out "LEVEL ONE" text (0.7s)
-  splashText.style.transition = 'opacity 0.7s ease';
-  splashText.style.opacity = '0';
+  // Step 1: fade "LEVEL ONE" text out slowly (0.9s)
+  requestAnimationFrame(() => {
+    splashText.style.transition = 'opacity 0.9s ease';
+    splashText.style.opacity = '0';
+  });
 
   // Step 2: after text has faded, fade the black screen to reveal the website (2.2s)
   setTimeout(() => {
@@ -37,41 +40,51 @@ function revealSite() {
     splashScreen.style.opacity = '0';
     document.body.style.overflow = 'auto';
     setTimeout(() => { splashScreen.style.display = 'none'; }, 2200);
-  }, 750);
+  }, 950);
 }
 
-// View transition trigger — black screen shows with LEVEL ONE text, text fades out, then screen fades out
+// View transition trigger — screen fades to black, LEVEL ONE fades in with glitch, fades out, screen reveals
 function triggerTransition(callback) {
-  // Instantly show full black screen with text
+  // Reset: text invisible, screen transparent, glitch ready
   splashText.style.animation = 'none';
   splashText.style.transition = 'none';
-  splashText.style.opacity = '1';
-  splashText.classList.remove('glitch-active');
+  splashText.style.opacity = '0';
+  splashText.classList.add('glitch-active');
   splashScreen.style.transition = 'none';
-  splashScreen.style.opacity = '1';
+  splashScreen.style.opacity = '0';
   splashScreen.style.display = 'flex';
 
   // Two rAFs ensure paint is committed before transitions begin
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    // Swap views immediately — screen is black so the DOM change is invisible
-    callback();
 
-    // Step 1: fade text out (0.7s) after brief pause
+    // Step 1: screen fades to black (0.45s)
+    splashScreen.style.transition = 'opacity 0.45s ease-in';
+    splashScreen.style.opacity = '1';
+
+    // Step 2: screen is black — swap views invisibly, then fade text in (0.35s)
     setTimeout(() => {
-      splashText.style.transition = 'opacity 0.7s ease';
-      splashText.style.opacity = '0';
-    }, 300);
+      callback();
+      splashText.style.transition = 'opacity 0.35s ease';
+      splashText.style.opacity = '1';
+    }, 450);
 
-    // Step 2: fade screen out after text is gone (1.5s ease-in-out for seamless reveal)
+    // Step 3: text has glitched for ~0.85s — fade text out (0.4s)
+    setTimeout(() => {
+      splashText.style.transition = 'opacity 0.4s ease';
+      splashText.style.opacity = '0';
+    }, 1650);
+
+    // Step 4: text gone — fade screen out to reveal new page (1.5s)
     setTimeout(() => {
       splashScreen.style.transition = 'opacity 1.5s ease-in-out';
       splashScreen.style.opacity = '0';
-    }, 1000);
+    }, 2100);
 
-    // Step 3: hide screen completely
+    // Step 5: hide screen + cleanup
     setTimeout(() => {
       splashScreen.style.display = 'none';
-    }, 2600);
+      splashText.classList.remove('glitch-active');
+    }, 3700);
   }));
 }
 

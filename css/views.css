@@ -312,14 +312,12 @@
   min-height: calc(100vh - 68px);
 }
 
-/* Stationary left sidebar */
+/* Left sidebar — flows normally within grid column */
 .cs-sidebar {
-  position: sticky;
-  top: 88px;
-  height: fit-content;
   align-self: start;
   border-right: 1px solid var(--border);
   padding: 2.5rem 2rem;
+  min-width: 0;
 }
 
 .cs-sidebar-header {
@@ -355,6 +353,8 @@
 
 .cs-nav-btn {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 0.5rem;
