@@ -61,6 +61,10 @@ function selectCoreSection(panelKey, clickedBtn, forceOpen) {
       });
     });
   }
+
+  // Scroll the right content area back to the top
+  var contentArea = document.querySelector('.cs-content');
+  if (contentArea) contentArea.scrollTop = 0;
 }
 
 // Core Systems View Opening Function (01 — Revenue Infrastructure)
@@ -73,8 +77,8 @@ function openCoreSystemsView(systemType) {
     document.getElementById('solutions-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
 
-    // Show core systems view
-    document.getElementById('core-systems-view').style.display = 'block';
+    // Show core systems view (flex layout for fixed sidebar + scrollable content)
+    document.getElementById('core-systems-view').style.display = 'flex';
     currentView = 'core-systems-view';
 
     hexBurger.classList.add('hidden');

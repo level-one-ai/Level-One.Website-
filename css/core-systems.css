@@ -1,104 +1,136 @@
 /* ============================================
    CORE SYSTEMS VIEW — #core-systems-view
    Revenue Infrastructure Architecture
-   All layout and appearance for this view
-   only. No other views are affected.
+
+   Self-contained styles for this view only.
+   Layout: fixed left sidebar + scrollable
+   right content panel.
    ============================================ */
 
-/* Top bar with back button */
-.cs-top-bar {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1.5rem 2.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-/* Two-column layout: fixed sidebar left + flexible content right */
-.cs-layout {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  max-width: 1400px;
-  margin: 0 auto;
-  min-height: calc(100vh - 68px);
+/* ----------------------------------------
+   VIEW SHELL — locks the viewport
+   ---------------------------------------- */
+/* display is toggled by JS (none ↔ flex).
+   When visible, JS sets display:flex which activates
+   the column layout defined here.                    */
+#core-systems-view {
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+  padding-top: 68px;          /* clear the fixed nav bar */
+  box-sizing: border-box;
 }
 
 /* ----------------------------------------
-   LEFT SIDEBAR — hard 260px width
-   Nav buttons are contained here under
-   the title and cannot escape this column
+   TOP BAR — back button
    ---------------------------------------- */
-.cs-sidebar {
-  width: 260px;
+.cs-top-bar {
   flex-shrink: 0;
-  flex-grow: 0;
-  border-right: 1px solid var(--border);
-  padding: 2.5rem 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.2rem 2.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   box-sizing: border-box;
-  overflow: hidden;
 }
 
-/* Title block — nav buttons sit directly below the border */
+/* ----------------------------------------
+   TWO-COLUMN LAYOUT
+   Sidebar is static; content scrolls.
+   ---------------------------------------- */
+.cs-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;               /* allow flex child to shrink below content */
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ----------------------------------------
+   LEFT SIDEBAR — static, never scrolls
+   ---------------------------------------- */
+.cs-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar header — title block */
 .cs-sidebar-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .cs-main-title {
   font-family: var(--heading);
-  font-size: 1.85rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--white);
   letter-spacing: -0.02em;
   line-height: 1.3;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .cs-main-subtitle {
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
 }
 
-/* Section selector buttons — stacked vertically under the title */
+/* ----------------------------------------
+   SECTION SELECTOR BUTTONS
+   Stacked vertically inside the sidebar.
+   Each has an arrow toggle indicator.
+   ---------------------------------------- */
 .cs-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .cs-nav-btn {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.65rem;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
   background: transparent;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: background 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
   text-align: left;
   box-sizing: border-box;
 }
 
 .cs-nav-btn:hover {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--border);
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.12);
 }
 
 .cs-nav-btn.active {
-  background: rgba(255,107,53,0.08);
-  border-color: rgba(255,107,53,0.35);
+  background: rgba(255,107,53,0.06);
+  border-color: rgba(255,107,53,0.4);
+  box-shadow: 0 0 0 1px rgba(255,107,53,0.15);
 }
 
+/* Button label */
 .cs-nav-label {
   flex: 1;
   font-family: var(--body);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--text-secondary);
   transition: color 0.2s;
@@ -116,12 +148,14 @@
   font-weight: 600;
 }
 
-/* Chevron arrow — points down by default, rotates up when section is active */
+/* Chevron arrow — rotates on active */
 .cs-nav-arrow {
   flex-shrink: 0;
   color: var(--text-secondary);
-  opacity: 0.4;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s, color 0.2s;
+  opacity: 0.35;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s,
+              color 0.2s;
 }
 
 .cs-nav-btn.active .cs-nav-arrow {
@@ -131,68 +165,59 @@
 }
 
 .cs-nav-btn:hover .cs-nav-arrow {
-  opacity: 0.7;
+  opacity: 0.6;
   color: var(--orange);
 }
 
 /* ----------------------------------------
-   RIGHT CONTENT PANEL
+   RIGHT CONTENT — scrollable panel
    ---------------------------------------- */
 .cs-content {
   flex: 1;
   min-width: 0;
-  padding: 2.5rem;
-  min-height: calc(100vh - 68px);
+  padding: 2rem 2.5rem 3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,107,53,0.2) transparent;
 }
 
-/* Individual content panels — shown one at a time via JS opacity fade */
+.cs-content::-webkit-scrollbar {
+  width: 6px;
+}
+.cs-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cs-content::-webkit-scrollbar-thumb {
+  background: rgba(255,107,53,0.18);
+  border-radius: 3px;
+}
+.cs-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,107,53,0.35);
+}
+
+/* ----------------------------------------
+   CONTENT PANELS — one visible at a time
+   ---------------------------------------- */
 .cs-panel {
   display: none;
 }
 
-.cs-panel-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.cs-panel-num {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--orange);
-  background: rgba(255,107,53,0.1);
-  border: 1px solid rgba(255,107,53,0.25);
-  padding: 0.35rem 0.8rem;
-  border-radius: 5px;
-  letter-spacing: 0.05em;
-}
-
-.cs-panel-title {
-  font-family: var(--heading);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: -0.03em;
-}
-
 /* ----------------------------------------
    SPEC CARD — main content container
+   Clean, modern card with solid border
    ---------------------------------------- */
 .spec-card {
-  background: rgba(5,5,7,0.6);
-  border: 1px solid var(--border);
+  background: rgba(10,10,14,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  backdrop-filter: blur(10px);
 }
 
+/* Content blocks inside spec card */
 .spec-block {
   display: flex;
   flex-direction: column;
@@ -201,13 +226,21 @@
 
 .spec-block-label {
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--orange);
   text-transform: uppercase;
   letter-spacing: 0.15em;
 }
 
+/* Spec text */
+.spec-text {
+  font-size: 1.02rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+}
+
+/* Spec list */
 .spec-list {
   list-style: none;
   padding: 0;
@@ -240,7 +273,7 @@
 }
 
 /* ----------------------------------------
-   STAT BOXES — Real-World Impact section
+   STAT BOXES — Real-World Impact
    ---------------------------------------- */
 .spec-stat-grid {
   display: grid;
@@ -249,18 +282,21 @@
 }
 
 .spec-stat-box {
-  background: rgba(5,5,7,0.8);
-  border: 1px solid var(--border);
+  background: rgba(5,5,7,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
   padding: 1.4rem 1.2rem;
   text-align: center;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.3s ease,
+              border-color 0.3s ease,
+              transform 0.3s ease;
   cursor: default;
 }
 
 .spec-stat-box:hover {
-  border-color: rgba(255,107,53,0.5);
-  box-shadow: 0 0 22px rgba(255,107,53,0.35), 0 0 8px rgba(255,107,53,0.15);
+  border-color: rgba(255,107,53,0.45);
+  box-shadow: 0 0 18px rgba(255,107,53,0.25),
+              0 0 6px rgba(255,107,53,0.1);
   transform: translateY(-2px);
 }
 
@@ -271,7 +307,7 @@
   color: var(--orange);
   line-height: 1.1;
   margin-bottom: 0.6rem;
-  text-shadow: 0 0 20px rgba(255,107,53,0.25);
+  text-shadow: 0 0 20px rgba(255,107,53,0.2);
 }
 
 .spec-stat-desc {
@@ -281,12 +317,12 @@
 }
 
 /* ----------------------------------------
-   Q&A — futuristic terminal style
+   Q&A — clean accordion style
    ---------------------------------------- */
 .spec-qa {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
 
 .spec-qa-item {
@@ -296,9 +332,9 @@
 
 .spec-qa-btn {
   width: 100%;
-  background: rgba(6,6,14,0.92);
+  background: rgba(8,8,16,0.85);
   border: 1px solid rgba(255,255,255,0.07);
-  border-left: 2px solid rgba(255,107,53,0.5);
+  border-left: 2px solid rgba(255,107,53,0.45);
   border-radius: 10px;
   padding: 1.1rem 1.3rem;
   display: flex;
@@ -312,25 +348,27 @@
   text-align: left;
   line-height: 1.5;
   letter-spacing: 0.01em;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: background 0.2s ease,
+              border-color 0.2s ease;
 }
 
 .spec-qa-btn:hover {
-  background: rgba(10,10,22,0.95);
-  border-left-color: rgba(255,107,53,0.85);
+  background: rgba(12,12,24,0.9);
+  border-left-color: rgba(255,107,53,0.8);
 }
 
 .spec-qa-item.open .spec-qa-btn {
-  background: rgba(6,6,14,0.92);
+  background: rgba(8,8,16,0.85);
   border-left-color: var(--orange);
 }
 
-/* Q&A chevron arrow */
+/* Q&A chevron */
 .spec-qa-arrow {
   flex-shrink: 0;
   color: var(--orange);
-  opacity: 0.65;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  opacity: 0.6;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease;
 }
 
 .spec-qa-item.open .spec-qa-arrow {
@@ -338,13 +376,15 @@
   opacity: 1;
 }
 
-/* Answer panel — slides open below the question */
+/* Q&A answer panel */
 .spec-qa-answer {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
   margin-top: 0;
-  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, margin-top 0.3s ease;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin-top 0.3s ease;
 }
 
 .spec-qa-item.open .spec-qa-answer {
@@ -354,29 +394,81 @@
 }
 
 .spec-qa-answer-inner {
-  background: rgba(4,4,12,0.97);
-  border: 1px solid rgba(255,107,53,0.15);
+  background: rgba(4,4,12,0.95);
+  border: 1px solid rgba(255,107,53,0.12);
   border-left: 3px solid var(--orange);
   border-radius: 0 10px 10px 10px;
   padding: 1.1rem 1.4rem;
   font-size: 1rem;
   color: var(--text);
   line-height: 1.8;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 14px rgba(255,107,53,0.06);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4),
+              0 0 10px rgba(255,107,53,0.04);
 }
 
 /* ----------------------------------------
-   RESPONSIVE
+   RESPONSIVE — tablet + mobile
    ---------------------------------------- */
 @media (max-width: 900px) {
-  .cs-layout { flex-direction: column; }
-  .cs-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); overflow: visible; }
-  .spec-stat-grid { grid-template-columns: 1fr; }
+  #core-systems-view {
+    height: auto;
+    overflow: visible;
+  }
+
+  .cs-layout {
+    flex-direction: column;
+  }
+
+  .cs-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    overflow: visible;
+    position: relative;
+  }
+
+  .cs-content {
+    overflow-y: visible;
+    height: auto;
+  }
+
+  .spec-stat-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .cs-top-bar { padding: 1rem 1.5rem; }
-  .cs-content { padding: 1.5rem; }
-  .cs-panel-title { font-size: 1.6rem; }
-  .spec-stat-grid { grid-template-columns: 1fr 1fr; }
+  .cs-top-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .cs-sidebar {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .cs-content {
+    padding: 1.5rem;
+  }
+
+  .cs-main-title {
+    font-size: 1.15rem;
+  }
+
+  .spec-card {
+    padding: 1.5rem;
+  }
+
+  .spec-stat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .spec-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spec-card {
+    padding: 1.25rem;
+  }
 }
