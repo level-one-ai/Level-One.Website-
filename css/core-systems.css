@@ -184,30 +184,23 @@
   border-color: rgba(255,107,53,0.25);
 }
 
-/* Nav icon container */
-.cs-nav-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+/* Status dot — small circle indicator before label */
+.cs-nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
   flex-shrink: 0;
-  color: var(--text-secondary);
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
-.cs-nav-btn.active .cs-nav-icon {
-  background: rgba(255,107,53,0.12);
-  border-color: rgba(255,107,53,0.3);
-  color: var(--orange);
+.cs-nav-btn.active .cs-nav-dot {
+  background: var(--orange);
+  box-shadow: 0 0 6px rgba(255,107,53,0.5);
 }
 
-.cs-nav-btn:hover .cs-nav-icon {
-  border-color: rgba(255,255,255,0.1);
-  color: var(--text);
+.cs-nav-btn:hover .cs-nav-dot {
+  background: rgba(255,255,255,0.25);
 }
 
 /* Button label */
@@ -230,26 +223,6 @@
 .cs-nav-btn.active .cs-nav-label {
   color: var(--white);
   font-weight: 600;
-}
-
-/* Arrow indicator — right-pointing chevron, rotates down on active */
-.cs-nav-arrow {
-  flex-shrink: 0;
-  color: var(--text-secondary);
-  opacity: 0;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.15s,
-              color 0.15s;
-}
-
-.cs-nav-btn.active .cs-nav-arrow {
-  opacity: 1;
-  color: var(--orange);
-  transform: rotate(90deg);
-}
-
-.cs-nav-btn:hover .cs-nav-arrow {
-  opacity: 0.4;
 }
 
 /* Sidebar footer */
