@@ -2,6 +2,24 @@
    INITIALIZATION AND HELPER FUNCTIONS
    ======================================== */
 
+// Scroll to a specific phase section within the process section on the main page
+function scrollToPhaseSection(phaseId) {
+  // Make sure main-content is visible (close any open views)
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('blog-view').style.display = 'none';
+  document.getElementById('calendar-view').style.display = 'none';
+  document.getElementById('core-systems-view').style.display = 'none';
+  document.getElementById('blueprint-view').style.display = 'none';
+  document.getElementById('solutions-view').style.display = 'none';
+  hexBurger.classList.remove('hidden');
+  currentView = 'main';
+
+  var target = document.getElementById(phaseId);
+  if (target) {
+    smoothScrollTo(target.offsetTop - 68, 2000);
+  }
+}
+
 // Blueprint Phase Opening Function
 function openBlueprintPhase(phaseIndex, section = 'process') {
   sourceSection = section;

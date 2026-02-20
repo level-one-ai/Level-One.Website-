@@ -20,9 +20,9 @@ const menuStructure = {
   },
   'Architecture': {
     subsections: [
-      { name: 'Systems Audit', action: () => { openView('blueprint-view', 'process'); } },
-      { name: 'Infrastructure Deployment', action: () => { openView('blueprint-view', 'process'); } },
-      { name: 'Performance Monitoring', action: () => { openView('blueprint-view', 'process'); } }
+      { name: 'Systems Audit', action: () => { scrollToPhaseSection('phase-audit'); } },
+      { name: 'Infrastructure Deployment', action: () => { scrollToPhaseSection('phase-deployment'); } },
+      { name: 'Performance Monitoring', action: () => { scrollToPhaseSection('phase-monitoring'); } }
     ],
     link: '#process'
   },
@@ -240,7 +240,7 @@ function showMainMenu() {
           const target = document.querySelector(menuData.link);
           hexBurger.click();
           setTimeout(() => {
-            smoothScrollTo(target.offsetTop + 180, 3000);
+            smoothScrollTo(target.offsetTop - 68, 3000);
           }, 600);
         }
       });
