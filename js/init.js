@@ -32,15 +32,8 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   window.scrollTo(0, 0);
 }
 
-// Panel selector for core-systems-view — always switches to target, one always open
-function selectCoreSection(panelKey, clickedBtn, forceOpen) {
-  // Update nav button active states
-  document.querySelectorAll('.cs-nav-btn').forEach(function(btn) {
-    btn.classList.remove('active');
-  });
-  var targetBtn = clickedBtn || document.querySelector('.cs-nav-btn[data-panel="' + panelKey + '"]');
-  if (targetBtn) targetBtn.classList.add('active');
-
+// Panel selector for core-systems-view — shows the target panel, hides the rest
+function selectCoreSection(panelKey) {
   // Hide all panels instantly
   document.querySelectorAll('.cs-panel').forEach(function(p) {
     p.style.display = 'none';
@@ -92,7 +85,7 @@ function openCoreSystemsView(systemType) {
       'workflow': 'spec-deployment'
     };
     var panelKey = (systemType && sectionMap[systemType]) || 'spec-sales';
-    selectCoreSection(panelKey, null);
+    selectCoreSection(panelKey);
   });
 }
 
