@@ -305,19 +305,22 @@
 }
 
 .cs-layout {
-  display: grid;
-  grid-template-columns: 300px 1fr;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   max-width: 1400px;
   margin: 0 auto;
   min-height: calc(100vh - 68px);
 }
 
-/* Left sidebar — contained within 300px grid column */
+/* Left sidebar — fixed width, never bleeds into right column */
 .cs-sidebar {
-  align-self: start;
+  width: 260px;
+  flex-shrink: 0;
+  flex-grow: 0;
   border-right: 1px solid var(--border);
   padding: 2.5rem 2rem;
-  min-width: 0;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -433,8 +436,10 @@
   color: var(--orange);
 }
 
-/* Right content area — scrollable independently via page scroll (sidebar stays sticky) */
+/* Right content area — fills remaining space beside the fixed-width sidebar */
 .cs-content {
+  flex: 1;
+  min-width: 0;
   padding: 2.5rem;
   min-height: calc(100vh - 68px);
 }
@@ -744,8 +749,8 @@
 
 /* Responsive */
 @media(max-width:900px) {
-  .cs-layout { grid-template-columns: 1fr; }
-  .cs-sidebar { position: relative; top: 0; border-right: none; border-bottom: 1px solid var(--border); }
+  .cs-layout { flex-direction: column; }
+  .cs-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
   .spec-stat-grid { grid-template-columns: 1fr; }
 }
 @media(max-width:768px) {
