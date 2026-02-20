@@ -101,7 +101,14 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
 }
 
 // Panel selector for core-systems-view — shows the target panel, hides the rest
-function selectCoreSection(panelKey) {
+function selectCoreSection(panelKey, clickedBtn) {
+  // Update nav button active states
+  document.querySelectorAll('.cs-nav-btn').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+  var targetBtn = clickedBtn || document.querySelector('.cs-nav-btn[data-panel="' + panelKey + '"]');
+  if (targetBtn) targetBtn.classList.add('active');
+
   // Hide all panels instantly
   document.querySelectorAll('.cs-panel').forEach(function(p) {
     p.style.display = 'none';
