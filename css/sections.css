@@ -1,8 +1,150 @@
 /* ============================================
-   PROCESS PHASES — 02 Deployment Process
+   PROCESS VIEW — #process-view
+   Opened from process cards or hexagon menu.
+   Mind-map at top, phase content below.
    ============================================ */
 
-/* Phase card container */
+/* Container */
+.pv-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+
+/* Back button */
+.pv-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+
+.pv-back:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+  transform: translateX(-3px);
+}
+
+.pv-back svg { transition: transform 0.25s; }
+.pv-back:hover svg { transform: translateX(-2px); }
+
+/* Badge */
+.pv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 2rem;
+}
+
+.pv-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 6px rgba(255,107,53,0.6);
+  animation: cs-pulse 2s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   MIND-MAP — 3 connected boxes
+   ---------------------------------------- */
+.pv-mindmap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+}
+
+.pv-mindmap-node {
+  flex: 1;
+  max-width: 220px;
+  padding: 1rem 1.25rem;
+  background: rgba(10, 10, 14, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.pv-mindmap-node:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 15, 20, 0.9);
+  transform: translateY(-2px);
+}
+
+.pv-mindmap-node.active {
+  border-color: var(--orange);
+  background: rgba(255, 107, 53, 0.08);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+}
+
+.pv-node-num {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.3rem;
+  transition: color 0.25s;
+}
+
+.pv-mindmap-node.active .pv-node-num {
+  color: var(--orange);
+}
+
+.pv-node-title {
+  font-family: var(--heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  transition: color 0.25s;
+}
+
+.pv-mindmap-node.active .pv-node-title {
+  color: var(--white);
+}
+
+/* Connector lines between nodes */
+.pv-mindmap-line {
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 107, 53, 0.3), rgba(255, 107, 53, 0.15));
+  flex-shrink: 0;
+}
+
+/* Content area */
+.pv-content {
+  position: relative;
+}
+
+.pv-panel {
+  transition: opacity 0.35s ease;
+}
+
+/* ----------------------------------------
+   PHASE CONTENT CARD (shared by all 3 panels)
+   ---------------------------------------- */
 .proc-phase {
   background: rgba(10, 10, 14, 0.85);
   backdrop-filter: blur(10px);
@@ -12,11 +154,6 @@
   transition: border-color 0.3s;
 }
 
-.proc-phase:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-/* Phase header bar */
 .proc-phase-header {
   display: flex;
   align-items: center;
@@ -50,7 +187,6 @@
   margin: 0;
 }
 
-/* Phase body content */
 .proc-phase-body {
   padding: 1.75rem 2rem 2rem;
 }
@@ -79,7 +215,6 @@
   margin: 1.5rem 0;
 }
 
-/* Step-by-step numbered list */
 .proc-steps {
   list-style: none;
   padding: 0;
@@ -116,17 +251,21 @@
   font-weight: 600;
 }
 
-/* Connector line between phase cards */
-.proc-connector {
-  width: 2px;
-  height: 2.5rem;
-  margin: 0 auto;
-  background: linear-gradient(to bottom, rgba(255, 107, 53, 0.4), rgba(255, 107, 53, 0.1));
-  border-radius: 1px;
-}
-
-/* Responsive */
+/* Responsive — process view */
 @media (max-width: 768px) {
+  .pv-mindmap {
+    flex-direction: column;
+    gap: 0;
+  }
+  .pv-mindmap-line {
+    width: 2px;
+    height: 1.5rem;
+    background: linear-gradient(to bottom, rgba(255, 107, 53, 0.3), rgba(255, 107, 53, 0.15));
+  }
+  .pv-mindmap-node {
+    max-width: 100%;
+    width: 100%;
+  }
   .proc-phase-header {
     padding: 1rem 1.25rem;
     gap: 0.75rem;
@@ -136,6 +275,9 @@
   }
   .proc-phase-title {
     font-size: 1.1rem;
+  }
+  .pv-container {
+    padding: 1.5rem 1.2rem 4rem;
   }
 }
 
@@ -208,8 +350,34 @@
 }
 
 /* Architecture: spans full width, keeps horizontal layout */
+/* Architecture: spans full width, compact horizontal layout */
 .pricing-right .pricing-grid .pricing-card:nth-child(3) {
   grid-column: 1 / -1;
+  padding: 1.25rem 1.75rem;
+  gap: 1.5rem;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(3) .pricing-features {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.35rem 1rem;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(3) .pricing-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(3) .pricing-subtitle {
+  margin-bottom: 0.6rem;
+  font-size: 0.78rem;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(3) .price-amount {
+  font-size: 1.6rem;
+}
+
+.pricing-right .pricing-grid .pricing-card:nth-child(3) .pricing-card-detail {
+  gap: 0.75rem;
 }
 
 /* Horizontal card layout: meta left, detail right */
