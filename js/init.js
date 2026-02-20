@@ -63,7 +63,7 @@ function selectCoreSection(panelKey, clickedBtn, forceOpen) {
   }
 
   // Scroll the right content area back to the top
-  var contentArea = document.querySelector('.cs-content');
+  var contentArea = document.querySelector('.cs-main');
   if (contentArea) contentArea.scrollTop = 0;
 }
 
@@ -304,14 +304,14 @@ window.addEventListener('load', animateOnScroll);
 
 // Q&A Accordion for core-systems-view
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.spec-qa-btn').forEach(function(btn) {
+  document.querySelectorAll('.cs-qa-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var item = this.closest('.spec-qa-item');
+      var item = this.closest('.cs-qa-item');
       var isOpen = item.classList.contains('open');
       // Close all others in the same group
-      var group = item.closest('.spec-qa');
+      var group = item.closest('.cs-qa');
       if (group) {
-        group.querySelectorAll('.spec-qa-item').forEach(function(i) {
+        group.querySelectorAll('.cs-qa-item').forEach(function(i) {
           i.classList.remove('open');
         });
       }

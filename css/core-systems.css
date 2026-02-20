@@ -1,139 +1,223 @@
 /* ============================================
    CORE SYSTEMS VIEW — #core-systems-view
-   Revenue Infrastructure Architecture
+   Revenue Infrastructure Dashboard
 
-   Self-contained styles for this view only.
-   Layout: fixed left sidebar + scrollable
-   right content panel.
+   Self-contained styles. New class names (cs-*)
+   scoped entirely to this view.
    ============================================ */
 
 /* ----------------------------------------
-   VIEW SHELL — locks the viewport
+   VIEW SHELL
+   Fills the viewport; nothing inside scrolls
+   except .cs-main (the right panel).
    ---------------------------------------- */
-/* display is toggled by JS (none ↔ flex).
-   When visible, JS sets display:flex which activates
-   the column layout defined here.                    */
 #core-systems-view {
   height: 100vh;
   overflow: hidden;
   flex-direction: column;
-  padding-top: 68px;          /* clear the fixed nav bar */
+  padding-top: 68px;
   box-sizing: border-box;
 }
 
-/* ----------------------------------------
-   TOP BAR — back button
-   ---------------------------------------- */
-.cs-top-bar {
-  flex-shrink: 0;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1.2rem 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-sizing: border-box;
-}
-
-/* ----------------------------------------
-   TWO-COLUMN LAYOUT
-   Sidebar is static; content scrolls.
-   ---------------------------------------- */
-.cs-layout {
+/* Dashboard wrapper — the bordered frame */
+.cs-dashboard {
   display: flex;
   flex: 1;
-  min-height: 0;               /* allow flex child to shrink below content */
-  max-width: 1400px;
+  min-height: 0;
+  height: 100%;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255,255,255,0.06);
 }
 
 /* ----------------------------------------
-   LEFT SIDEBAR — static, never scrolls
+   LEFT SIDEBAR
+   Fixed width, never scrolls, contains
+   back button + title + nav buttons.
    ---------------------------------------- */
 .cs-sidebar {
-  width: 280px;
+  width: 260px;
   flex-shrink: 0;
   flex-grow: 0;
-  border-right: 1px solid rgba(255,255,255,0.08);
-  padding: 2rem 1.5rem;
-  box-sizing: border-box;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  background: rgba(5,5,8,0.6);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Back button — compact, top of sidebar */
+.cs-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.cs-back-btn:hover {
+  color: var(--orange);
+  background: rgba(255,107,53,0.04);
+}
+
+.cs-back-btn svg {
+  transition: transform 0.2s;
+}
+
+.cs-back-btn:hover svg {
+  transform: translateX(-2px);
 }
 
 /* Sidebar header — title block */
 .cs-sidebar-header {
-  margin-bottom: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
 }
 
-.cs-main-title {
+.cs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.cs-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 6px rgba(255,107,53,0.6);
+  animation: cs-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.cs-title {
   font-family: var(--heading);
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--white);
   letter-spacing: -0.02em;
-  line-height: 1.3;
-  margin-bottom: 0.5rem;
+  line-height: 1.25;
+  margin: 0 0 0.35rem;
 }
 
-.cs-main-subtitle {
+.cs-subtitle {
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  margin-top: 0.3rem;
+  margin: 0;
+}
+
+/* "Modules" label above the nav */
+.cs-nav-heading {
+  padding: 0.9rem 1.25rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  flex-shrink: 0;
+  opacity: 0.5;
 }
 
 /* ----------------------------------------
    SECTION SELECTOR BUTTONS
    Stacked vertically inside the sidebar.
-   Each has an arrow toggle indicator.
    ---------------------------------------- */
 .cs-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 2px;
+  padding: 0 0.75rem;
+  flex-shrink: 0;
 }
 
 .cs-nav-btn {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.75rem;
+  gap: 0.55rem;
+  padding: 0.55rem 0.6rem;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease,
-              border-color 0.2s ease,
-              box-shadow 0.2s ease;
+  transition: background 0.15s ease,
+              border-color 0.15s ease;
   text-align: left;
   box-sizing: border-box;
 }
 
 .cs-nav-btn:hover {
   background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.06);
 }
 
 .cs-nav-btn.active {
-  background: rgba(255,107,53,0.06);
-  border-color: rgba(255,107,53,0.4);
-  box-shadow: 0 0 0 1px rgba(255,107,53,0.15);
+  background: rgba(255,107,53,0.07);
+  border-color: rgba(255,107,53,0.25);
+}
+
+/* Nav icon container */
+.cs-nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.cs-nav-btn.active .cs-nav-icon {
+  background: rgba(255,107,53,0.12);
+  border-color: rgba(255,107,53,0.3);
+  color: var(--orange);
+}
+
+.cs-nav-btn:hover .cs-nav-icon {
+  border-color: rgba(255,255,255,0.1);
+  color: var(--text);
 }
 
 /* Button label */
 .cs-nav-label {
   flex: 1;
   font-family: var(--body);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-secondary);
-  transition: color 0.2s;
+  transition: color 0.15s;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -148,52 +232,67 @@
   font-weight: 600;
 }
 
-/* Chevron arrow — rotates on active */
+/* Arrow indicator — right-pointing chevron, rotates down on active */
 .cs-nav-arrow {
   flex-shrink: 0;
   color: var(--text-secondary);
-  opacity: 0.35;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.2s,
-              color 0.2s;
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.15s,
+              color 0.15s;
 }
 
 .cs-nav-btn.active .cs-nav-arrow {
-  transform: rotate(180deg);
   opacity: 1;
   color: var(--orange);
+  transform: rotate(90deg);
 }
 
 .cs-nav-btn:hover .cs-nav-arrow {
-  opacity: 0.6;
-  color: var(--orange);
+  opacity: 0.4;
+}
+
+/* Sidebar footer */
+.cs-sidebar-footer {
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+
+.cs-sidebar-footer-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  letter-spacing: 0.05em;
 }
 
 /* ----------------------------------------
-   RIGHT CONTENT — scrollable panel
+   RIGHT MAIN PANEL — scrollable
    ---------------------------------------- */
-.cs-content {
+.cs-main {
   flex: 1;
   min-width: 0;
-  padding: 2rem 2.5rem 3rem;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 2rem 2.5rem 3rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,107,53,0.2) transparent;
+  scrollbar-color: rgba(255,107,53,0.15) transparent;
 }
 
-.cs-content::-webkit-scrollbar {
-  width: 6px;
+.cs-main::-webkit-scrollbar {
+  width: 5px;
 }
-.cs-content::-webkit-scrollbar-track {
+.cs-main::-webkit-scrollbar-track {
   background: transparent;
 }
-.cs-content::-webkit-scrollbar-thumb {
-  background: rgba(255,107,53,0.18);
+.cs-main::-webkit-scrollbar-thumb {
+  background: rgba(255,107,53,0.15);
   border-radius: 3px;
 }
-.cs-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,107,53,0.35);
+.cs-main::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,107,53,0.3);
 }
 
 /* ----------------------------------------
@@ -203,211 +302,239 @@
   display: none;
 }
 
-/* ----------------------------------------
-   SPEC CARD — main content container
-   Clean, modern card with solid border
-   ---------------------------------------- */
-.spec-card {
-  background: rgba(10,10,14,0.5);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 2.5rem;
+/* Panel header with numbered badge */
+.cs-panel-header {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Content blocks inside spec card */
-.spec-block {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
-.spec-block-label {
+.cs-panel-badge {
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--orange);
+  background: rgba(255,107,53,0.08);
+  border: 1px solid rgba(255,107,53,0.2);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.cs-panel-title {
+  font-family: var(--heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* ----------------------------------------
+   CARD — main content container
+   ---------------------------------------- */
+.cs-card {
+  background: rgba(8,8,12,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.cs-card-section {
+  padding: 0.25rem 0;
+}
+
+.cs-card-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--orange);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.6rem;
 }
 
-/* Spec text */
-.spec-text {
-  font-size: 1.02rem;
+.cs-card-text {
+  font-family: var(--body);
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.85;
+  line-height: 1.8;
+  margin: 0;
 }
 
-/* Spec list */
-.spec-list {
+.cs-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin: 1.25rem 0;
+}
+
+/* List items */
+.cs-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
-.spec-list li {
-  font-size: 1rem;
+.cs-list li {
+  font-family: var(--body);
+  font-size: 0.92rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  padding-left: 1.4rem;
+  padding-left: 1.3rem;
   position: relative;
 }
 
-.spec-list li::before {
+.cs-list li::before {
   content: "\2192";
   position: absolute;
   left: 0;
   color: var(--orange);
-  font-size: 0.8rem;
-  opacity: 0.7;
+  font-size: 0.75rem;
+  opacity: 0.6;
 }
 
-.spec-list li strong {
+.cs-list li strong {
   color: var(--text);
   font-weight: 600;
 }
 
 /* ----------------------------------------
-   STAT BOXES — Real-World Impact
+   METRICS ROW
    ---------------------------------------- */
-.spec-stat-grid {
+.cs-metrics-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.spec-stat-box {
-  background: rgba(5,5,7,0.7);
-  border: 1px solid rgba(255,255,255,0.08);
+.cs-metric {
+  background: rgba(8,8,12,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 10px;
-  padding: 1.4rem 1.2rem;
+  padding: 1.25rem 1rem;
   text-align: center;
-  transition: box-shadow 0.3s ease,
-              border-color 0.3s ease,
-              transform 0.3s ease;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
   cursor: default;
 }
 
-.spec-stat-box:hover {
-  border-color: rgba(255,107,53,0.45);
-  box-shadow: 0 0 18px rgba(255,107,53,0.25),
-              0 0 6px rgba(255,107,53,0.1);
+.cs-metric:hover {
+  border-color: rgba(255,107,53,0.35);
+  box-shadow: 0 0 16px rgba(255,107,53,0.15);
   transform: translateY(-2px);
 }
 
-.spec-stat-value {
+.cs-metric-value {
   font-family: var(--heading);
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--orange);
   line-height: 1.1;
-  margin-bottom: 0.6rem;
-  text-shadow: 0 0 20px rgba(255,107,53,0.2);
+  margin-bottom: 0.4rem;
 }
 
-.spec-stat-desc {
-  font-size: 0.92rem;
+.cs-metric-desc {
+  font-family: var(--body);
+  font-size: 0.82rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 /* ----------------------------------------
-   Q&A — clean accordion style
+   Q&A ACCORDION
    ---------------------------------------- */
-.spec-qa {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+.cs-card--qa {
+  padding-bottom: 0.5rem;
 }
 
-.spec-qa-item {
+.cs-qa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cs-qa-item {
   display: flex;
   flex-direction: column;
 }
 
-.spec-qa-btn {
+.cs-qa-btn {
   width: 100%;
-  background: rgba(8,8,16,0.85);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-left: 2px solid rgba(255,107,53,0.45);
-  border-radius: 10px;
-  padding: 1.1rem 1.3rem;
+  background: rgba(5,5,10,0.7);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 2px solid rgba(255,107,53,0.35);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   cursor: pointer;
   color: var(--text);
   font-family: var(--body);
-  font-size: 1rem;
+  font-size: 0.92rem;
   text-align: left;
   line-height: 1.5;
-  letter-spacing: 0.01em;
-  transition: background 0.2s ease,
-              border-color 0.2s ease;
+  transition: background 0.15s, border-color 0.15s;
 }
 
-.spec-qa-btn:hover {
-  background: rgba(12,12,24,0.9);
-  border-left-color: rgba(255,107,53,0.8);
+.cs-qa-btn:hover {
+  background: rgba(10,10,20,0.8);
+  border-left-color: rgba(255,107,53,0.7);
 }
 
-.spec-qa-item.open .spec-qa-btn {
-  background: rgba(8,8,16,0.85);
+.cs-qa-item.open .cs-qa-btn {
   border-left-color: var(--orange);
 }
 
-/* Q&A chevron */
-.spec-qa-arrow {
+.cs-qa-chevron {
   flex-shrink: 0;
   color: var(--orange);
-  opacity: 0.6;
+  opacity: 0.5;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.2s ease;
+              opacity 0.2s;
 }
 
-.spec-qa-item.open .spec-qa-arrow {
+.cs-qa-item.open .cs-qa-chevron {
   transform: rotate(180deg);
   opacity: 1;
 }
 
-/* Q&A answer panel */
-.spec-qa-answer {
+.cs-qa-answer {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
   margin-top: 0;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              margin-top 0.3s ease;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease,
+              margin-top 0.25s ease;
 }
 
-.spec-qa-item.open .spec-qa-answer {
+.cs-qa-item.open .cs-qa-answer {
   max-height: 320px;
   opacity: 1;
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
 }
 
-.spec-qa-answer-inner {
-  background: rgba(4,4,12,0.95);
-  border: 1px solid rgba(255,107,53,0.12);
+.cs-qa-answer-body {
+  background: rgba(4,4,10,0.9);
+  border: 1px solid rgba(255,107,53,0.1);
   border-left: 3px solid var(--orange);
-  border-radius: 0 10px 10px 10px;
-  padding: 1.1rem 1.4rem;
-  font-size: 1rem;
+  border-radius: 0 8px 8px 8px;
+  padding: 1rem 1.2rem;
+  font-family: var(--body);
+  font-size: 0.92rem;
   color: var(--text);
-  line-height: 1.8;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4),
-              0 0 10px rgba(255,107,53,0.04);
+  line-height: 1.75;
 }
 
 /* ----------------------------------------
-   RESPONSIVE — tablet + mobile
+   RESPONSIVE
    ---------------------------------------- */
 @media (max-width: 900px) {
   #core-systems-view {
@@ -415,60 +542,59 @@
     overflow: visible;
   }
 
-  .cs-layout {
+  .cs-dashboard {
     flex-direction: column;
+    border-left: none;
+    border-right: none;
   }
 
   .cs-sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    overflow: visible;
-    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  .cs-content {
+  .cs-sidebar-footer {
+    display: none;
+  }
+
+  .cs-main {
     overflow-y: visible;
-    height: auto;
   }
 
-  .spec-stat-grid {
+  .cs-metrics-row {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .cs-top-bar {
-    padding: 1rem 1.5rem;
-  }
-
-  .cs-sidebar {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .cs-content {
+  .cs-main {
     padding: 1.5rem;
   }
 
-  .cs-main-title {
-    font-size: 1.15rem;
+  .cs-card {
+    padding: 1.25rem;
   }
 
-  .spec-card {
-    padding: 1.5rem;
+  .cs-panel-title {
+    font-size: 1.25rem;
   }
 
-  .spec-stat-grid {
+  .cs-metrics-row {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 480px) {
-  .spec-stat-grid {
+  .cs-metrics-row {
     grid-template-columns: 1fr;
   }
 
-  .spec-card {
-    padding: 1.25rem;
+  .cs-main {
+    padding: 1rem;
+  }
+
+  .cs-card {
+    padding: 1rem;
   }
 }

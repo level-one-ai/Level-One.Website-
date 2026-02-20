@@ -548,111 +548,132 @@
 </div>
 
 <div id="core-systems-view">
+  <div class="cs-dashboard">
 
-  <div class="cs-top-bar">
-    <button class="view-back-btn" onclick="closeView()">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 1L5 8l6 7"/>
-      </svg>
-      Back to Home
-    </button>
-  </div>
+    <!-- LEFT SIDEBAR — static, never scrolls -->
+    <aside class="cs-sidebar">
 
-  <div class="cs-layout">
+      <!-- Back button -->
+      <button class="cs-back-btn" onclick="closeView()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 8l6 7"/></svg>
+        <span>Back</span>
+      </button>
 
-    <!-- STATIONARY LEFT SIDEBAR -->
-    <div class="cs-sidebar">
+      <!-- Title block -->
       <div class="cs-sidebar-header">
-        <div class="spec-badge" style="margin-bottom:1.5rem;">
-          <span class="pulse"></span>
+        <div class="cs-badge">
+          <span class="cs-badge-dot"></span>
           Technical Specification
         </div>
-        <h1 class="cs-main-title">Revenue Infrastructure Architecture</h1>
-        <p class="cs-main-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
+        <h1 class="cs-title">Revenue Infrastructure</h1>
+        <p class="cs-subtitle">Growth Engines &amp; Efficiency Systems Framework</p>
       </div>
+
+      <!-- Section navigation -->
+      <div class="cs-nav-heading">Modules</div>
       <nav class="cs-nav">
         <button class="cs-nav-btn active" data-panel="spec-sales" onclick="selectCoreSection('spec-sales', this)">
+          <span class="cs-nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 7l5 5-5 5M6 7l5 5-5 5"/></svg>
+          </span>
           <span class="cs-nav-label">Revenue Engines</span>
-          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="cs-nav-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
         <button class="cs-nav-btn" data-panel="spec-support" onclick="selectCoreSection('spec-support', this)">
+          <span class="cs-nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </span>
           <span class="cs-nav-label">Resolution Systems</span>
-          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="cs-nav-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
         <button class="cs-nav-btn" data-panel="spec-integration" onclick="selectCoreSection('spec-integration', this)">
+          <span class="cs-nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </span>
           <span class="cs-nav-label">Systems Architecture</span>
-          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="cs-nav-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
         <button class="cs-nav-btn" data-panel="spec-deployment" onclick="selectCoreSection('spec-deployment', this)">
+          <span class="cs-nav-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </span>
           <span class="cs-nav-label">Operational Autonomy</span>
-          <svg class="cs-nav-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="cs-nav-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
         </button>
       </nav>
-    </div>
 
-    <!-- SCROLLABLE RIGHT CONTENT PANELS -->
-    <div class="cs-content">
+      <!-- Sidebar footer -->
+      <div class="cs-sidebar-footer">
+        <div class="cs-sidebar-footer-label">01 — Revenue Infrastructure</div>
+      </div>
+    </aside>
+
+    <!-- RIGHT CONTENT — scrollable -->
+    <main class="cs-main">
 
       <!-- PANEL 1: REVENUE ENGINES (shown by default) -->
       <div class="cs-panel" id="cs-panel-spec-sales" style="display:block;opacity:1;">
-        <div class="spec-card">
-          <div class="spec-block">
-            <div class="spec-block-label">System Overview</div>
-            <p class="spec-text">A Revenue Engine is a system that automatically collects, checks, and organizes your leads. Instead of having your team guess who to talk to or waste time doing manual data entry, this setup uses clear rules to manage the whole process. The main goal is to drive revenue growth by making your acquisition smoother and mathematically improving your conversion.</p>
+        <div class="cs-panel-header">
+          <div class="cs-panel-badge">01</div>
+          <h2 class="cs-panel-title">Revenue Engines</h2>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-section">
+            <div class="cs-card-label">System Overview</div>
+            <p class="cs-card-text">A Revenue Engine is a system that automatically collects, checks, and organizes your leads. Instead of having your team guess who to talk to or waste time doing manual data entry, this setup uses clear rules to manage the whole process. The main goal is to drive revenue growth by making your acquisition smoother and mathematically improving your conversion.</p>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Core Components</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Core Components</div>
+            <ul class="cs-list">
               <li><strong>Collecting &amp; Organizing Leads:</strong> Automatically grabs prospect data from your website, social media, and emails, standardizing it into your main database.</li>
               <li><strong>Scoring for Conversion:</strong> Gives every lead a score based on company size and content interaction, pushing the hottest prospects to the front.</li>
               <li><strong>Smart Lead Routing:</strong> Automatically sends the best leads to the right salesperson or email campaign.</li>
               <li><strong>Tracking the Pipeline:</strong> Watches how leads move through your sales process, showing drop-off points and acquisition costs.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Applied AI Systems</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Applied AI Systems</div>
+            <ul class="cs-list">
               <li><strong>Intent-Tracking AI:</strong> Looks at online behavior to spot companies researching your services before they fill out a form.</li>
               <li><strong>Smart Lead Scoring AI:</strong> Analyzes past sales data to figure out which new leads have the highest mathematical chance of buying.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Real-World Impact</div>
-            <div class="spec-stat-grid">
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">+35%</div>
-                <div class="spec-stat-desc">average increase in lead-to-opportunity conversion rates</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-50%</div>
-                <div class="spec-stat-desc">reduction in manual lead qualification time</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-30%</div>
-                <div class="spec-stat-desc">drop in overall Customer Acquisition Costs (CAC)</div>
+        </div>
+        <div class="cs-metrics-row">
+          <div class="cs-metric">
+            <div class="cs-metric-value">+35%</div>
+            <div class="cs-metric-desc">average increase in lead-to-opportunity conversion rates</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">-50%</div>
+            <div class="cs-metric-desc">reduction in manual lead qualification time</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">-30%</div>
+            <div class="cs-metric-desc">drop in overall Customer Acquisition Costs (CAC)</div>
+          </div>
+        </div>
+        <div class="cs-card cs-card--qa">
+          <div class="cs-card-label">Q&amp;A</div>
+          <div class="cs-qa">
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>How does the system know the difference between a hot lead and a cold lead?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">It adds up points based on their actions, like reading a pricing page or downloading a guide. Once a lead hits a certain score, the system flags them as "hot."</div>
               </div>
             </div>
-          </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Q&amp;A</div>
-            <div class="spec-qa">
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>How does the system know the difference between a hot lead and a cold lead?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">It adds up points based on their actions, like reading a pricing page or downloading a guide. Once a lead hits a certain score, the system flags them as "hot."</div>
-                </div>
-              </div>
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>Does a Revenue Engine lower the cost of getting new customers?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">Yes. Because the system automatically filters out bad leads, your sales team doesn't waste hours talking to people who won't buy, directly cutting labor costs.</div>
-                </div>
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>Does a Revenue Engine lower the cost of getting new customers?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">Yes. Because the system automatically filters out bad leads, your sales team doesn't waste hours talking to people who won't buy, directly cutting labor costs.</div>
               </div>
             </div>
           </div>
@@ -661,64 +682,67 @@
 
       <!-- PANEL 2: RESOLUTION SYSTEMS -->
       <div class="cs-panel" id="cs-panel-spec-support">
-        <div class="spec-card">
-          <div class="spec-block">
-            <div class="spec-block-label">System Overview</div>
-            <p class="spec-text">Resolution Systems handle your incoming support messages automatically. This setup is all about cost reduction and operational efficiency. It acts as a smart filter, answering routine questions instantly so your team only steps in for complex issues.</p>
+        <div class="cs-panel-header">
+          <div class="cs-panel-badge">02</div>
+          <h2 class="cs-panel-title">Resolution Systems</h2>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-section">
+            <div class="cs-card-label">System Overview</div>
+            <p class="cs-card-text">Resolution Systems handle your incoming support messages automatically. This setup is all about cost reduction and operational efficiency. It acts as a smart filter, answering routine questions instantly so your team only steps in for complex issues.</p>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Core Components</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Core Components</div>
+            <ul class="cs-list">
               <li><strong>Smart Sorting:</strong> Reads incoming emails and chat messages to figure out what the customer needs and how urgent it is.</li>
               <li><strong>Instant Answers:</strong> Connects common questions directly to your knowledge base to resolve them without human touch.</li>
               <li><strong>Human Handoffs:</strong> Spots angry customers or complicated questions and smoothly transfers them to a real person with all background info attached.</li>
               <li><strong>Quality Tracking:</strong> Keeps a record of automated chats to ensure accuracy and spot missing help guides.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Applied AI Systems</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Applied AI Systems</div>
+            <ul class="cs-list">
               <li><strong>Message-Reading AI:</strong> Reads incoming support tickets to instantly understand customer intent and route them perfectly.</li>
               <li><strong>Automated Helpers:</strong> Digital assistants that grab info from emails or chats, find the answer in your database, and reply independently.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Real-World Impact</div>
-            <div class="spec-stat-grid">
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">60–80%</div>
-                <div class="spec-stat-desc">of routine support tickets successfully deflected</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-30%</div>
-                <div class="spec-stat-desc">average reduction in customer support operational costs</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-50%</div>
-                <div class="spec-stat-desc">decrease in ticket handling times</div>
+        </div>
+        <div class="cs-metrics-row">
+          <div class="cs-metric">
+            <div class="cs-metric-value">60–80%</div>
+            <div class="cs-metric-desc">of routine support tickets successfully deflected</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">-30%</div>
+            <div class="cs-metric-desc">average reduction in customer support operational costs</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">-50%</div>
+            <div class="cs-metric-desc">decrease in ticket handling times</div>
+          </div>
+        </div>
+        <div class="cs-card cs-card--qa">
+          <div class="cs-card-label">Q&amp;A</div>
+          <div class="cs-qa">
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>How do you measure if this system is actually working?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">We look at how fast questions get answered, and the "Ticket Deflection Rate"—the percentage of questions the system handles completely on its own.</div>
               </div>
             </div>
-          </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Q&amp;A</div>
-            <div class="spec-qa">
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>How do you measure if this system is actually working?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">We look at how fast questions get answered, and the "Ticket Deflection Rate"—the percentage of questions the system handles completely on its own.</div>
-                </div>
-              </div>
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>What exactly counts as a "routine" question?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">A routine question is anything with a standard, unchangeable answer—like password resets, order statuses, or return policies.</div>
-                </div>
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>What exactly counts as a "routine" question?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">A routine question is anything with a standard, unchangeable answer—like password resets, order statuses, or return policies.</div>
               </div>
             </div>
           </div>
@@ -727,64 +751,67 @@
 
       <!-- PANEL 3: SYSTEMS ARCHITECTURE -->
       <div class="cs-panel" id="cs-panel-spec-integration">
-        <div class="spec-card">
-          <div class="spec-block">
-            <div class="spec-block-label">System Overview</div>
-            <p class="spec-text">Systems Architecture is the blueprint of how your software and tools work together. By looking at the big picture of your operations, this process enables profit identification (finding where clunky manual tasks eat your money) and accurate ROI mapping for automation.</p>
+        <div class="cs-panel-header">
+          <div class="cs-panel-badge">03</div>
+          <h2 class="cs-panel-title">Systems Architecture</h2>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-section">
+            <div class="cs-card-label">System Overview</div>
+            <p class="cs-card-text">Systems Architecture is the blueprint of how your software and tools work together. By looking at the big picture of your operations, this process enables profit identification (finding where clunky manual tasks eat your money) and accurate ROI mapping for automation.</p>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Core Components</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Core Components</div>
+            <ul class="cs-list">
               <li><strong>Mapping How You Work:</strong> Documenting exactly how your team works step-by-step to spot bottlenecks.</li>
               <li><strong>Software Checkup:</strong> Looking at your current tools to see if they can connect or if you are paying for unused tools.</li>
               <li><strong>Connection Plans:</strong> Creating maps that show exactly how your software programs will share information.</li>
               <li><strong>Measuring the Payoff:</strong> Timing how long tasks take right now to calculate exactly how much money automation will save you.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Applied AI Systems</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Applied AI Systems</div>
+            <ul class="cs-list">
               <li><strong>Workflow Mapping AI:</strong> Plugs into your main software to see exactly how work gets done and calculate the financial return of fixing bottlenecks.</li>
               <li><strong>Bottleneck Spotting AI:</strong> Watches how data moves to find loops of repetitive data entry, highlighting quick ways to save money.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Real-World Impact</div>
-            <div class="spec-stat-grid">
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">46%</div>
-                <div class="spec-stat-desc">of organizations achieve significantly faster process execution</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">41%</div>
-                <div class="spec-stat-desc">successful reduction in manual administrative effort</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">80%</div>
-                <div class="spec-stat-desc">of adopters report immediate, measurable operational ROI</div>
+        </div>
+        <div class="cs-metrics-row">
+          <div class="cs-metric">
+            <div class="cs-metric-value">46%</div>
+            <div class="cs-metric-desc">of organizations achieve significantly faster process execution</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">41%</div>
+            <div class="cs-metric-desc">successful reduction in manual administrative effort</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">80%</div>
+            <div class="cs-metric-desc">of adopters report immediate, measurable operational ROI</div>
+          </div>
+        </div>
+        <div class="cs-card cs-card--qa">
+          <div class="cs-card-label">Q&amp;A</div>
+          <div class="cs-qa">
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>How does mapping our processes help us find hidden profit?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">By timing how long manual tasks take and multiplying that by hourly wages, we put an exact dollar amount on what bottlenecks cost you.</div>
               </div>
             </div>
-          </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Q&amp;A</div>
-            <div class="spec-qa">
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>How does mapping our processes help us find hidden profit?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">By timing how long manual tasks take and multiplying that by hourly wages, we put an exact dollar amount on what bottlenecks cost you.</div>
-                </div>
-              </div>
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>Will we have to buy all new software?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">Not usually. The goal is interoperability. We connect the software you already use rather than ripping it out and starting over.</div>
-                </div>
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>Will we have to buy all new software?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">Not usually. The goal is interoperability. We connect the software you already use rather than ripping it out and starting over.</div>
               </div>
             </div>
           </div>
@@ -793,72 +820,75 @@
 
       <!-- PANEL 4: OPERATIONAL AUTONOMY -->
       <div class="cs-panel" id="cs-panel-spec-deployment">
-        <div class="spec-card">
-          <div class="spec-block">
-            <div class="spec-block-label">System Overview</div>
-            <p class="spec-text">Operational Autonomy means setting up software to run your daily tasks in the background without human help. By making sure the end of one task automatically starts the next, your business achieves massive scale while driving total cost elimination for admin work.</p>
+        <div class="cs-panel-header">
+          <div class="cs-panel-badge">04</div>
+          <h2 class="cs-panel-title">Operational Autonomy</h2>
+        </div>
+        <div class="cs-card">
+          <div class="cs-card-section">
+            <div class="cs-card-label">System Overview</div>
+            <p class="cs-card-text">Operational Autonomy means setting up software to run your daily tasks in the background without human help. By making sure the end of one task automatically starts the next, your business achieves massive scale while driving total cost elimination for admin work.</p>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Core Components</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Core Components</div>
+            <ul class="cs-list">
               <li><strong>Action Triggers:</strong> Background alerts that wait for something to happen (like a signed contract) and instantly start the next step.</li>
               <li><strong>Data Movers:</strong> Systems that take info from one place, reformat it, and paste it into another system, eliminating manual entry.</li>
               <li><strong>Keeping Tools in Sync:</strong> Ensuring an update in your sales tool automatically updates your billing and project management tools.</li>
               <li><strong>Handling Errors:</strong> A safety net that notices if an automation fails, tries to fix it, and alerts your tech team.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Applied AI Systems</div>
-            <ul class="spec-list">
+          <div class="cs-divider"></div>
+          <div class="cs-card-section">
+            <div class="cs-card-label">Applied AI Systems</div>
+            <ul class="cs-list">
               <li><strong>Smart Connectors:</strong> AI tools that sit between your platforms, building workflows that process thousands of tasks a day.</li>
               <li><strong>Built-in AI Assistants:</strong> Agents that live inside your main database and do multi-step chores completely on their own.</li>
             </ul>
           </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Real-World Impact</div>
-            <div class="spec-stat-grid">
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-30%</div>
-                <div class="spec-stat-desc">reduction in overall operational and administrative costs</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">-60%</div>
-                <div class="spec-stat-desc">cost savings per transaction vs. manual invoice processing</div>
-              </div>
-              <div class="spec-stat-box">
-                <div class="spec-stat-value">&lt;12mo</div>
-                <div class="spec-stat-desc">to achieve full ROI for over 50% of businesses</div>
+        </div>
+        <div class="cs-metrics-row">
+          <div class="cs-metric">
+            <div class="cs-metric-value">-30%</div>
+            <div class="cs-metric-desc">reduction in overall operational and administrative costs</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">-60%</div>
+            <div class="cs-metric-desc">cost savings per transaction vs. manual invoice processing</div>
+          </div>
+          <div class="cs-metric">
+            <div class="cs-metric-value">&lt;12mo</div>
+            <div class="cs-metric-desc">to achieve full ROI for over 50% of businesses</div>
+          </div>
+        </div>
+        <div class="cs-card cs-card--qa">
+          <div class="cs-card-label">Q&amp;A</div>
+          <div class="cs-qa">
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>How is this different from simple automation, like Zapier?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">Simple automation usually does one thing. Operational Autonomy connects whole multi-system processes (reading a contract, sending an invoice, setting up a project board) from one trigger.</div>
               </div>
             </div>
-          </div>
-          <div class="spec-block">
-            <div class="spec-block-label">Q&amp;A</div>
-            <div class="spec-qa">
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>How is this different from simple automation, like Zapier?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">Simple automation usually does one thing. Operational Autonomy connects whole multi-system processes (reading a contract, sending an invoice, setting up a project board) from one trigger.</div>
-                </div>
-              </div>
-              <div class="spec-qa-item">
-                <button class="spec-qa-btn">
-                  <span>How do you stop data from getting messy across different apps?</span>
-                  <svg class="spec-qa-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="spec-qa-answer">
-                  <div class="spec-qa-answer-inner">We set up one main database as the "source of truth." All other apps just read from and write to that main database to stop conflicting info.</div>
-                </div>
+            <div class="cs-qa-item">
+              <button class="cs-qa-btn">
+                <span>How do you stop data from getting messy across different apps?</span>
+                <svg class="cs-qa-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="cs-qa-answer">
+                <div class="cs-qa-answer-body">We set up one main database as the "source of truth." All other apps just read from and write to that main database to stop conflicting info.</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-    </div><!-- /cs-content -->
-  </div><!-- /cs-layout -->
+    </main>
+  </div>
 </div>
 
 <div id="blueprint-view">
