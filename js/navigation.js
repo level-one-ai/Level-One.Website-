@@ -20,9 +20,9 @@ const menuStructure = {
   },
   'Architecture': {
     subsections: [
-      { name: 'Systems Audit', action: () => { scrollToPhaseSection('phase-audit'); } },
-      { name: 'Infrastructure Deployment', action: () => { scrollToPhaseSection('phase-deployment'); } },
-      { name: 'Performance Monitoring', action: () => { scrollToPhaseSection('phase-monitoring'); } }
+      { name: 'Systems Audit', action: () => { openProcessView('audit'); } },
+      { name: 'Infrastructure Deployment', action: () => { openProcessView('deployment'); } },
+      { name: 'Performance Monitoring', action: () => { openProcessView('monitoring'); } }
     ],
     link: '#process'
   },
@@ -56,7 +56,8 @@ function openView(viewId, section = null) {
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('blog-view').style.display = 'none';
     document.getElementById('calendar-view').style.display = 'none';
-    
+    document.getElementById('process-view').style.display = 'none';
+
     const targetView = document.getElementById(viewId);
     if (targetView) {
       targetView.style.display = 'block';
@@ -77,10 +78,11 @@ function closeView() {
     document.getElementById('core-systems-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
     document.getElementById('solutions-view').style.display = 'none';
-    
+    document.getElementById('process-view').style.display = 'none';
+
     hexBurger.classList.remove('hidden');
     currentView = 'main';
-    
+
     // Scroll to source section if available
     if (sourceSection) {
       const targetSection = document.getElementById(sourceSection);
@@ -120,16 +122,19 @@ function closeViewToSource() {
     let targetSectionId = null;
     const coreSystemsView = document.getElementById('core-systems-view');
     const blueprintView = document.getElementById('blueprint-view');
-    
+    const processView = document.getElementById('process-view');
+
     if (coreSystemsView.style.display === 'block') targetSectionId = 'features';
     if (blueprintView.style.display === 'block') targetSectionId = 'process';
-    
+    if (processView.style.display === 'block') targetSectionId = 'process';
+
     document.getElementById('main-content').style.display = 'block';
     document.getElementById('blog-view').style.display = 'none';
     document.getElementById('calendar-view').style.display = 'none';
     document.getElementById('core-systems-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
     document.getElementById('solutions-view').style.display = 'none';
+    document.getElementById('process-view').style.display = 'none';
     
     hexBurger.classList.remove('hidden');
     currentView = 'main';
@@ -240,7 +245,7 @@ function showMainMenu() {
           const target = document.querySelector(menuData.link);
           hexBurger.click();
           setTimeout(() => {
-            smoothScrollTo(target.offsetTop - 68, 3000);
+            smoothScrollTo(target.offsetTop - 70, 3000);
           }, 600);
         }
       });
@@ -257,22 +262,26 @@ function smoothScrollTo(targetY, duration) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   let startTime = null;
-  
+
   function animation(currentTime) {
     if (startTime === null) startTime = currentTime;
     const timeElapsed = currentTime - startTime;
+    if (timeElapsed >= duration) {
+      window.scrollTo(0, targetY);
+      return;
+    }
     const run = ease(timeElapsed, startY, distance, duration);
     window.scrollTo(0, run);
-    if (timeElapsed < duration) requestAnimationFrame(animation);
+    requestAnimationFrame(animation);
   }
-  
+
   function ease(t, b, c, d) {
     t /= d / 2;
     if (t < 1) return c / 2 * t * t + b;
     t--;
     return -c / 2 * (t * (t - 2) - 1) + b;
   }
-  
+
   requestAnimationFrame(animation);
 }
 

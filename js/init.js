@@ -2,22 +2,71 @@
    INITIALIZATION AND HELPER FUNCTIONS
    ======================================== */
 
-// Scroll to a specific phase section within the process section on the main page
-function scrollToPhaseSection(phaseId) {
-  // Make sure main-content is visible (close any open views)
-  document.getElementById('main-content').style.display = 'block';
-  document.getElementById('blog-view').style.display = 'none';
-  document.getElementById('calendar-view').style.display = 'none';
-  document.getElementById('core-systems-view').style.display = 'none';
-  document.getElementById('blueprint-view').style.display = 'none';
-  document.getElementById('solutions-view').style.display = 'none';
-  hexBurger.classList.remove('hidden');
-  currentView = 'main';
+// Open Process View with a specific phase selected
+function openProcessView(phaseKey) {
+  sourceSection = 'process';
 
-  var target = document.getElementById(phaseId);
-  if (target) {
-    smoothScrollTo(target.offsetTop - 68, 2000);
+  triggerTransition(function() {
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('blog-view').style.display = 'none';
+    document.getElementById('calendar-view').style.display = 'none';
+    document.getElementById('core-systems-view').style.display = 'none';
+    document.getElementById('blueprint-view').style.display = 'none';
+    document.getElementById('solutions-view').style.display = 'none';
+
+    document.getElementById('process-view').style.display = 'block';
+    currentView = 'process-view';
+
+    hexBurger.classList.add('hidden');
+    window.scrollTo(0, 0);
+
+    // Select the requested phase
+    var key = phaseKey || 'audit';
+    var targetNode = document.querySelector('.pv-mindmap-node[data-phase="' + key + '"]');
+    selectProcessPhase(key, targetNode);
+  });
+}
+
+// Switch between phases within the process view
+function selectProcessPhase(phaseKey, clickedNode) {
+  // Update mind-map active states
+  document.querySelectorAll('.pv-mindmap-node').forEach(function(n) {
+    n.classList.remove('active');
+  });
+  if (clickedNode) clickedNode.classList.add('active');
+
+  // Hide all panels
+  document.querySelectorAll('.pv-panel').forEach(function(p) {
+    p.style.display = 'none';
+    p.style.opacity = '0';
+    p.style.transition = 'none';
+  });
+
+  // Fade in target panel
+  var panel = document.getElementById('pv-panel-' + phaseKey);
+  if (panel) {
+    panel.style.display = 'block';
+    panel.style.opacity = '0';
+    panel.style.transition = 'none';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        panel.style.transition = 'opacity 0.35s ease';
+        panel.style.opacity = '1';
+      });
+    });
   }
+
+  // Close any open Q&A accordions in the new panel
+  if (panel) {
+    panel.querySelectorAll('.cs-qa-item.open').forEach(function(item) {
+      item.classList.remove('open');
+    });
+  }
+
+  // Scroll content area to top
+  var container = document.querySelector('.pv-container');
+  if (container) container.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 // Blueprint Phase Opening Function
@@ -29,7 +78,8 @@ function openBlueprintPhase(phaseIndex, section = 'process') {
   document.getElementById('calendar-view').style.display = 'none';
   document.getElementById('core-systems-view').style.display = 'none';
   document.getElementById('solutions-view').style.display = 'none';
-  
+  document.getElementById('process-view').style.display = 'none';
+
   const blueprintView = document.getElementById('blueprint-view');
   if (blueprintView) {
     blueprintView.style.display = 'block';
@@ -87,6 +137,7 @@ function openCoreSystemsView(systemType) {
     document.getElementById('calendar-view').style.display = 'none';
     document.getElementById('solutions-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
+    document.getElementById('process-view').style.display = 'none';
 
     // Show core systems view
     document.getElementById('core-systems-view').style.display = 'block';
@@ -352,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (target) {
           hexBurger.click();
           setTimeout(() => {
-            smoothScrollTo(target.offsetTop - 68, 3000);
+            smoothScrollTo(target.offsetTop - 70, 3000);
           }, 600);
         }
       }

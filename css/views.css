@@ -1,5 +1,5 @@
 /* VIEW MANAGER */
-#blog-view,#calendar-view,#blueprint-view,#solutions-view{display:none;padding-top:68px;min-height:100vh;background:var(--bg);position:relative;z-index:20}
+#blog-view,#calendar-view,#blueprint-view,#solutions-view,#process-view{display:none;padding-top:68px;min-height:100vh;background:var(--bg);position:relative;z-index:20}
 #core-systems-view{display:none;background:var(--bg);position:relative;z-index:20}
 #blog-view,#calendar-view{padding-top:120px}
 .view-container{max-width:1200px;margin:0 auto;padding:2rem}
