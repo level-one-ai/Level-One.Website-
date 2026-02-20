@@ -73,8 +73,8 @@ function openCoreSystemsView(systemType) {
     document.getElementById('solutions-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
 
-    // Show core systems view
-    document.getElementById('core-systems-view').style.display = 'block';
+    // Show core systems view as flex so the viewport-height layout works
+    document.getElementById('core-systems-view').style.display = 'flex';
     currentView = 'core-systems-view';
 
     hexBurger.classList.add('hidden');
