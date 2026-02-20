@@ -138,6 +138,49 @@
   margin: 0;
 }
 
+/* ----------------------------------------
+   SECTION NAV BUTTONS
+   Stacked vertically below the title block.
+   Active button gets an orange glow.
+   ---------------------------------------- */
+.cs-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+}
+
+.cs-nav-btn {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.cs-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+}
+
+.cs-nav-btn.active {
+  background: rgba(255, 107, 53, 0.1);
+  border-color: rgba(255, 107, 53, 0.5);
+  color: var(--white);
+  font-weight: 600;
+  box-shadow:
+    0 0 12px rgba(255, 107, 53, 0.25),
+    0 0 24px rgba(255, 107, 53, 0.1);
+}
+
 /* Sidebar footer */
 .cs-sidebar-footer {
   margin-top: auto;
