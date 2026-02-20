@@ -12,35 +12,38 @@
    except .cs-main (the right panel).
    ---------------------------------------- */
 #core-systems-view {
-  height: 100vh;
-  overflow: hidden;
-  flex-direction: column;
   padding-top: 68px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
-/* Dashboard wrapper — the bordered frame */
+/* Dashboard wrapper — the bordered frame.
+   display:flex + flex-direction:row forces
+   sidebar left, main right on all screens >900px. */
 .cs-dashboard {
   display: flex;
-  flex: 1;
+  flex-direction: row;
   min-height: 0;
-  height: 100%;
+  height: calc(100vh - 68px);
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   border-left: 1px solid rgba(255,255,255,0.06);
   border-right: 1px solid rgba(255,255,255,0.06);
+  position: relative;
 }
 
 /* ----------------------------------------
    LEFT SIDEBAR
-   Fixed width, never scrolls, contains
-   back button + title + nav buttons.
+   Fixed width, locked to the left.
+   Height fills the dashboard. Never scrolls
+   the page — only its own overflow if needed.
    ---------------------------------------- */
 .cs-sidebar {
   width: 260px;
-  flex-shrink: 0;
-  flex-grow: 0;
+  min-width: 260px;
+  max-width: 260px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(255,255,255,0.06);
@@ -48,6 +51,7 @@
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
+  flex-shrink: 0;
 }
 
 /* Back button — compact, top of sidebar */
@@ -250,6 +254,7 @@
 .cs-main {
   flex: 1;
   min-width: 0;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 2rem 2.5rem 3rem;
@@ -520,12 +525,16 @@
 
   .cs-dashboard {
     flex-direction: column;
+    height: auto;
     border-left: none;
     border-right: none;
   }
 
   .cs-sidebar {
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
     border-right: none;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
@@ -535,6 +544,7 @@
   }
 
   .cs-main {
+    height: auto;
     overflow-y: visible;
   }
 

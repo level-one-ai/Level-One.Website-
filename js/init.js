@@ -77,8 +77,8 @@ function openCoreSystemsView(systemType) {
     document.getElementById('solutions-view').style.display = 'none';
     document.getElementById('blueprint-view').style.display = 'none';
 
-    // Show core systems view (flex layout for fixed sidebar + scrollable content)
-    document.getElementById('core-systems-view').style.display = 'flex';
+    // Show core systems view
+    document.getElementById('core-systems-view').style.display = 'block';
     currentView = 'core-systems-view';
 
     hexBurger.classList.add('hidden');
