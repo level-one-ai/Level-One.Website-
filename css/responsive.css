@@ -1,6 +1,7 @@
 /* ========================================
    MOBILE RESPONSIVE STYLES
    All devices including tablets, phones, and foldables
+   Enhanced for glassmorphism design
    ======================================== */
 
 /* Tablet Landscape (1024px and below) */
@@ -247,6 +248,16 @@
   .trainline-station {
     flex-direction: column;
   }
+
+  /* Reduce glassmorphism blur on mobile for performance */
+  .feature-card,
+  .process-card,
+  .srv-card,
+  .pricing-card,
+  .blog-card,
+  .newsletter-container {
+    backdrop-filter: blur(10px) saturate(1.1);
+  }
 }
 
 /* Mobile Landscape (640px and below) */
@@ -434,6 +445,15 @@
     width: 36px;
     height: 36px;
   }
+
+  /* Reduce glassmorphism complexity on small devices */
+  .feature-card,
+  .process-card,
+  .srv-card,
+  .pricing-card,
+  .blog-card {
+    backdrop-filter: blur(8px);
+  }
 }
 
 /* Foldable/Narrow Devices (360px and below - Samsung Fold, etc.) */
@@ -604,6 +624,15 @@
   .weekday {
     font-size: 0.6rem;
   }
+
+  /* Minimal glassmorphism on smallest devices */
+  .feature-card,
+  .process-card,
+  .srv-card,
+  .pricing-card,
+  .blog-card {
+    backdrop-filter: blur(6px);
+  }
 }
 
 /* Landscape Orientation Adjustments */
@@ -661,6 +690,24 @@
 
   .time-slot {
     min-height: 44px;
+  }
+
+  /* Disable hover-only effects on touch for clean experience */
+  .feature-card:hover,
+  .process-card:hover,
+  .srv-card:hover,
+  .pricing-card:hover,
+  .blog-card:hover {
+    transform: none;
+  }
+
+  .feature-card:active,
+  .process-card:active,
+  .srv-card:active,
+  .pricing-card:active,
+  .blog-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
   }
 }
 

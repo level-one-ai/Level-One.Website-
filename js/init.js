@@ -353,23 +353,150 @@ window.addEventListener('scroll', () => {
   progressBar.style.width = scrollPercentage + '%';
 });
 
-// Animation on Scroll
+// Enhanced Animation on Scroll — IntersectionObserver with .vis class
 const animateOnScroll = () => {
   const elements = document.querySelectorAll('.anim');
-  
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    if (rect.top < windowHeight * 0.85) {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0) translateX(0)';
-    }
-  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('vis');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+  } else {
+    // Fallback for old browsers
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        el.classList.add('vis');
+      }
+    });
+    window.addEventListener('scroll', function fallbackScroll() {
+      document.querySelectorAll('.anim:not(.vis)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+          el.classList.add('vis');
+        }
+      });
+    });
+  }
 };
 
-window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', animateOnScroll);
+
+// ============================================
+// PREMIUM ANIMATIONS — Magnetic Hover, Glow Pulse
+// ============================================
+
+// Magnetic Hover Effect for hex burger and CTAs
+function initMagneticHover() {
+  const magneticElements = document.querySelectorAll('.hex-burger, .hero-cta .btn-primary, .cta-section .btn-primary');
+
+  magneticElements.forEach(el => {
+    el.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const strength = 0.3;
+
+      this.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+
+    el.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      setTimeout(() => {
+        this.style.transition = '';
+      }, 500);
+    });
+  });
+}
+
+// Glow Trace Effect — Adds a subtle animated orange border trace to glass cards
+function initGlowTrace() {
+  const glassCards = document.querySelectorAll('.feature-card, .process-card, .pricing-card.featured');
+
+  glassCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+  });
+}
+
+// Parallax Depth — subtle depth movement on sections when scrolling
+function initParallaxDepth() {
+  const sections = document.querySelectorAll('.section-inner');
+  let ticking = false;
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const sectionCenter = rect.top + rect.height / 2;
+          const distance = (sectionCenter - viewportCenter) / viewportCenter;
+          const moveY = distance * -8;
+
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            section.style.transform = `translateY(${moveY}px)`;
+          }
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+// Enhanced Cursor Glow — adds a subtle glow following the cursor on dark backgrounds
+function initCursorGlow() {
+  const mainContent = document.getElementById('main-content');
+  if (!mainContent) return;
+
+  const glow = document.createElement('div');
+  glow.style.cssText = 'position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;transition:opacity 0.3s;opacity:0;transform:translate(-50%,-50%)';
+  document.body.appendChild(glow);
+
+  let mouseX = 0, mouseY = 0;
+  let glowX = 0, glowY = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    glow.style.opacity = '1';
+  });
+
+  document.addEventListener('mouseleave', function() {
+    glow.style.opacity = '0';
+  });
+
+  function animateGlow() {
+    glowX += (mouseX - glowX) * 0.08;
+    glowY += (mouseY - glowY) * 0.08;
+    glow.style.left = glowX + 'px';
+    glow.style.top = glowY + 'px';
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+}
+
+// Initialize all premium effects
+document.addEventListener('DOMContentLoaded', function() {
+  initMagneticHover();
+  initGlowTrace();
+  initCursorGlow();
+  // initParallaxDepth disabled by default — uncomment if desired:
+  // initParallaxDepth();
+});
 
 // Q&A Accordion for core-systems-view
 document.addEventListener('DOMContentLoaded', function() {

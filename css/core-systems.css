@@ -1,25 +1,14 @@
 /* ============================================
    CORE SYSTEMS VIEW — #core-systems-view
-   Revenue Infrastructure Dashboard
-
-   Self-contained styles. New class names (cs-*)
-   scoped entirely to this view.
+   Revenue Infrastructure Dashboard — Glassmorphism
    ============================================ */
 
-/* ----------------------------------------
-   VIEW SHELL
-   Fills the viewport; nothing inside scrolls
-   except .cs-main (the right panel).
-   ---------------------------------------- */
 #core-systems-view {
   padding-top: 68px;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Dashboard wrapper — the bordered frame.
-   display:flex + flex-direction:row forces
-   sidebar left, main right on all screens >900px. */
 .cs-dashboard {
   display: flex;
   flex-direction: row;
@@ -28,17 +17,12 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  border-left: 1px solid rgba(255,255,255,0.06);
-  border-right: 1px solid rgba(255,255,255,0.06);
+  border-left: 1px solid rgba(255, 107, 53, 0.06);
+  border-right: 1px solid rgba(255, 107, 53, 0.06);
   position: relative;
 }
 
-/* ----------------------------------------
-   LEFT SIDEBAR
-   Fixed width, locked to the left.
-   Height fills the dashboard. Never scrolls
-   the page — only its own overflow if needed.
-   ---------------------------------------- */
+/* ---- LEFT SIDEBAR — Glassmorphism ---- */
 .cs-sidebar {
   width: 260px;
   min-width: 260px;
@@ -46,22 +30,22 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(255,255,255,0.06);
-  background: rgba(5,5,8,0.6);
+  border-right: 1px solid rgba(255, 107, 53, 0.06);
+  background: rgba(5, 5, 8, 0.65);
+  backdrop-filter: blur(20px) saturate(1.2);
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
   flex-shrink: 0;
 }
 
-/* Back button — compact, top of sidebar */
 .cs-back-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 107, 53, 0.06);
   background: transparent;
   color: var(--text-secondary);
   font-family: var(--mono);
@@ -69,27 +53,26 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   cursor: pointer;
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.3s, background 0.3s;
   flex-shrink: 0;
 }
 
 .cs-back-btn:hover {
   color: var(--orange);
-  background: rgba(255,107,53,0.04);
+  background: rgba(255, 107, 53, 0.04);
 }
 
 .cs-back-btn svg {
-  transition: transform 0.2s;
+  transition: transform 0.3s var(--ease-out-expo);
 }
 
 .cs-back-btn:hover svg {
-  transform: translateX(-2px);
+  transform: translateX(-3px);
 }
 
-/* Sidebar header — title block */
 .cs-sidebar-header {
   padding: 1.25rem 1.25rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 107, 53, 0.06);
   flex-shrink: 0;
 }
 
@@ -111,13 +94,13 @@
   height: 6px;
   border-radius: 50%;
   background: var(--orange);
-  box-shadow: 0 0 6px rgba(255,107,53,0.6);
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.7);
   animation: cs-pulse 2s ease-in-out infinite;
 }
 
 @keyframes cs-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(255, 107, 53, 0.7); }
+  50% { opacity: 0.4; box-shadow: 0 0 4px rgba(255, 107, 53, 0.3); }
 }
 
 .cs-title {
@@ -125,7 +108,7 @@
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--white);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1.25;
   margin: 0 0 0.35rem;
 }
@@ -136,13 +119,10 @@
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
+  letter-spacing: 0.03em;
 }
 
-/* ----------------------------------------
-   SECTION NAV BUTTONS
-   Stacked vertically below the title block.
-   Active button gets an orange glow.
-   ---------------------------------------- */
+/* ---- SECTION NAV BUTTONS — with orange glow ---- */
 .cs-nav {
   display: flex;
   flex-direction: column;
@@ -153,21 +133,22 @@
 .cs-nav-btn {
   width: 100%;
   padding: 0.65rem 0.9rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background: rgba(255, 107, 53, 0.03);
+  border: 1px solid rgba(255, 107, 53, 0.08);
+  border-radius: 10px;
   cursor: pointer;
   font-family: var(--body);
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-secondary);
   text-align: left;
-  transition: all 0.25s ease;
+  transition: all 0.4s var(--ease-out-expo);
+  letter-spacing: 0.01em;
 }
 
 .cs-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 107, 53, 0.06);
+  border-color: rgba(255, 107, 53, 0.2);
   color: var(--text);
 }
 
@@ -177,15 +158,14 @@
   color: var(--white);
   font-weight: 600;
   box-shadow:
-    0 0 12px rgba(255, 107, 53, 0.25),
-    0 0 24px rgba(255, 107, 53, 0.1);
+    0 0 15px rgba(255, 107, 53, 0.25),
+    0 0 30px rgba(255, 107, 53, 0.1);
 }
 
-/* Sidebar footer */
 .cs-sidebar-footer {
   margin-top: auto;
   padding: 1rem 1.25rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255, 107, 53, 0.06);
   flex-shrink: 0;
 }
 
@@ -197,9 +177,7 @@
   letter-spacing: 0.05em;
 }
 
-/* ----------------------------------------
-   RIGHT MAIN PANEL — scrollable
-   ---------------------------------------- */
+/* ---- RIGHT MAIN PANEL ---- */
 .cs-main {
   flex: 1;
   min-width: 0;
@@ -208,7 +186,7 @@
   overflow-x: hidden;
   padding: 2rem 2.5rem 3rem;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,107,53,0.15) transparent;
+  scrollbar-color: rgba(255, 107, 53, 0.15) transparent;
 }
 
 .cs-main::-webkit-scrollbar {
@@ -218,21 +196,18 @@
   background: transparent;
 }
 .cs-main::-webkit-scrollbar-thumb {
-  background: rgba(255,107,53,0.15);
+  background: rgba(255, 107, 53, 0.15);
   border-radius: 3px;
 }
 .cs-main::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,107,53,0.3);
+  background: rgba(255, 107, 53, 0.3);
 }
 
-/* ----------------------------------------
-   CONTENT PANELS — one visible at a time
-   ---------------------------------------- */
+/* ---- CONTENT PANELS ---- */
 .cs-panel {
   display: none;
 }
 
-/* Panel header with numbered badge */
 .cs-panel-header {
   display: flex;
   align-items: center;
@@ -245,11 +220,12 @@
   font-size: 0.65rem;
   font-weight: 700;
   color: var(--orange);
-  background: rgba(255,107,53,0.08);
-  border: 1px solid rgba(255,107,53,0.2);
+  background: rgba(255, 107, 53, 0.08);
+  border: 1px solid rgba(255, 107, 53, 0.25);
   padding: 0.3rem 0.7rem;
-  border-radius: 4px;
+  border-radius: 6px;
   letter-spacing: 0.05em;
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.1);
 }
 
 .cs-panel-title {
@@ -257,19 +233,24 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--white);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0;
 }
 
-/* ----------------------------------------
-   CARD — main content container
-   ---------------------------------------- */
+/* ---- CARD — glassmorphism container ---- */
 .cs-card {
-  background: rgba(8,8,12,0.5);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
   padding: 1.75rem;
   margin-bottom: 1rem;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  transition: border-color 0.3s ease;
+}
+
+.cs-card:hover {
+  border-color: rgba(255, 107, 53, 0.2);
 }
 
 .cs-card-section {
@@ -284,6 +265,7 @@
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-bottom: 0.6rem;
+  text-shadow: 0 0 8px rgba(255, 107, 53, 0.2);
 }
 
 .cs-card-text {
@@ -292,15 +274,15 @@
   color: var(--text-secondary);
   line-height: 1.8;
   margin: 0;
+  letter-spacing: 0.01em;
 }
 
 .cs-divider {
   height: 1px;
-  background: rgba(255,255,255,0.05);
+  background: linear-gradient(90deg, rgba(255, 107, 53, 0.1), rgba(255, 255, 255, 0.04), rgba(255, 107, 53, 0.1));
   margin: 1.25rem 0;
 }
 
-/* List items */
 .cs-list {
   list-style: none;
   padding: 0;
@@ -317,6 +299,7 @@
   line-height: 1.7;
   padding-left: 1.3rem;
   position: relative;
+  letter-spacing: 0.01em;
 }
 
 .cs-list li::before {
@@ -333,9 +316,7 @@
   font-weight: 600;
 }
 
-/* ----------------------------------------
-   METRICS ROW
-   ---------------------------------------- */
+/* ---- METRICS ROW — Glassmorphism cards ---- */
 .cs-metrics-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -344,19 +325,21 @@
 }
 
 .cs-metric {
-  background: rgba(8,8,12,0.5);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
   padding: 1.25rem 1rem;
   text-align: center;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  transition: all 0.4s var(--ease-out-expo);
   cursor: default;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
 }
 
 .cs-metric:hover {
-  border-color: rgba(255,107,53,0.35);
-  box-shadow: 0 0 16px rgba(255,107,53,0.15);
-  transform: translateY(-2px);
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.2), 0 0 40px rgba(255, 107, 53, 0.08);
+  transform: translateY(-3px);
 }
 
 .cs-metric-value {
@@ -366,6 +349,7 @@
   color: var(--orange);
   line-height: 1.1;
   margin-bottom: 0.4rem;
+  text-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
 }
 
 .cs-metric-desc {
@@ -373,11 +357,10 @@
   font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.45;
+  letter-spacing: 0.01em;
 }
 
-/* ----------------------------------------
-   Q&A ACCORDION
-   ---------------------------------------- */
+/* ---- Q&A ACCORDION — with orange accents ---- */
 .cs-card--qa {
   padding-bottom: 0.5rem;
 }
@@ -395,10 +378,10 @@
 
 .cs-qa-btn {
   width: 100%;
-  background: rgba(5,5,10,0.7);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-left: 2px solid rgba(255,107,53,0.35);
-  border-radius: 8px;
+  background: rgba(5, 5, 10, 0.6);
+  border: 1px solid rgba(255, 107, 53, 0.08);
+  border-left: 2px solid rgba(255, 107, 53, 0.35);
+  border-radius: 10px;
   padding: 0.9rem 1.1rem;
   display: flex;
   align-items: center;
@@ -410,16 +393,19 @@
   font-size: 0.92rem;
   text-align: left;
   line-height: 1.5;
-  transition: background 0.15s, border-color 0.15s;
+  transition: all 0.3s var(--ease-out-expo);
+  letter-spacing: 0.01em;
 }
 
 .cs-qa-btn:hover {
-  background: rgba(10,10,20,0.8);
-  border-left-color: rgba(255,107,53,0.7);
+  background: rgba(255, 107, 53, 0.04);
+  border-left-color: rgba(255, 107, 53, 0.7);
+  border-color: rgba(255, 107, 53, 0.15);
 }
 
 .cs-qa-item.open .cs-qa-btn {
   border-left-color: var(--orange);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.08);
 }
 
 .cs-qa-chevron {
@@ -452,20 +438,20 @@
 }
 
 .cs-qa-answer-body {
-  background: rgba(4,4,10,0.9);
-  border: 1px solid rgba(255,107,53,0.1);
+  background: rgba(4, 4, 10, 0.8);
+  border: 1px solid rgba(255, 107, 53, 0.12);
   border-left: 3px solid var(--orange);
-  border-radius: 0 8px 8px 8px;
+  border-radius: 0 10px 10px 10px;
   padding: 1rem 1.2rem;
   font-family: var(--body);
   font-size: 0.92rem;
   color: var(--text);
   line-height: 1.75;
+  letter-spacing: 0.01em;
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.05);
 }
 
-/* ----------------------------------------
-   RESPONSIVE
-   ---------------------------------------- */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   #core-systems-view {
     height: auto;
@@ -485,7 +471,7 @@
     max-width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.06);
   }
 
   .cs-sidebar-footer {
