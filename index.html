@@ -100,7 +100,7 @@
     <h1>The premier systems partner for high-growth business.</h1>
     <p class="hero-sub">We eliminate administrative friction through the deployment of autonomous digital infrastructure. Based in Edinburgh; engineered for leaders across Scotland and the United Kingdom.</p>
     <div class="hero-cta">
-      <button onclick="openCalendar()" class="btn-primary">Map Your Growth <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
+      <button onclick="openCalendar()" class="btn-primary">Book A Call <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
     </div>
   </div>
 </section>
@@ -110,38 +110,117 @@
     <div class="section-num anim anim-up"><span class="pulse"></span> 01 — Revenue Infrastructure</div>
     <h2 class="section-title anim anim-up d1">Four systems.<br>One outcome: high-performance growth.</h2>
     <p class="section-desc anim anim-up d2">We install revenue infrastructure that increases acquisition, reduces overhead, and eliminates manual bottlenecks across your operations.</p>
-    <div class="feature-grid">
-      <div class="feature-card anim anim-up d1" onclick="openCoreSystemsView('sales')" style="cursor: pointer;">
-        <div class="feature-card-icon">
-          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" class="card-img-fill" alt="Sales Systems">
+    <!-- Hexagon Pairs Layout -->
+    <div class="hex-pairs-container anim anim-up d3" id="hexPairsContainer">
+
+      <!-- Hexagon pairs grid (default view) -->
+      <div class="hex-pairs-grid" id="hexPairsGrid">
+
+        <div class="hex-pair" data-system="sales">
+          <div class="hex-img-wrap">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-img-inner">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" alt="Sales Systems">
+            </div>
+          </div>
+          <div class="hex-label-wrap" onclick="expandHexSystem('sales')">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-label-inner">
+              <span class="hex-label-text">Revenue Engines</span>
+            </div>
+          </div>
         </div>
-        <div class="feature-labels"><span class="feature-label">✓ Revenue Growth</span><span class="feature-label">✓ Conversion</span><span class="feature-label">✓ Acquisition</span></div>
-        <h3>Revenue Engines</h3>
-        <p>Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.</p>
+
+        <div class="hex-pair" data-system="support">
+          <div class="hex-img-wrap">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-img-inner">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" alt="Support Systems">
+            </div>
+          </div>
+          <div class="hex-label-wrap" onclick="expandHexSystem('support')">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-label-inner">
+              <span class="hex-label-text">Resolution Systems</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hex-pair" data-system="consulting">
+          <div class="hex-img-wrap">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-img-inner">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" alt="AI Strategy">
+            </div>
+          </div>
+          <div class="hex-label-wrap" onclick="expandHexSystem('consulting')">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-label-inner">
+              <span class="hex-label-text">Systems Architecture</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hex-pair" data-system="workflow">
+          <div class="hex-img-wrap">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-img-inner">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" alt="Agentic Flows">
+            </div>
+          </div>
+          <div class="hex-label-wrap" onclick="expandHexSystem('workflow')">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+            <div class="hex-label-inner">
+              <span class="hex-label-text">Operational Autonomy</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="feature-card anim anim-up d2" onclick="openCoreSystemsView('support')" style="cursor: pointer;">
-        <div class="feature-card-icon">
-          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" class="card-img-fill" alt="Support Systems">
+
+      <!-- Expanded view: minimized hex sidebar + card content -->
+      <div class="hex-expanded" id="hexExpanded">
+
+        <div class="hex-expanded-sidebar" id="hexExpandedSidebar">
+          <!-- Close/collapse button -->
+          <button class="hex-collapse-btn" id="hexCollapseBtn" onclick="collapseHexView()">
+            <svg class="hex-collapse-border" viewBox="0 0 42 42"><polygon points="21,1 39,11 39,31 21,41 3,31 3,11"/></svg>
+            <svg class="hex-collapse-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 7l6 6"/></svg>
+          </button>
+
+          <div class="hex-mini-pair" data-system="sales" onclick="switchHexCard('sales')">
+            <div class="hex-mini-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" alt="Sales">
+            </div>
+            <div class="hex-mini-label">Revenue Engines</div>
+          </div>
+
+          <div class="hex-mini-pair" data-system="support" onclick="switchHexCard('support')">
+            <div class="hex-mini-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" alt="Support">
+            </div>
+            <div class="hex-mini-label">Resolution Systems</div>
+          </div>
+
+          <div class="hex-mini-pair" data-system="consulting" onclick="switchHexCard('consulting')">
+            <div class="hex-mini-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" alt="Consulting">
+            </div>
+            <div class="hex-mini-label">Systems Architecture</div>
+          </div>
+
+          <div class="hex-mini-pair" data-system="workflow" onclick="switchHexCard('workflow')">
+            <div class="hex-mini-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" alt="Workflow">
+            </div>
+            <div class="hex-mini-label">Operational Autonomy</div>
+          </div>
         </div>
-        <div class="feature-labels"><span class="feature-label">Cost Reduction</span><span class="feature-label">Efficiency</span></div>
-        <h3>Resolution Systems</h3>
-        <p>Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.</p>
-      </div>
-      <div class="feature-card anim anim-up d3" onclick="openCoreSystemsView('consulting')" style="cursor: pointer;">
-        <div class="feature-card-icon">
-          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" class="card-img-fill" alt="AI Strategy">
+
+        <div class="hex-card-content" id="hexCardContent">
+          <!-- Card content injected by JS -->
         </div>
-        <div class="feature-labels"><span class="feature-label">Profit Identification</span><span class="feature-label">ROI Mapping</span></div>
-        <h3>Systems Architecture</h3>
-        <p>We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.</p>
-      </div>
-      <div class="feature-card anim anim-up d4" onclick="openCoreSystemsView('workflow')" style="cursor: pointer;">
-        <div class="feature-card-icon">
-          <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" class="card-img-fill" alt="Agentic Flows">
-        </div>
-        <div class="feature-labels"><span class="feature-label">Cost Elimination</span><span class="feature-label">Scale</span></div>
-        <h3>Operational Autonomy</h3>
-        <p>Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.</p>
+
       </div>
     </div>
   </div>
@@ -385,7 +464,7 @@
     <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 07 — Growth Audit</div>
     <h2 class="section-title anim anim-up d1" style="text-align:center">Map your revenue infrastructure.</h2>
     <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Schedule a growth audit. We'll quantify where inefficiency costs you revenue or margin and map the deployment pathway to scalable growth.</p>
-    <div style="text-align:center" class="anim anim-up d3"><button onclick="openCalendar()" class="btn-primary">Schedule Growth Audit <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button></div>
+    <div style="text-align:center" class="anim anim-up d3"><button onclick="openCalendar()" class="btn-primary">Book A Call <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button></div>
   </div>
 </section>
 

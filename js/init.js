@@ -340,6 +340,204 @@ function switchInfrastructureSection(type, sectionId) {
 }
 
 
+// ============================================
+// HEXAGON PAIRS — Expand / Collapse / Switch
+// ============================================
+
+// Card content data for the hex expanded view
+var hexCardData = {
+  sales: {
+    badge: '01',
+    title: 'Revenue Engines',
+    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.',
+    label: 'Core Components',
+    items: [
+      '<strong>Collecting & Organizing Leads:</strong> Automatically grabs prospect data from your website, social media, and emails, standardizing it into your main database.',
+      '<strong>Scoring for Conversion:</strong> Gives every lead a score based on company size and content interaction, pushing the hottest prospects to the front.',
+      '<strong>Smart Lead Routing:</strong> Automatically sends the best leads to the right salesperson or email campaign.',
+      '<strong>Tracking the Pipeline:</strong> Watches how leads move through your sales process, showing drop-off points and acquisition costs.'
+    ],
+    metrics: [
+      { value: '+35%', desc: 'increase in lead-to-opportunity conversion rates' },
+      { value: '-50%', desc: 'reduction in manual lead qualification time' },
+      { value: '-30%', desc: 'drop in Customer Acquisition Costs' }
+    ]
+  },
+  support: {
+    badge: '02',
+    title: 'Resolution Systems',
+    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.',
+    label: 'Core Components',
+    items: [
+      '<strong>Smart Sorting:</strong> Reads incoming emails and chat messages to figure out what the customer needs and how urgent it is.',
+      '<strong>Instant Answers:</strong> Connects common questions directly to your knowledge base to resolve them without human touch.',
+      '<strong>Human Handoffs:</strong> Spots angry customers or complicated questions and smoothly transfers them to a real person.',
+      '<strong>Quality Tracking:</strong> Keeps a record of automated chats to ensure accuracy and spot missing help guides.'
+    ],
+    metrics: [
+      { value: '60–80%', desc: 'of routine support tickets deflected' },
+      { value: '-30%', desc: 'reduction in support operational costs' },
+      { value: '-50%', desc: 'decrease in ticket handling times' }
+    ]
+  },
+  consulting: {
+    badge: '03',
+    title: 'Systems Architecture',
+    desc: 'We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.',
+    label: 'Core Components',
+    items: [
+      '<strong>Mapping How You Work:</strong> Documenting exactly how your team works step-by-step to spot bottlenecks.',
+      '<strong>Software Checkup:</strong> Looking at your current tools to see if they can connect or if you are paying for unused tools.',
+      '<strong>Connection Plans:</strong> Creating maps that show exactly how your software programs will share information.',
+      '<strong>Measuring the Payoff:</strong> Timing how long tasks take right now to calculate exactly how much money automation will save you.'
+    ],
+    metrics: [
+      { value: '46%', desc: 'faster process execution achieved' },
+      { value: '41%', desc: 'reduction in manual admin effort' },
+      { value: '80%', desc: 'report immediate measurable ROI' }
+    ]
+  },
+  workflow: {
+    badge: '04',
+    title: 'Operational Autonomy',
+    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.',
+    label: 'Core Components',
+    items: [
+      '<strong>Action Triggers:</strong> Background alerts that wait for something to happen (like a signed contract) and instantly start the next step.',
+      '<strong>Data Movers:</strong> Systems that take info from one place, reformat it, and paste it into another system, eliminating manual entry.',
+      '<strong>Keeping Tools in Sync:</strong> Ensuring an update in your sales tool automatically updates your billing and project management tools.',
+      '<strong>Handling Errors:</strong> A safety net that notices if an automation fails, tries to fix it, and alerts your tech team.'
+    ],
+    metrics: [
+      { value: '-30%', desc: 'reduction in operational costs' },
+      { value: '-60%', desc: 'cost savings per transaction' },
+      { value: '<12mo', desc: 'to achieve full ROI' }
+    ]
+  }
+};
+
+var currentHexSystem = null;
+
+function buildHexCardHTML(system) {
+  var data = hexCardData[system];
+  if (!data) return '';
+
+  var itemsHTML = '';
+  data.items.forEach(function(item) {
+    itemsHTML += '<li>' + item + '</li>';
+  });
+
+  var metricsHTML = '';
+  data.metrics.forEach(function(m) {
+    metricsHTML += '<div class="hex-metric"><div class="hex-metric-value">' + m.value + '</div><div class="hex-metric-desc">' + m.desc + '</div></div>';
+  });
+
+  return '<div class="hex-card-header">' +
+    '<div class="hex-card-badge">' + data.badge + '</div>' +
+    '<h3 class="hex-card-title">' + data.title + '</h3>' +
+    '</div>' +
+    '<p class="hex-card-desc">' + data.desc + '</p>' +
+    '<div class="hex-card-label">' + data.label + '</div>' +
+    '<ul class="hex-card-list">' + itemsHTML + '</ul>' +
+    '<div class="hex-card-divider"></div>' +
+    '<div class="hex-card-label">Performance Metrics</div>' +
+    '<div class="hex-card-metrics">' + metricsHTML + '</div>' +
+    '<div class="hex-card-divider"></div>' +
+    '<button class="hex-card-viewmore" onclick="openCoreSystemsView(\'' + system + '\')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>';
+}
+
+function expandHexSystem(system) {
+  var grid = document.getElementById('hexPairsGrid');
+  var expanded = document.getElementById('hexExpanded');
+  var content = document.getElementById('hexCardContent');
+
+  currentHexSystem = system;
+
+  // Fade out grid
+  grid.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  grid.style.opacity = '0';
+  grid.style.transform = 'scale(0.95)';
+
+  setTimeout(function() {
+    grid.style.display = 'none';
+
+    // Build card content
+    content.innerHTML = buildHexCardHTML(system);
+
+    // Activate the correct mini pair
+    document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
+    if (activeMini) activeMini.classList.add('active');
+
+    // Show expanded view
+    expanded.style.display = 'grid';
+    expanded.style.opacity = '0';
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        expanded.classList.add('active');
+        expanded.style.opacity = '1';
+      });
+    });
+  }, 400);
+}
+
+function switchHexCard(system) {
+  if (system === currentHexSystem) return;
+  currentHexSystem = system;
+
+  var content = document.getElementById('hexCardContent');
+
+  // Update active state on sidebar
+  document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
+  if (activeMini) activeMini.classList.add('active');
+
+  // Fade out current card
+  content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+  content.style.opacity = '0';
+  content.style.transform = 'translateY(10px)';
+
+  setTimeout(function() {
+    content.innerHTML = buildHexCardHTML(system);
+    content.style.transform = 'translateY(0)';
+    content.style.opacity = '1';
+  }, 300);
+}
+
+function collapseHexView() {
+  var grid = document.getElementById('hexPairsGrid');
+  var expanded = document.getElementById('hexExpanded');
+
+  currentHexSystem = null;
+
+  // Fade out expanded view
+  expanded.style.transition = 'opacity 0.4s ease';
+  expanded.style.opacity = '0';
+
+  setTimeout(function() {
+    expanded.classList.remove('active');
+    expanded.style.display = 'none';
+
+    // Show grid again
+    grid.style.display = '';
+    grid.style.opacity = '0';
+    grid.style.transform = 'scale(0.95)';
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        grid.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        grid.style.opacity = '1';
+        grid.style.transform = 'scale(1)';
+      });
+    });
+  }, 400);
+}
+
 // Scroll Progress Bar
 window.addEventListener('scroll', () => {
   const progressBar = document.getElementById('progressBar');

@@ -412,7 +412,7 @@
   transition: all 0.5s var(--ease-out-expo);
   align-items: center;
   box-shadow: var(--glass-shadow);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .pricing-card::after {
