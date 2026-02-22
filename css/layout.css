@@ -517,6 +517,7 @@ section:hover {
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   justify-items: center;
+  align-items: start;
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
@@ -530,6 +531,12 @@ section:hover {
   cursor: pointer;
 }
 
+/* Stagger: 2nd and 4th pairs lowered */
+.hex-pair:nth-child(2),
+.hex-pair:nth-child(4) {
+  margin-top: 50px;
+}
+
 /* Shared hex wrapper base */
 .hex-img-wrap,
 .hex-label-wrap {
@@ -538,15 +545,16 @@ section:hover {
   height: 174px;
 }
 
-/* Text hex overlaps image slightly from below */
+/* Text hex: offset to the right, no overlap behind image */
 .hex-label-wrap {
-  margin-top: -30px;
+  margin-top: -20px;
+  margin-left: 50px;
   z-index: 2;
   pointer-events: none; /* clicks go through to .hex-pair */
 }
 
 .hex-img-wrap {
-  z-index: 1;
+  z-index: 2;
 }
 
 /* SVG border for each hexagon */
@@ -572,17 +580,17 @@ section:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.3;
+  opacity: 0.55;
   transform: scale(1);
   transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo);
 }
 
-/* ---- LABEL HEXAGON — transparent ---- */
+/* ---- LABEL HEXAGON — grey background ---- */
 .hex-label-inner {
   position: absolute;
   inset: 0;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: transparent;
+  background: var(--bg-card, #0a0a0e);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -604,7 +612,7 @@ section:hover {
 /* ---- LINKED HOVER: hovering the pair triggers BOTH hexagons ---- */
 /* Image lights up + zooms */
 .hex-pair:hover .hex-img-inner img {
-  opacity: 0.9;
+  opacity: 1;
   transform: scale(1.12);
 }
 
@@ -1102,7 +1110,8 @@ footer p {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .hex-expanded { grid-template-columns: 160px 1fr; gap: 1.5rem; }
   .hex-img-wrap, .hex-label-wrap { width: 170px; height: 148px; }
-  .hex-label-wrap { margin-top: -26px; }
+  .hex-label-wrap { margin-top: -18px; margin-left: 42px; }
+  .hex-pair:nth-child(2), .hex-pair:nth-child(4) { margin-top: 40px; }
   .hex-card-metrics { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
 }
 
@@ -1115,7 +1124,8 @@ footer p {
   nav { padding: 0 1.5rem; }
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
   .hex-img-wrap, .hex-label-wrap { width: 180px; height: 157px; }
-  .hex-label-wrap { margin-top: -28px; }
+  .hex-label-wrap { margin-top: -22px; margin-left: 45px; }
+  .hex-pair:nth-child(2), .hex-pair:nth-child(4) { margin-top: 0; }
   .hex-expanded { grid-template-columns: 1fr; }
   .hex-expanded-sidebar {
     flex-direction: row;
@@ -1140,7 +1150,7 @@ footer p {
   .services-grid { gap: 1rem; }
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.5rem; }
   .hex-img-wrap, .hex-label-wrap { width: 150px; height: 130px; }
-  .hex-label-wrap { margin-top: -22px; }
+  .hex-label-wrap { margin-top: -18px; margin-left: 38px; }
   .hex-label-text { font-size: 0.72rem; padding: 0 0.8rem; }
   .hex-card-content { padding: 1.5rem; }
   .hex-card-metrics { grid-template-columns: 1fr; }
@@ -1150,7 +1160,7 @@ footer p {
 @media (max-width: 480px) {
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem 0.25rem; }
   .hex-img-wrap, .hex-label-wrap { width: 130px; height: 113px; }
-  .hex-label-wrap { margin-top: -18px; }
+  .hex-label-wrap { margin-top: -15px; margin-left: 32px; }
   .hex-label-text { font-size: 0.65rem; padding: 0 0.5rem; }
   .hex-expanded-sidebar { flex-direction: column; }
   .hex-mini-pair { padding: 0.4rem 0.5rem; }
