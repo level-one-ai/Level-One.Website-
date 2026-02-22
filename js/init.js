@@ -344,75 +344,31 @@ function switchInfrastructureSection(type, sectionId) {
 // HEXAGON PAIRS — Expand / Collapse / Switch
 // ============================================
 
-// Card content data for the hex expanded view
+// Original feature card data for the hex expanded view
 var hexCardData = {
   sales: {
-    badge: '01',
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg',
+    labels: ['Revenue Growth', 'Conversion', 'Acquisition'],
     title: 'Revenue Engines',
-    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.',
-    label: 'Core Components',
-    items: [
-      '<strong>Collecting & Organizing Leads:</strong> Automatically grabs prospect data from your website, social media, and emails, standardizing it into your main database.',
-      '<strong>Scoring for Conversion:</strong> Gives every lead a score based on company size and content interaction, pushing the hottest prospects to the front.',
-      '<strong>Smart Lead Routing:</strong> Automatically sends the best leads to the right salesperson or email campaign.',
-      '<strong>Tracking the Pipeline:</strong> Watches how leads move through your sales process, showing drop-off points and acquisition costs.'
-    ],
-    metrics: [
-      { value: '+35%', desc: 'increase in lead-to-opportunity conversion rates' },
-      { value: '-50%', desc: 'reduction in manual lead qualification time' },
-      { value: '-30%', desc: 'drop in Customer Acquisition Costs' }
-    ]
+    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.'
   },
   support: {
-    badge: '02',
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg',
+    labels: ['Cost Reduction', 'Efficiency'],
     title: 'Resolution Systems',
-    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.',
-    label: 'Core Components',
-    items: [
-      '<strong>Smart Sorting:</strong> Reads incoming emails and chat messages to figure out what the customer needs and how urgent it is.',
-      '<strong>Instant Answers:</strong> Connects common questions directly to your knowledge base to resolve them without human touch.',
-      '<strong>Human Handoffs:</strong> Spots angry customers or complicated questions and smoothly transfers them to a real person.',
-      '<strong>Quality Tracking:</strong> Keeps a record of automated chats to ensure accuracy and spot missing help guides.'
-    ],
-    metrics: [
-      { value: '60–80%', desc: 'of routine support tickets deflected' },
-      { value: '-30%', desc: 'reduction in support operational costs' },
-      { value: '-50%', desc: 'decrease in ticket handling times' }
-    ]
+    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.'
   },
   consulting: {
-    badge: '03',
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg',
+    labels: ['Profit Identification', 'ROI Mapping'],
     title: 'Systems Architecture',
-    desc: 'We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.',
-    label: 'Core Components',
-    items: [
-      '<strong>Mapping How You Work:</strong> Documenting exactly how your team works step-by-step to spot bottlenecks.',
-      '<strong>Software Checkup:</strong> Looking at your current tools to see if they can connect or if you are paying for unused tools.',
-      '<strong>Connection Plans:</strong> Creating maps that show exactly how your software programs will share information.',
-      '<strong>Measuring the Payoff:</strong> Timing how long tasks take right now to calculate exactly how much money automation will save you.'
-    ],
-    metrics: [
-      { value: '46%', desc: 'faster process execution achieved' },
-      { value: '41%', desc: 'reduction in manual admin effort' },
-      { value: '80%', desc: 'report immediate measurable ROI' }
-    ]
+    desc: 'We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.'
   },
   workflow: {
-    badge: '04',
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg',
+    labels: ['Cost Elimination', 'Scale'],
     title: 'Operational Autonomy',
-    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.',
-    label: 'Core Components',
-    items: [
-      '<strong>Action Triggers:</strong> Background alerts that wait for something to happen (like a signed contract) and instantly start the next step.',
-      '<strong>Data Movers:</strong> Systems that take info from one place, reformat it, and paste it into another system, eliminating manual entry.',
-      '<strong>Keeping Tools in Sync:</strong> Ensuring an update in your sales tool automatically updates your billing and project management tools.',
-      '<strong>Handling Errors:</strong> A safety net that notices if an automation fails, tries to fix it, and alerts your tech team.'
-    ],
-    metrics: [
-      { value: '-30%', desc: 'reduction in operational costs' },
-      { value: '-60%', desc: 'cost savings per transaction' },
-      { value: '<12mo', desc: 'to achieve full ROI' }
-    ]
+    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.'
   }
 };
 
@@ -422,26 +378,15 @@ function buildHexCardHTML(system) {
   var data = hexCardData[system];
   if (!data) return '';
 
-  var itemsHTML = '';
-  data.items.forEach(function(item) {
-    itemsHTML += '<li>' + item + '</li>';
+  var labelsHTML = '';
+  data.labels.forEach(function(label) {
+    labelsHTML += '<span class="feature-label">' + label + '</span>';
   });
 
-  var metricsHTML = '';
-  data.metrics.forEach(function(m) {
-    metricsHTML += '<div class="hex-metric"><div class="hex-metric-value">' + m.value + '</div><div class="hex-metric-desc">' + m.desc + '</div></div>';
-  });
-
-  return '<div class="hex-card-header">' +
-    '<div class="hex-card-badge">' + data.badge + '</div>' +
-    '<h3 class="hex-card-title">' + data.title + '</h3>' +
-    '</div>' +
-    '<p class="hex-card-desc">' + data.desc + '</p>' +
-    '<div class="hex-card-label">' + data.label + '</div>' +
-    '<ul class="hex-card-list">' + itemsHTML + '</ul>' +
-    '<div class="hex-card-divider"></div>' +
-    '<div class="hex-card-label">Performance Metrics</div>' +
-    '<div class="hex-card-metrics">' + metricsHTML + '</div>' +
+  return '<div class="feature-card-icon"><img src="' + data.image + '" class="card-img-fill" alt="' + data.title + '"></div>' +
+    '<div class="feature-labels">' + labelsHTML + '</div>' +
+    '<h3>' + data.title + '</h3>' +
+    '<p>' + data.desc + '</p>' +
     '<div class="hex-card-divider"></div>' +
     '<button class="hex-card-viewmore" onclick="openCoreSystemsView(\'' + system + '\')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>';
 }

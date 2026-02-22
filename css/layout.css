@@ -505,47 +505,44 @@ section:hover {
    HEXAGON PAIRS — Revenue Infrastructure (01)
    ============================================ */
 
-/* Clip-path for hexagon shapes */
-.hex-clip {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
-
 /* Container */
 .hex-pairs-container {
   position: relative;
-  min-height: 320px;
+  min-height: 280px;
 }
 
-/* ---- DEFAULT GRID VIEW (4 hex pairs) ---- */
+/* ---- DEFAULT GRID VIEW — single horizontal row ---- */
 .hex-pairs-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   justify-items: center;
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Each hex pair: image hex + label hex side-by-side */
+/* Each hex pair: image on top, text below (vertical) */
 .hex-pair {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0;
   position: relative;
+  cursor: pointer;
 }
 
 /* Shared hex wrapper base */
 .hex-img-wrap,
 .hex-label-wrap {
   position: relative;
-  width: 180px;
-  height: 157px; /* 180 * 0.866 */
+  width: 200px;
+  height: 174px;
 }
 
-/* Attach hexagons: label overlaps image slightly */
+/* Text hex overlaps image slightly from below */
 .hex-label-wrap {
-  margin-left: -30px;
-  cursor: pointer;
+  margin-top: -30px;
   z-index: 2;
+  pointer-events: none; /* clicks go through to .hex-pair */
 }
 
 .hex-img-wrap {
@@ -575,29 +572,17 @@ section:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.35;
+  opacity: 0.3;
   transform: scale(1);
   transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo);
 }
 
-/* Image hex hover: lights up and zooms */
-.hex-img-wrap:hover img {
-  opacity: 0.9;
-  transform: scale(1.1);
-}
-
-.hex-img-wrap:hover .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.3);
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
-}
-
-/* ---- LABEL HEXAGON ---- */
+/* ---- LABEL HEXAGON — transparent ---- */
 .hex-label-inner {
   position: absolute;
   inset: 0;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: rgba(10, 10, 14, 0.85);
-  backdrop-filter: blur(12px);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -606,28 +591,36 @@ section:hover {
 
 .hex-label-text {
   font-family: var(--heading);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-align: center;
-  padding: 0 1.2rem;
+  padding: 0 1.5rem;
   line-height: 1.3;
   letter-spacing: 0.02em;
   transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
-/* Label hex hover: white glow */
-.hex-label-wrap:hover .hex-label-text {
+/* ---- LINKED HOVER: hovering the pair triggers BOTH hexagons ---- */
+/* Image lights up + zooms */
+.hex-pair:hover .hex-img-inner img {
+  opacity: 0.9;
+  transform: scale(1.12);
+}
+
+.hex-pair:hover .hex-img-wrap .hex-clip-border polygon {
+  stroke: rgba(255, 255, 255, 0.3);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+/* Text glows white */
+.hex-pair:hover .hex-label-text {
   color: #ffffff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
-.hex-label-wrap:hover .hex-label-inner {
-  background: rgba(15, 15, 20, 0.95);
-}
-
-.hex-label-wrap:hover .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.45);
+.hex-pair:hover .hex-label-wrap .hex-clip-border polygon {
+  stroke: rgba(255, 255, 255, 0.4);
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
 }
 
@@ -1107,9 +1100,9 @@ footer p {
 /* GLOBAL RESPONSIVE */
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .hex-expanded { grid-template-columns: 170px 1fr; gap: 1.5rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 155px; height: 134px; }
-  .hex-label-wrap { margin-left: -25px; }
+  .hex-expanded { grid-template-columns: 160px 1fr; gap: 1.5rem; }
+  .hex-img-wrap, .hex-label-wrap { width: 170px; height: 148px; }
+  .hex-label-wrap { margin-top: -26px; }
   .hex-card-metrics { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
 }
 
@@ -1120,8 +1113,9 @@ footer p {
   .about-tags { justify-content: center; }
   .services-grid { grid-template-columns: 1fr; }
   nav { padding: 0 1.5rem; }
-  .hex-pairs-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .hex-pair { justify-content: center; }
+  .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
+  .hex-img-wrap, .hex-label-wrap { width: 180px; height: 157px; }
+  .hex-label-wrap { margin-top: -28px; }
   .hex-expanded { grid-template-columns: 1fr; }
   .hex-expanded-sidebar {
     flex-direction: row;
@@ -1144,8 +1138,9 @@ footer p {
   .feature-grid,
   .process-grid,
   .services-grid { gap: 1rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 140px; height: 121px; }
-  .hex-label-wrap { margin-left: -20px; }
+  .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.5rem; }
+  .hex-img-wrap, .hex-label-wrap { width: 150px; height: 130px; }
+  .hex-label-wrap { margin-top: -22px; }
   .hex-label-text { font-size: 0.72rem; padding: 0 0.8rem; }
   .hex-card-content { padding: 1.5rem; }
   .hex-card-metrics { grid-template-columns: 1fr; }
@@ -1153,8 +1148,9 @@ footer p {
 }
 
 @media (max-width: 480px) {
-  .hex-img-wrap, .hex-label-wrap { width: 120px; height: 104px; }
-  .hex-label-wrap { margin-left: -16px; }
+  .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem 0.25rem; }
+  .hex-img-wrap, .hex-label-wrap { width: 130px; height: 113px; }
+  .hex-label-wrap { margin-top: -18px; }
   .hex-label-text { font-size: 0.65rem; padding: 0 0.5rem; }
   .hex-expanded-sidebar { flex-direction: column; }
   .hex-mini-pair { padding: 0.4rem 0.5rem; }
