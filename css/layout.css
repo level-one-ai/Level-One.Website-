@@ -529,6 +529,7 @@ section:hover {
   gap: 0;
   position: relative;
   cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 /* Stagger: 2nd and 4th pairs lowered */
@@ -537,24 +538,25 @@ section:hover {
   margin-top: 50px;
 }
 
-/* Shared hex wrapper base */
-.hex-img-wrap,
+/* Image hex: LARGER than text hex */
+.hex-img-wrap {
+  position: relative;
+  width: 230px;
+  height: 200px;
+  z-index: 3;
+  transition: all 0.6s var(--ease-out-expo);
+}
+
+/* Text hex: SMALLER, offset right, layered below image */
 .hex-label-wrap {
   position: relative;
-  width: 200px;
-  height: 174px;
-}
-
-/* Text hex: offset to the right, no overlap behind image */
-.hex-label-wrap {
-  margin-top: -20px;
+  width: 180px;
+  height: 157px;
+  margin-top: -25px;
   margin-left: 50px;
-  z-index: 2;
-  pointer-events: none; /* clicks go through to .hex-pair */
-}
-
-.hex-img-wrap {
-  z-index: 2;
+  z-index: 1;
+  pointer-events: none;
+  transition: all 0.5s ease;
 }
 
 /* SVG border for each hexagon */
@@ -585,25 +587,25 @@ section:hover {
   transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo);
 }
 
-/* ---- LABEL HEXAGON — grey background ---- */
+/* ---- LABEL HEXAGON — TRANSPARENT background, faded text ---- */
 .hex-label-inner {
   position: absolute;
   inset: 0;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: var(--bg-card, #0a0a0e);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s ease;
+  transition: background 0.4s ease;
 }
 
 .hex-label-text {
   font-family: var(--heading);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.35);
   text-align: center;
-  padding: 0 1.5rem;
+  padding: 0 1.2rem;
   line-height: 1.3;
   letter-spacing: 0.02em;
   transition: color 0.4s ease, text-shadow 0.4s ease;
@@ -621,7 +623,11 @@ section:hover {
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 
-/* Text glows white */
+/* Text becomes brighter + dimmed background appears */
+.hex-pair:hover .hex-label-inner {
+  background: rgba(10, 10, 14, 0.6);
+}
+
 .hex-pair:hover .hex-label-text {
   color: #ffffff;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
@@ -1109,8 +1115,8 @@ footer p {
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .hex-expanded { grid-template-columns: 160px 1fr; gap: 1.5rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 170px; height: 148px; }
-  .hex-label-wrap { margin-top: -18px; margin-left: 42px; }
+  .hex-img-wrap { width: 195px; height: 170px; }
+  .hex-label-wrap { width: 155px; height: 135px; margin-top: -20px; margin-left: 42px; }
   .hex-pair:nth-child(2), .hex-pair:nth-child(4) { margin-top: 40px; }
   .hex-card-metrics { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
 }
@@ -1123,8 +1129,8 @@ footer p {
   .services-grid { grid-template-columns: 1fr; }
   nav { padding: 0 1.5rem; }
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 180px; height: 157px; }
-  .hex-label-wrap { margin-top: -22px; margin-left: 45px; }
+  .hex-img-wrap { width: 200px; height: 174px; }
+  .hex-label-wrap { width: 160px; height: 139px; margin-top: -22px; margin-left: 45px; }
   .hex-pair:nth-child(2), .hex-pair:nth-child(4) { margin-top: 0; }
   .hex-expanded { grid-template-columns: 1fr; }
   .hex-expanded-sidebar {
@@ -1149,8 +1155,8 @@ footer p {
   .process-grid,
   .services-grid { gap: 1rem; }
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.5rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 150px; height: 130px; }
-  .hex-label-wrap { margin-top: -18px; margin-left: 38px; }
+  .hex-img-wrap { width: 165px; height: 144px; }
+  .hex-label-wrap { width: 130px; height: 113px; margin-top: -18px; margin-left: 38px; }
   .hex-label-text { font-size: 0.72rem; padding: 0 0.8rem; }
   .hex-card-content { padding: 1.5rem; }
   .hex-card-metrics { grid-template-columns: 1fr; }
@@ -1159,8 +1165,8 @@ footer p {
 
 @media (max-width: 480px) {
   .hex-pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem 0.25rem; }
-  .hex-img-wrap, .hex-label-wrap { width: 130px; height: 113px; }
-  .hex-label-wrap { margin-top: -15px; margin-left: 32px; }
+  .hex-img-wrap { width: 140px; height: 122px; }
+  .hex-label-wrap { width: 115px; height: 100px; margin-top: -15px; margin-left: 32px; }
   .hex-label-text { font-size: 0.65rem; padding: 0 0.5rem; }
   .hex-expanded-sidebar { flex-direction: column; }
   .hex-mini-pair { padding: 0.4rem 0.5rem; }

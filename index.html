@@ -358,110 +358,391 @@
   </div>
 </section>
 
- <section class="pricing-section" id="pricing">
-  <div class="section-inner pricing-layout">
+<section class="pricing-section" id="pricing">
+  <div class="section-inner pricing-centered">
 
-    <div class="pricing-left">
-      <div class="section-num anim anim-up"><span class="pulse"></span> 05 — Deployment Tiers</div>
-      <h2 class="section-title anim anim-up d1">Three entry points.<br>Scalable revenue infrastructure.</h2>
-      <p class="section-desc anim anim-up d2">Fixed-scope builds with transparent ROI. No retainers, no hourly billing. You own the infrastructure; we deliver measurable growth.</p>
-      <div class="pricing-transparency anim anim-up d3">
-        <div class="pricing-transparency-title">Commercial Transparency</div>
-        <p class="pricing-transparency-text">
-          API costs are billed directly to your accounts—you pay zero markup and retain full data ownership.
-          The Operations fee covers infrastructure management, performance monitoring, and continuous ROI optimization.
-        </p>
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 05 — Deployment Tiers</div>
+    <h2 class="section-title anim anim-up d1" style="text-align:center">Three entry points.<br>Scalable revenue infrastructure.</h2>
+    <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Fixed-scope builds with transparent ROI. No retainers, no hourly billing. You own the infrastructure; we deliver measurable growth.</p>
+
+    <div class="pricing-cards-row">
+
+      <div class="pricing-card-v2 anim anim-up d2">
+        <div class="pricing-card-v2-inner">
+          <h3 class="pricing-v2-title">The Prototype</h3>
+          <p class="pricing-v2-subtitle">For high-growth businesses testing revenue infrastructure in a single department.</p>
+          <div class="pricing-v2-price">
+            <span class="pricing-v2-amount">£1,500</span>
+            <span class="pricing-v2-period">Fixed Build (One-time)</span>
+          </div>
+          <div class="pricing-v2-monthly">+ £299 /mo Operations</div>
+          <div class="pricing-v2-commitment">3-Month Minimum Agreement</div>
+          <div class="pricing-v2-features">
+            <div class="pricing-v2-feature">3 Targeted Growth Systems</div>
+            <div class="pricing-v2-feature">Standardized Logic Deployment</div>
+            <div class="pricing-v2-feature">Systems Engineer Oversight</div>
+            <div class="pricing-v2-feature">24/7 Performance Monitoring</div>
+            <div class="pricing-v2-feature">Email Support (48hr SLA)</div>
+            <div class="pricing-v2-feature">Zero Downtime Guarantee</div>
+          </div>
+          <button onclick="openCalendar('The Prototype')" class="pricing-btn outline">Deploy Prototype</button>
+        </div>
       </div>
+
+      <div class="pricing-card-v2 featured anim anim-up d3">
+        <div class="pricing-card-v2-inner">
+          <h3 class="pricing-v2-title">The Pilot</h3>
+          <p class="pricing-v2-subtitle">For ambitious businesses deploying full departmental revenue infrastructure.</p>
+          <div class="pricing-v2-price">
+            <span class="pricing-v2-amount">£3,500</span>
+            <span class="pricing-v2-period">Fixed Build</span>
+          </div>
+          <div class="pricing-v2-monthly">+ £599 /mo Operations</div>
+          <div class="pricing-v2-commitment">3-Month Minimum Agreement</div>
+          <div class="pricing-v2-features">
+            <div class="pricing-v2-feature">Complete Revenue Infrastructure</div>
+            <div class="pricing-v2-feature">Custom Growth Logic Deployment</div>
+            <div class="pricing-v2-feature">Memory Systems (Vector Database)</div>
+            <div class="pricing-v2-feature">Direct Support Channel (Slack)</div>
+            <div class="pricing-v2-feature">Monthly Performance Optimization</div>
+            <div class="pricing-v2-feature">API Key Management (BYOK)</div>
+            <div class="pricing-v2-feature">14-Day Deployment Sprint</div>
+          </div>
+          <button onclick="openCalendar('The Pilot')" class="pricing-btn solid">Deploy Pilot</button>
+        </div>
+      </div>
+
+      <div class="pricing-card-v2 anim anim-up d4">
+        <div class="pricing-card-v2-inner">
+          <h3 class="pricing-v2-title">The Architecture</h3>
+          <p class="pricing-v2-subtitle">For businesses requiring enterprise-grade growth infrastructure and dedicated engineering.</p>
+          <div class="pricing-v2-price">
+            <span class="pricing-v2-amount">Custom Scope</span>
+            <span class="pricing-v2-period">Quoted based on complexity</span>
+          </div>
+          <div class="pricing-v2-monthly">From £1,250 /mo Operations</div>
+          <div class="pricing-v2-commitment">3-Month Minimum Agreement</div>
+          <div class="pricing-v2-features">
+            <div class="pricing-v2-feature">Unlimited System Requests</div>
+            <div class="pricing-v2-feature">Full-Stack Infrastructure (Private Cloud)</div>
+            <div class="pricing-v2-feature">Priority Support Channel (Slack)</div>
+            <div class="pricing-v2-feature">Dedicated Growth Systems Engineer</div>
+            <div class="pricing-v2-feature">Cross-Departmental Orchestration</div>
+            <div class="pricing-v2-feature">Weekly Strategy &amp; ROI Roadmapping</div>
+            <div class="pricing-v2-feature">Custom Security Protocols</div>
+          </div>
+          <button onclick="openCalendar('The Architecture')" class="pricing-btn outline">Schedule Architecture Call</button>
+        </div>
+      </div>
+
     </div>
 
-    <div class="pricing-right">
-      <div class="pricing-grid">
+    <!-- Compare Plans Button -->
+    <div class="pricing-compare-toggle anim anim-up d5" style="text-align:center">
+      <button class="pricing-compare-btn" id="pricingCompareBtn" onclick="togglePricingComparison()">
+        <span>Compare Plans</span>
+        <svg class="pricing-compare-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+      </button>
+    </div>
 
-        <div class="pricing-card anim anim-up d3">
-          <div class="pricing-card-meta">
-            <h3 class="pricing-title">The Prototype</h3>
-            <p class="pricing-subtitle">For high-growth businesses testing revenue infrastructure in a single department.</p>
-            <div class="pricing-price">
-              <span class="price-amount">£1,500</span>
-              <span class="price-period">Fixed Build (One-time)</span>
-            </div>
-            <div class="pricing-monthly">+ £299 /mo Operations</div>
-            <div class="pricing-commitment">3-Month Minimum Agreement</div>
-          </div>
-          <div class="pricing-card-detail">
-            <div class="pricing-features">
-              <div class="pricing-feature">3 Targeted Growth Systems (Revenue, Efficiency, or Conversion)</div>
-              <div class="pricing-feature">Standardized Logic Deployment</div>
-              <div class="pricing-feature">Systems Engineer Oversight</div>
-              <div class="pricing-feature">24/7 Performance Monitoring</div>
-              <div class="pricing-feature">Email Support (48hr SLA)</div>
-              <div class="pricing-feature">Zero Downtime Guarantee</div>
-            </div>
-            <button onclick="openCalendar('The Prototype')" class="pricing-btn outline">Deploy Prototype</button>
-          </div>
+    <!-- Expandable Comparison Table -->
+    <div class="pricing-comparison" id="pricingComparison">
+      <div class="pricing-comparison-inner">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th class="pricing-table-feature-col">Feature</th>
+              <th>The Prototype</th>
+              <th class="pricing-table-featured">The Pilot</th>
+              <th>The Architecture</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pricing-table-feature">Growth Systems</td>
+              <td>3 Targeted</td>
+              <td class="pricing-table-featured">Complete Department</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Logic Deployment</td>
+              <td>Standardized</td>
+              <td class="pricing-table-featured">Custom</td>
+              <td>Fully Bespoke</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Memory Systems (Vector DB)</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Support Channel</td>
+              <td>Email (48hr SLA)</td>
+              <td class="pricing-table-featured">Direct Slack</td>
+              <td>Priority Slack</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Performance Monitoring</td>
+              <td class="pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-featured pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Monthly Optimization</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">API Key Management (BYOK)</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Dedicated Engineer</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-no">&mdash;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Cross-Departmental Orchestration</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-no">&mdash;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Weekly Strategy Sessions</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-no">&mdash;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Custom Security Protocols</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-no">&mdash;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Private Cloud Infrastructure</td>
+              <td class="pricing-table-no">&mdash;</td>
+              <td class="pricing-table-featured pricing-table-no">&mdash;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Deployment Sprint</td>
+              <td>Standard Timeline</td>
+              <td class="pricing-table-featured">14-Day Sprint</td>
+              <td>Custom Schedule</td>
+            </tr>
+            <tr>
+              <td class="pricing-table-feature">Zero Downtime Guarantee</td>
+              <td class="pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-featured pricing-table-yes">&#10003;</td>
+              <td class="pricing-table-yes">&#10003;</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pricing-transparency" style="margin-top:2rem">
+          <div class="pricing-transparency-title">Commercial Transparency</div>
+          <p class="pricing-transparency-text">
+            API costs are billed directly to your accounts—you pay zero markup and retain full data ownership.
+            The Operations fee covers infrastructure management, performance monitoring, and continuous ROI optimization.
+          </p>
         </div>
-
-        <div class="pricing-card featured anim anim-up d4">
-          <div class="pricing-card-meta">
-            <h3 class="pricing-title">The Pilot</h3>
-            <p class="pricing-subtitle">For ambitious businesses deploying full departmental revenue infrastructure.</p>
-            <div class="pricing-price">
-              <span class="price-amount">£3,500</span>
-              <span class="price-period">Fixed Build</span>
-            </div>
-            <div class="pricing-monthly">+ £599 /mo Operations</div>
-            <div class="pricing-commitment">3-Month Minimum Agreement</div>
-          </div>
-          <div class="pricing-card-detail">
-            <div class="pricing-features">
-              <div class="pricing-feature">Complete Revenue Infrastructure (Sales or Operations)</div>
-              <div class="pricing-feature">Custom Growth Logic Deployment</div>
-              <div class="pricing-feature">Memory Systems (Vector Database)</div>
-              <div class="pricing-feature">Direct Support Channel (Slack)</div>
-              <div class="pricing-feature">Monthly Performance Optimization</div>
-              <div class="pricing-feature">API Key Management (BYOK)</div>
-              <div class="pricing-feature">14-Day Deployment Sprint</div>
-            </div>
-            <button onclick="openCalendar('The Pilot')" class="pricing-btn solid">Deploy Pilot</button>
-          </div>
-        </div>
-
-        <div class="pricing-card anim anim-up d5">
-          <div class="pricing-card-meta">
-            <h3 class="pricing-title">The Architecture</h3>
-            <p class="pricing-subtitle">For businesses requiring enterprise-grade growth infrastructure and dedicated engineering.</p>
-            <div class="pricing-price">
-              <span class="price-amount">Custom Scope</span>
-              <span class="price-period">Quoted based on complexity</span>
-            </div>
-            <div class="pricing-monthly">From £1,250 /mo Operations</div>
-            <div class="pricing-commitment">3-Month Minimum Agreement</div>
-          </div>
-          <div class="pricing-card-detail">
-            <div class="pricing-features">
-              <div class="pricing-feature">Unlimited Integration &amp; Revenue System Requests</div>
-              <div class="pricing-feature">Full-Stack Growth Infrastructure (Private Cloud)</div>
-              <div class="pricing-feature">Priority Support Channel (Slack)</div>
-              <div class="pricing-feature">Dedicated Growth Systems Engineer</div>
-              <div class="pricing-feature">Cross-Departmental Performance Orchestration</div>
-              <div class="pricing-feature">Weekly Strategy &amp; ROI Roadmapping</div>
-              <div class="pricing-feature">Custom Security Protocols</div>
-            </div>
-            <button onclick="openCalendar('The Architecture')" class="pricing-btn outline">Schedule Architecture Call</button>
-          </div>
-        </div>
-
       </div>
     </div>
 
   </div>
 </section>
 
-  
+<section class="faq-section" id="faq">
+  <div class="section-inner">
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 06 — Common Questions</div>
+    <h2 class="section-title anim anim-up d1" style="text-align:center">Questions about AI integration.</h2>
+    <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Straightforward answers to the questions we hear most from businesses exploring AI-powered infrastructure.</p>
+
+    <div class="faq-list anim anim-up d3">
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>How long does it take to deploy AI infrastructure in my business?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">Most deployments complete within 2–4 weeks depending on complexity. Our Pilot tier includes a 14-day sprint. We start with an audit of your current systems, then build and test in stages so your team never experiences downtime or disruption.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>Do I need technical knowledge to use the systems you build?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">No. The entire point of our infrastructure is to remove technical complexity from your team's daily work. Once deployed, the systems run autonomously in the background. We handle all maintenance, monitoring, and optimization on your behalf.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>Will AI replace my existing staff?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">No. Our systems are designed to handle repetitive, manual tasks so your team can focus on higher-value work—client relationships, strategy, and revenue-generating activities. The goal is amplification, not replacement.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>What happens to my data? Is it secure?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">You retain full ownership of all data at every stage. API keys are managed under your own accounts (BYOK), and we never store sensitive data on third-party servers without your explicit approval. Enterprise clients receive dedicated private cloud infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>Can you integrate with the tools and software we already use?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">Yes. We build on top of your existing technology stack—CRMs, email platforms, project management tools, accounting software, and more. Our audit identifies the optimal way to connect your current systems rather than replacing them.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>What kind of ROI can I expect?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">Results vary by business, but our clients typically see a 30–50% reduction in administrative costs, 35% increase in lead-to-opportunity conversion, and measurable ROI within the first 12 months. We map expected returns during the initial audit before any build begins.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>What if the system doesn't work as expected?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">Every system is tested extensively before handover. After deployment, we provide continuous monitoring and optimization as part of your Operations agreement. If something underperforms, we identify and fix it—that's the purpose of Phase 3: Performance Monitoring.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span>Is there a minimum contract length?</span>
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-body">All tiers include a 3-month minimum operations agreement. This gives enough time for deployment, stabilisation, and initial performance measurement. After that, the agreement continues month-to-month with no long-term lock-in.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviews">
+  <div class="section-inner">
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> Client Results</div>
+    <h2 class="section-title anim anim-up d1" style="text-align:center">What our clients say.</h2>
+
+    <div class="reviews-carousel anim anim-up d2" id="reviewsCarousel">
+      <div class="reviews-track" id="reviewsTrack">
+
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"Level One completely transformed how we handle inbound leads. We went from losing 40% of enquiries to capturing and qualifying every single one automatically. Revenue is up 28% in three months."</p>
+            <div class="review-author">
+              <div class="review-author-info">
+                <div class="review-name">Callum Henderson</div>
+                <div class="review-role">Director, Henderson &amp; Co Solicitors — Edinburgh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"We were drowning in admin—invoices, project updates, client follow-ups. Level One automated the lot. My team now spends their time on actual project work instead of data entry. Best investment we've made."</p>
+            <div class="review-author">
+              <div class="review-author-info">
+                <div class="review-name">Fiona MacLeod</div>
+                <div class="review-role">Managing Director, Forth Valley Construction — Stirling</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"The support automation alone saved us two full-time salaries. Customer satisfaction actually went up because response times dropped from hours to seconds. The ROI was obvious within weeks."</p>
+            <div class="review-author">
+              <div class="review-author-info">
+                <div class="review-name">Gregor Wallace</div>
+                <div class="review-role">Operations Manager, Highland Digital Solutions — Inverness</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I was sceptical about AI for a traditional business like ours, but Level One made it completely painless. The systems just work in the background. Our booking rate has doubled and we haven't hired anyone new."</p>
+            <div class="review-author">
+              <div class="review-author-info">
+                <div class="review-name">Eilidh Robertson</div>
+                <div class="review-role">Owner, The Morningside Practice — Edinburgh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"Level One mapped out exactly where we were losing money before building anything. That audit alone was worth the investment. Six months in and our operational costs are down 35%."</p>
+            <div class="review-author">
+              <div class="review-author-info">
+                <div class="review-name">Alistair Drummond</div>
+                <div class="review-role">CEO, Drummond Property Group — Glasgow</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Carousel Controls -->
+      <div class="reviews-controls">
+        <button class="reviews-arrow" id="reviewPrev" onclick="moveReview(-1)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 7l6 6"/></svg>
+        </button>
+        <div class="reviews-dots" id="reviewsDots"></div>
+        <button class="reviews-arrow" id="reviewNext" onclick="moveReview(1)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cta-section">
   <div style="max-width:600px;margin:0 auto">
     <div class="glow-line"></div>
-    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 07 — Growth Audit</div>
+    <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 08 — Growth Audit</div>
     <h2 class="section-title anim anim-up d1" style="text-align:center">Map your revenue infrastructure.</h2>
     <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">Schedule a growth audit. We'll quantify where inefficiency costs you revenue or margin and map the deployment pathway to scalable growth.</p>
     <div style="text-align:center" class="anim anim-up d3"><button onclick="openCalendar()" class="btn-primary">Book A Call <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button></div>

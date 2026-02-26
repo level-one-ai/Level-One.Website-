@@ -395,19 +395,48 @@ function expandHexSystem(system) {
   var grid = document.getElementById('hexPairsGrid');
   var expanded = document.getElementById('hexExpanded');
   var content = document.getElementById('hexCardContent');
+  var pairs = grid.querySelectorAll('.hex-pair');
 
   currentHexSystem = system;
 
-  // Fade out grid
-  grid.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-  grid.style.opacity = '0';
-  grid.style.transform = 'scale(0.95)';
+  // Step 1: Text hexagons DISAPPEAR
+  pairs.forEach(function(pair) {
+    var label = pair.querySelector('.hex-label-wrap');
+    if (label) {
+      label.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      label.style.opacity = '0';
+      label.style.transform = 'scale(0.7)';
+    }
+  });
 
+  // Step 2: After text gone, image hexes SHRINK and SLIDE LEFT
+  setTimeout(function() {
+    pairs.forEach(function(pair) {
+      var img = pair.querySelector('.hex-img-wrap');
+      if (img) {
+        img.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        img.style.transform = 'scale(0.45) translateX(-120px)';
+        img.style.opacity = '0.3';
+      }
+    });
+  }, 300);
+
+  // Step 3: After images have moved, hide grid and show expanded view with card fade in
   setTimeout(function() {
     grid.style.display = 'none';
 
+    // Reset inline styles on pair elements
+    pairs.forEach(function(pair) {
+      var label = pair.querySelector('.hex-label-wrap');
+      var img = pair.querySelector('.hex-img-wrap');
+      if (label) { label.style.cssText = ''; }
+      if (img) { img.style.cssText = ''; }
+    });
+
     // Build card content
     content.innerHTML = buildHexCardHTML(system);
+    content.style.opacity = '0';
+    content.style.transform = 'translateY(15px)';
 
     // Activate the correct mini pair
     document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
@@ -424,9 +453,15 @@ function expandHexSystem(system) {
       requestAnimationFrame(function() {
         expanded.classList.add('active');
         expanded.style.opacity = '1';
+        // Card fades in after sidebar appears
+        setTimeout(function() {
+          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          content.style.opacity = '1';
+          content.style.transform = 'translateY(0)';
+        }, 150);
       });
     });
-  }, 400);
+  }, 750);
 }
 
 function switchHexCard(system) {
@@ -468,19 +503,79 @@ function collapseHexView() {
     expanded.classList.remove('active');
     expanded.style.display = 'none';
 
-    // Show grid again
+    // Show grid again — image hexes appear first, then labels fade in
     grid.style.display = '';
-    grid.style.opacity = '0';
-    grid.style.transform = 'scale(0.95)';
+    var pairs = grid.querySelectorAll('.hex-pair');
 
+    // Start with everything hidden
+    pairs.forEach(function(pair) {
+      var img = pair.querySelector('.hex-img-wrap');
+      var label = pair.querySelector('.hex-label-wrap');
+      if (img) {
+        img.style.opacity = '0';
+        img.style.transform = 'scale(0.7)';
+        img.style.transition = 'none';
+      }
+      if (label) {
+        label.style.opacity = '0';
+        label.style.transform = 'scale(0.7)';
+        label.style.transition = 'none';
+      }
+    });
+
+    // Animate images in
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        grid.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        grid.style.opacity = '1';
-        grid.style.transform = 'scale(1)';
+        pairs.forEach(function(pair) {
+          var img = pair.querySelector('.hex-img-wrap');
+          if (img) {
+            img.style.transition = 'opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+          }
+        });
+
+        // Then labels fade in
+        setTimeout(function() {
+          pairs.forEach(function(pair) {
+            var label = pair.querySelector('.hex-label-wrap');
+            if (label) {
+              label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              label.style.opacity = '1';
+              label.style.transform = 'scale(1)';
+            }
+          });
+          // Clean up inline styles after animation
+          setTimeout(function() {
+            pairs.forEach(function(pair) {
+              var img = pair.querySelector('.hex-img-wrap');
+              var label = pair.querySelector('.hex-label-wrap');
+              if (img) img.style.cssText = '';
+              if (label) label.style.cssText = '';
+            });
+          }, 500);
+        }, 250);
       });
     });
   }, 400);
+}
+
+// ============================================
+// PRICING COMPARISON TABLE — Toggle
+// ============================================
+function togglePricingComparison() {
+  var comparison = document.getElementById('pricingComparison');
+  var btn = document.getElementById('pricingCompareBtn');
+  if (!comparison || !btn) return;
+
+  var isOpen = comparison.classList.contains('open');
+  if (isOpen) {
+    comparison.classList.remove('open');
+    btn.classList.remove('open');
+  } else {
+    comparison.classList.add('open');
+    btn.classList.add('open');
+  }
 }
 
 // Scroll Progress Bar
@@ -688,6 +783,97 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
+// ============================================
+// FAQ ACCORDION
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.faq-btn');
+    if (!btn) return;
+
+    var item = btn.closest('.faq-item');
+    if (!item) return;
+
+    var isOpen = item.classList.contains('open');
+
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item.open').forEach(function(i) {
+      i.classList.remove('open');
+    });
+
+    // Toggle the clicked one
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  });
+});
+
+// ============================================
+// REVIEWS CAROUSEL — Auto-rotate
+// ============================================
+var reviewCurrentIndex = 0;
+var reviewAutoInterval = null;
+
+function initReviewsCarousel() {
+  var slides = document.querySelectorAll('.review-slide');
+  var dotsContainer = document.getElementById('reviewsDots');
+  if (!slides.length || !dotsContainer) return;
+
+  // Build dots
+  dotsContainer.innerHTML = '';
+  for (var i = 0; i < slides.length; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    dot.addEventListener('click', function() {
+      goToReview(parseInt(this.dataset.index));
+    });
+    dotsContainer.appendChild(dot);
+  }
+
+  // Start auto-rotation
+  startReviewAuto();
+}
+
+function goToReview(index) {
+  var track = document.getElementById('reviewsTrack');
+  var slides = document.querySelectorAll('.review-slide');
+  var dots = document.querySelectorAll('.review-dot');
+  if (!track || !slides.length) return;
+
+  reviewCurrentIndex = index;
+  if (reviewCurrentIndex < 0) reviewCurrentIndex = slides.length - 1;
+  if (reviewCurrentIndex >= slides.length) reviewCurrentIndex = 0;
+
+  track.style.transform = 'translateX(-' + (reviewCurrentIndex * 100) + '%)';
+
+  dots.forEach(function(d) { d.classList.remove('active'); });
+  if (dots[reviewCurrentIndex]) dots[reviewCurrentIndex].classList.add('active');
+}
+
+function moveReview(direction) {
+  goToReview(reviewCurrentIndex + direction);
+  // Reset auto-rotate timer on manual interaction
+  stopReviewAuto();
+  startReviewAuto();
+}
+
+function startReviewAuto() {
+  stopReviewAuto();
+  reviewAutoInterval = setInterval(function() {
+    goToReview(reviewCurrentIndex + 1);
+  }, 3000);
+}
+
+function stopReviewAuto() {
+  if (reviewAutoInterval) {
+    clearInterval(reviewAutoInterval);
+    reviewAutoInterval = null;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initReviewsCarousel);
 
 // Newsletter Webhook Submission
 function sendNewsletterToWebhook(email) {
