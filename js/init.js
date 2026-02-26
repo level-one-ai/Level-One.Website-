@@ -400,19 +400,19 @@ function expandHexSystem(system) {
 
   currentHexSystem = system;
 
-  // Step 1: Text hexagons DISAPPEAR
+  // Step 1: Fade out text labels (reverse of collapse step 4)
   pairs.forEach(function(pair) {
     var label = pair.querySelector('.hex-label-wrap');
     if (label) {
-      label.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       label.style.opacity = '0';
       label.style.transform = 'scale(0.7)';
     }
   });
 
-  // Capture the starting positions of all hex images before any transform
-  var imageStartRects = [];
+  // Capture starting positions of all hex images
   var pairArray = Array.from(pairs);
+  var imageStartRects = [];
   pairArray.forEach(function(pair) {
     var img = pair.querySelector('.hex-img-wrap');
     if (img) {
@@ -420,9 +420,9 @@ function expandHexSystem(system) {
     }
   });
 
-  // Step 2: After text gone, make expanded view visible but transparent to measure target positions
+  // Step 2: After text gone, measure mini targets and animate images (reverse of collapse step 3)
   setTimeout(function() {
-    // Temporarily show expanded view off-screen to measure mini pair positions
+    // Temporarily show expanded view to measure mini pair positions
     expanded.style.display = 'grid';
     expanded.style.opacity = '0';
     expanded.style.visibility = 'hidden';
@@ -436,7 +436,7 @@ function expandHexSystem(system) {
     var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
     if (activeMini) activeMini.classList.add('active');
 
-    // Measure target positions of mini images in sidebar
+    // Measure target positions of mini images
     var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
     var targetRects = [];
     miniPairs.forEach(function(mini) {
@@ -446,16 +446,15 @@ function expandHexSystem(system) {
       }
     });
 
-    // Hide expanded view again
+    // Hide expanded again
     expanded.style.display = 'none';
     expanded.style.visibility = '';
     expanded.style.position = '';
     expanded.style.width = '';
 
-    // Map: sales=0, support=1, consulting=2, workflow=3
     var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
 
-    // Now animate each hex image to its corresponding mini sidebar position
+    // Animate hex images slowly from grid positions to mini sidebar positions
     pairArray.forEach(function(pair, index) {
       var img = pair.querySelector('.hex-img-wrap');
       if (!img) return;
@@ -466,12 +465,10 @@ function expandHexSystem(system) {
       var targetRect = targetRects[targetIndex];
 
       if (startRect && targetRect) {
-        // Calculate the scale factor (mini img size vs hex img size)
         var scaleX = targetRect.width / startRect.width;
         var scaleY = targetRect.height / startRect.height;
         var scale = Math.min(scaleX, scaleY);
 
-        // Calculate translation to target centre
         var startCenterX = startRect.left + startRect.width / 2;
         var startCenterY = startRect.top + startRect.height / 2;
         var targetCenterX = targetRect.left + targetRect.width / 2;
@@ -480,18 +477,18 @@ function expandHexSystem(system) {
         var translateX = targetCenterX - startCenterX;
         var translateY = targetCenterY - startCenterY;
 
-        img.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        img.style.transition = 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
         img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale.toFixed(3) + ')';
         img.style.opacity = '0.7';
         img.style.zIndex = '100';
       }
     });
 
-    // Step 3: After images have arrived, swap to expanded view
+    // Step 3: After images arrive, swap to expanded view and fade in content (reverse of collapse step 1)
     setTimeout(function() {
       grid.style.display = 'none';
 
-      // Reset inline styles on pair elements
+      // Reset inline styles on grid elements
       pairs.forEach(function(pair) {
         var label = pair.querySelector('.hex-label-wrap');
         var img = pair.querySelector('.hex-img-wrap');
@@ -501,27 +498,64 @@ function expandHexSystem(system) {
 
       // Build card content
       content.innerHTML = buildHexCardHTML(system);
+
+      // Show expanded view with sidebar labels, button, and card hidden initially
+      expanded.style.display = 'grid';
+      expanded.style.opacity = '1';
+      expanded.classList.add('active');
+
+      var collapseBtn = document.getElementById('hexCollapseBtn');
+      if (collapseBtn) {
+        collapseBtn.style.opacity = '0';
+        collapseBtn.style.transition = 'none';
+      }
+      sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
+        label.style.opacity = '0';
+        label.style.transition = 'none';
+      });
+      sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
+        pair.style.background = 'transparent';
+        pair.style.borderColor = 'transparent';
+        pair.style.transition = 'none';
+      });
       content.style.opacity = '0';
       content.style.transform = 'translateY(15px)';
+      content.style.transition = 'none';
 
-      // Show expanded view
-      expanded.style.display = 'grid';
-      expanded.style.opacity = '0';
-
+      // Fade in collapse button, mini labels, mini pair backgrounds, and card content
       requestAnimationFrame(function() {
         requestAnimationFrame(function() {
-          expanded.classList.add('active');
-          expanded.style.opacity = '1';
-          // Card fades in after sidebar appears
+          if (collapseBtn) {
+            collapseBtn.style.transition = 'opacity 0.4s ease';
+            collapseBtn.style.opacity = '1';
+          }
+          sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
+            label.style.transition = 'opacity 0.4s ease';
+            label.style.opacity = '1';
+          });
+          sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
+            pair.style.transition = 'background 0.4s ease, border-color 0.4s ease';
+            pair.style.background = '';
+            pair.style.borderColor = '';
+          });
+          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          content.style.opacity = '1';
+          content.style.transform = 'translateY(0)';
+
+          // Clean up inline styles after animation completes
           setTimeout(function() {
-            content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            content.style.opacity = '1';
-            content.style.transform = 'translateY(0)';
-          }, 150);
+            if (collapseBtn) collapseBtn.style.cssText = '';
+            sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
+              label.style.cssText = '';
+            });
+            sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
+              pair.style.cssText = '';
+            });
+          }, 500);
         });
       });
-    }, 750);
-  }, 350);
+    }, 1250);
+  }, 420);
 }
 
 function switchHexCard(system) {
@@ -553,38 +587,61 @@ function collapseHexView() {
   var grid = document.getElementById('hexPairsGrid');
   var expanded = document.getElementById('hexExpanded');
   var sidebar = document.getElementById('hexExpandedSidebar');
+  var content = document.getElementById('hexCardContent');
   var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
 
   currentHexSystem = null;
 
-  // Capture positions of mini images in sidebar before hiding
-  var miniRects = [];
-  var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
-  miniPairs.forEach(function(mini) {
-    var miniImg = mini.querySelector('.hex-mini-img');
-    if (miniImg) {
-      miniRects.push(miniImg.getBoundingClientRect());
-    }
+  // Step 1: Fade out collapse button, mini labels, mini pair backgrounds, and card content
+  // Keep mini hex images visible — this is the reverse of expand step 3
+  var collapseBtn = document.getElementById('hexCollapseBtn');
+  if (collapseBtn) {
+    collapseBtn.style.transition = 'opacity 0.4s ease';
+    collapseBtn.style.opacity = '0';
+  }
+  sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
+    label.style.transition = 'opacity 0.4s ease';
+    label.style.opacity = '0';
   });
-
-  // Fade out the card content first
-  var content = document.getElementById('hexCardContent');
+  sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
+    pair.style.transition = 'background 0.4s ease, border-color 0.4s ease';
+    pair.style.background = 'transparent';
+    pair.style.borderColor = 'transparent';
+  });
   if (content) {
-    content.style.transition = 'opacity 0.3s ease';
+    content.style.transition = 'opacity 0.4s ease';
     content.style.opacity = '0';
   }
 
+  // Step 2: After fade, only mini hex images remain — capture their positions
   setTimeout(function() {
-    // Hide expanded view
+    var miniRects = [];
+    var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
+    miniPairs.forEach(function(mini) {
+      var miniImg = mini.querySelector('.hex-mini-img');
+      if (miniImg) {
+        miniRects.push(miniImg.getBoundingClientRect());
+      }
+    });
+
+    // Hide expanded view and reset inline styles
     expanded.classList.remove('active');
     expanded.style.display = 'none';
+    if (collapseBtn) collapseBtn.style.cssText = '';
+    sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
+      label.style.cssText = '';
+    });
+    sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
+      pair.style.cssText = '';
+    });
+    if (content) content.style.cssText = '';
 
-    // Show grid again but with images starting at their mini sidebar positions
+    // Step 3: Show grid with images at mini positions, animate slowly to full size
+    // This is the reverse of expand step 2
     grid.style.display = '';
     var pairs = grid.querySelectorAll('.hex-pair');
     var pairArray = Array.from(pairs);
 
-    // Start images at the mini sidebar positions (reversed animation)
     pairArray.forEach(function(pair) {
       var img = pair.querySelector('.hex-img-wrap');
       var label = pair.querySelector('.hex-label-wrap');
@@ -623,20 +680,20 @@ function collapseHexView() {
       }
     });
 
-    // Animate images from mini positions back to full size
+    // Animate images slowly from mini positions back to full grid positions
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
         pairArray.forEach(function(pair) {
           var img = pair.querySelector('.hex-img-wrap');
           if (img) {
-            img.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            img.style.transition = 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
             img.style.transform = 'translate(0, 0) scale(1)';
             img.style.opacity = '1';
             img.style.zIndex = '';
           }
         });
 
-        // Then labels fade in after images arrive
+        // Step 4: After images arrive, fade in text labels (reverse of expand step 1)
         setTimeout(function() {
           pairArray.forEach(function(pair) {
             var label = pair.querySelector('.hex-label-wrap');
@@ -646,7 +703,7 @@ function collapseHexView() {
               label.style.transform = 'scale(1)';
             }
           });
-          // Clean up inline styles after animation
+          // Clean up inline styles after animation completes
           setTimeout(function() {
             pairArray.forEach(function(pair) {
               var img = pair.querySelector('.hex-img-wrap');
@@ -655,10 +712,10 @@ function collapseHexView() {
               if (label) label.style.cssText = '';
             });
           }, 500);
-        }, 500);
+        }, 900);
       });
     });
-  }, 350);
+  }, 450);
 }
 
 // ============================================
