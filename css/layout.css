@@ -793,6 +793,26 @@ section:hover {
   border-color: var(--glass-border-hover);
 }
 
+/* Brighter text and images inside the expanded hex card */
+.hex-card-content h3 {
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+.hex-card-content p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hex-card-content .feature-card-icon .card-img-fill {
+  opacity: 0.9;
+}
+
+.hex-card-content .feature-label {
+  color: var(--orange);
+  border-color: rgba(255, 107, 53, 0.4);
+  background: rgba(255, 107, 53, 0.08);
+}
+
 .hex-card-content::before {
   content: '';
   position: absolute;
@@ -933,16 +953,23 @@ section:hover {
   margin-top: 1.5rem;
   font-family: var(--mono);
   font-size: 0.75rem;
-  color: var(--orange);
+  color: #ffffff;
   cursor: pointer;
-  background: none;
-  border: none;
-  letter-spacing: 0.04em;
-  transition: color 0.3s, text-shadow 0.3s;
-  padding: 0;
+  background: rgba(255, 107, 53, 0.06);
+  border: 2px solid rgba(255, 107, 53, 0.25);
+  letter-spacing: 0.06em;
+  transition: all 0.4s var(--ease-out-expo);
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .hex-card-viewmore:hover {
+  background: rgba(255, 107, 53, 0.12);
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
   text-shadow: 0 0 12px rgba(255, 107, 53, 0.4);
 }
 
@@ -956,6 +983,70 @@ section:hover {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   background: transparent;
+  position: relative;
+}
+
+/* Stacked card animation — initial state */
+.process-grid.stacked {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.process-grid.stacked .process-card {
+  grid-row: 1;
+  grid-column: 2;
+  transform: scale(1);
+  z-index: 1;
+}
+
+/* Centre card (Infrastructure Deployment) — front */
+.process-grid.stacked .process-card:nth-child(2) {
+  z-index: 3;
+  opacity: 1;
+}
+
+/* Left card (Systems Audit) — hidden behind */
+.process-grid.stacked .process-card:nth-child(1) {
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Right card (Performance Monitoring) — hidden behind */
+.process-grid.stacked .process-card:nth-child(3) {
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* Revealed state — cards move out into their columns */
+.process-grid.stacked.revealed .process-card {
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease, grid-column 0s;
+}
+
+.process-grid.stacked.revealed .process-card:nth-child(1) {
+  grid-column: 1;
+  transform: scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+.process-grid.stacked.revealed .process-card:nth-child(2) {
+  grid-column: 2;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.process-grid.stacked.revealed .process-card:nth-child(3) {
+  grid-column: 3;
+  transform: scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Brighter images for process cards */
+.process-card-icon .card-img-fill {
+  opacity: 0.85 !important;
 }
 
 .process-card {

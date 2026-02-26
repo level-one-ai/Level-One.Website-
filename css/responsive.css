@@ -109,6 +109,15 @@
     gap: 1.5rem;
   }
 
+  /* Disable stacked animation on mobile — show all cards normally */
+  .process-grid.stacked .process-card {
+    grid-column: auto;
+    grid-row: auto;
+    opacity: 1;
+    transform: none;
+    z-index: 1;
+  }
+
   .feature-card-icon,
   .process-card-icon {
     height: 200px;

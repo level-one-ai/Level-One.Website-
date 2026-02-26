@@ -409,14 +409,19 @@ function expandHexSystem(system) {
     }
   });
 
-  // Step 2: After text gone, image hexes SHRINK and SLIDE LEFT
+  // Step 2: After text gone, image hexes visibly shrink and move towards upper-left (sidebar position)
   setTimeout(function() {
-    pairs.forEach(function(pair) {
+    var pairArray = Array.from(pairs);
+    pairArray.forEach(function(pair, index) {
       var img = pair.querySelector('.hex-img-wrap');
       if (img) {
-        img.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        img.style.transform = 'scale(0.45) translateX(-120px)';
-        img.style.opacity = '0.3';
+        var rect = img.getBoundingClientRect();
+        // Calculate target position for each image (stacked vertically on left)
+        var targetX = -rect.left + 40;
+        var targetY = -rect.top + 120 + (index * 60);
+        img.style.transition = 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+        img.style.transform = 'scale(0.25) translate(' + targetX + 'px, ' + targetY + 'px)';
+        img.style.opacity = '0.6';
       }
     });
   }, 300);
@@ -461,7 +466,7 @@ function expandHexSystem(system) {
         }, 150);
       });
     });
-  }, 750);
+  }, 900);
 }
 
 function switchHexCard(system) {
@@ -559,6 +564,45 @@ function collapseHexView() {
     });
   }, 400);
 }
+
+// ============================================
+// PROCESS SECTION — Stacked Card Animation
+// ============================================
+function initProcessStackAnimation() {
+  var processGrid = document.querySelector('.process-grid');
+  if (!processGrid) return;
+
+  // Add stacked class initially
+  processGrid.classList.add('stacked');
+
+  // Remove individual anim classes from process cards since we handle animation ourselves
+  var cards = processGrid.querySelectorAll('.process-card');
+  cards.forEach(function(card) {
+    card.classList.remove('anim', 'anim-up', 'd1', 'd3', 'd5');
+  });
+
+  var hasRevealed = false;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !hasRevealed) {
+        hasRevealed = true;
+        // Small delay then reveal cards
+        setTimeout(function() {
+          processGrid.classList.add('revealed');
+        }, 300);
+        observer.unobserve(processGrid);
+      }
+    });
+  }, {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+  });
+
+  observer.observe(processGrid);
+}
+
+document.addEventListener('DOMContentLoaded', initProcessStackAnimation);
 
 // ============================================
 // PRICING COMPARISON TABLE — Toggle
@@ -863,7 +907,7 @@ function startReviewAuto() {
   stopReviewAuto();
   reviewAutoInterval = setInterval(function() {
     goToReview(reviewCurrentIndex + 1);
-  }, 3000);
+  }, 6000);
 }
 
 function stopReviewAuto() {
