@@ -396,6 +396,7 @@ function expandHexSystem(system) {
   var expanded = document.getElementById('hexExpanded');
   var content = document.getElementById('hexCardContent');
   var pairs = grid.querySelectorAll('.hex-pair');
+  var sidebar = document.getElementById('hexExpandedSidebar');
 
   currentHexSystem = system;
 
@@ -409,39 +410,24 @@ function expandHexSystem(system) {
     }
   });
 
-  // Step 2: After text gone, image hexes visibly shrink and move towards upper-left (sidebar position)
+  // Capture the starting positions of all hex images before any transform
+  var imageStartRects = [];
+  var pairArray = Array.from(pairs);
+  pairArray.forEach(function(pair) {
+    var img = pair.querySelector('.hex-img-wrap');
+    if (img) {
+      imageStartRects.push(img.getBoundingClientRect());
+    }
+  });
+
+  // Step 2: After text gone, make expanded view visible but transparent to measure target positions
   setTimeout(function() {
-    var pairArray = Array.from(pairs);
-    pairArray.forEach(function(pair, index) {
-      var img = pair.querySelector('.hex-img-wrap');
-      if (img) {
-        var rect = img.getBoundingClientRect();
-        // Calculate target position for each image (stacked vertically on left)
-        var targetX = -rect.left + 40;
-        var targetY = -rect.top + 120 + (index * 60);
-        img.style.transition = 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
-        img.style.transform = 'scale(0.25) translate(' + targetX + 'px, ' + targetY + 'px)';
-        img.style.opacity = '0.6';
-      }
-    });
-  }, 300);
-
-  // Step 3: After images have moved, hide grid and show expanded view with card fade in
-  setTimeout(function() {
-    grid.style.display = 'none';
-
-    // Reset inline styles on pair elements
-    pairs.forEach(function(pair) {
-      var label = pair.querySelector('.hex-label-wrap');
-      var img = pair.querySelector('.hex-img-wrap');
-      if (label) { label.style.cssText = ''; }
-      if (img) { img.style.cssText = ''; }
-    });
-
-    // Build card content
-    content.innerHTML = buildHexCardHTML(system);
-    content.style.opacity = '0';
-    content.style.transform = 'translateY(15px)';
+    // Temporarily show expanded view off-screen to measure mini pair positions
+    expanded.style.display = 'grid';
+    expanded.style.opacity = '0';
+    expanded.style.visibility = 'hidden';
+    expanded.style.position = 'absolute';
+    expanded.style.width = grid.parentElement.offsetWidth + 'px';
 
     // Activate the correct mini pair
     document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
@@ -450,23 +436,92 @@ function expandHexSystem(system) {
     var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
     if (activeMini) activeMini.classList.add('active');
 
-    // Show expanded view
-    expanded.style.display = 'grid';
-    expanded.style.opacity = '0';
-
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        expanded.classList.add('active');
-        expanded.style.opacity = '1';
-        // Card fades in after sidebar appears
-        setTimeout(function() {
-          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
-        }, 150);
-      });
+    // Measure target positions of mini images in sidebar
+    var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
+    var targetRects = [];
+    miniPairs.forEach(function(mini) {
+      var miniImg = mini.querySelector('.hex-mini-img');
+      if (miniImg) {
+        targetRects.push(miniImg.getBoundingClientRect());
+      }
     });
-  }, 900);
+
+    // Hide expanded view again
+    expanded.style.display = 'none';
+    expanded.style.visibility = '';
+    expanded.style.position = '';
+    expanded.style.width = '';
+
+    // Map: sales=0, support=1, consulting=2, workflow=3
+    var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
+
+    // Now animate each hex image to its corresponding mini sidebar position
+    pairArray.forEach(function(pair, index) {
+      var img = pair.querySelector('.hex-img-wrap');
+      if (!img) return;
+
+      var startRect = imageStartRects[index];
+      var pairSystem = pair.getAttribute('data-system');
+      var targetIndex = systemOrder.indexOf(pairSystem);
+      var targetRect = targetRects[targetIndex];
+
+      if (startRect && targetRect) {
+        // Calculate the scale factor (mini img size vs hex img size)
+        var scaleX = targetRect.width / startRect.width;
+        var scaleY = targetRect.height / startRect.height;
+        var scale = Math.min(scaleX, scaleY);
+
+        // Calculate translation to target centre
+        var startCenterX = startRect.left + startRect.width / 2;
+        var startCenterY = startRect.top + startRect.height / 2;
+        var targetCenterX = targetRect.left + targetRect.width / 2;
+        var targetCenterY = targetRect.top + targetRect.height / 2;
+
+        var translateX = targetCenterX - startCenterX;
+        var translateY = targetCenterY - startCenterY;
+
+        img.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale.toFixed(3) + ')';
+        img.style.opacity = '0.7';
+        img.style.zIndex = '100';
+      }
+    });
+
+    // Step 3: After images have arrived, swap to expanded view
+    setTimeout(function() {
+      grid.style.display = 'none';
+
+      // Reset inline styles on pair elements
+      pairs.forEach(function(pair) {
+        var label = pair.querySelector('.hex-label-wrap');
+        var img = pair.querySelector('.hex-img-wrap');
+        if (label) { label.style.cssText = ''; }
+        if (img) { img.style.cssText = ''; }
+      });
+
+      // Build card content
+      content.innerHTML = buildHexCardHTML(system);
+      content.style.opacity = '0';
+      content.style.transform = 'translateY(15px)';
+
+      // Show expanded view
+      expanded.style.display = 'grid';
+      expanded.style.opacity = '0';
+
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          expanded.classList.add('active');
+          expanded.style.opacity = '1';
+          // Card fades in after sidebar appears
+          setTimeout(function() {
+            content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            content.style.opacity = '1';
+            content.style.transform = 'translateY(0)';
+          }, 150);
+        });
+      });
+    }, 750);
+  }, 350);
 }
 
 function switchHexCard(system) {
@@ -497,30 +552,70 @@ function switchHexCard(system) {
 function collapseHexView() {
   var grid = document.getElementById('hexPairsGrid');
   var expanded = document.getElementById('hexExpanded');
+  var sidebar = document.getElementById('hexExpandedSidebar');
+  var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
 
   currentHexSystem = null;
 
-  // Fade out expanded view
-  expanded.style.transition = 'opacity 0.4s ease';
-  expanded.style.opacity = '0';
+  // Capture positions of mini images in sidebar before hiding
+  var miniRects = [];
+  var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
+  miniPairs.forEach(function(mini) {
+    var miniImg = mini.querySelector('.hex-mini-img');
+    if (miniImg) {
+      miniRects.push(miniImg.getBoundingClientRect());
+    }
+  });
+
+  // Fade out the card content first
+  var content = document.getElementById('hexCardContent');
+  if (content) {
+    content.style.transition = 'opacity 0.3s ease';
+    content.style.opacity = '0';
+  }
 
   setTimeout(function() {
+    // Hide expanded view
     expanded.classList.remove('active');
     expanded.style.display = 'none';
 
-    // Show grid again — image hexes appear first, then labels fade in
+    // Show grid again but with images starting at their mini sidebar positions
     grid.style.display = '';
     var pairs = grid.querySelectorAll('.hex-pair');
+    var pairArray = Array.from(pairs);
 
-    // Start with everything hidden
-    pairs.forEach(function(pair) {
+    // Start images at the mini sidebar positions (reversed animation)
+    pairArray.forEach(function(pair) {
       var img = pair.querySelector('.hex-img-wrap');
       var label = pair.querySelector('.hex-label-wrap');
-      if (img) {
-        img.style.opacity = '0';
-        img.style.transform = 'scale(0.7)';
+      if (!img) return;
+
+      var pairSystem = pair.getAttribute('data-system');
+      var targetIndex = systemOrder.indexOf(pairSystem);
+      var miniRect = miniRects[targetIndex];
+      var fullRect = img.getBoundingClientRect();
+
+      if (miniRect && fullRect) {
+        var scaleX = miniRect.width / fullRect.width;
+        var scaleY = miniRect.height / fullRect.height;
+        var scale = Math.min(scaleX, scaleY);
+
+        var fullCenterX = fullRect.left + fullRect.width / 2;
+        var fullCenterY = fullRect.top + fullRect.height / 2;
+        var miniCenterX = miniRect.left + miniRect.width / 2;
+        var miniCenterY = miniRect.top + miniRect.height / 2;
+
+        var translateX = miniCenterX - fullCenterX;
+        var translateY = miniCenterY - fullCenterY;
+
+        // Start at the mini position
         img.style.transition = 'none';
+        img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale.toFixed(3) + ')';
+        img.style.opacity = '0.7';
+        img.style.zIndex = '100';
       }
+
+      // Hide labels initially
       if (label) {
         label.style.opacity = '0';
         label.style.transform = 'scale(0.7)';
@@ -528,21 +623,22 @@ function collapseHexView() {
       }
     });
 
-    // Animate images in
+    // Animate images from mini positions back to full size
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        pairs.forEach(function(pair) {
+        pairArray.forEach(function(pair) {
           var img = pair.querySelector('.hex-img-wrap');
           if (img) {
-            img.style.transition = 'opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+            img.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            img.style.transform = 'translate(0, 0) scale(1)';
             img.style.opacity = '1';
-            img.style.transform = 'scale(1)';
+            img.style.zIndex = '';
           }
         });
 
-        // Then labels fade in
+        // Then labels fade in after images arrive
         setTimeout(function() {
-          pairs.forEach(function(pair) {
+          pairArray.forEach(function(pair) {
             var label = pair.querySelector('.hex-label-wrap');
             if (label) {
               label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
@@ -552,17 +648,17 @@ function collapseHexView() {
           });
           // Clean up inline styles after animation
           setTimeout(function() {
-            pairs.forEach(function(pair) {
+            pairArray.forEach(function(pair) {
               var img = pair.querySelector('.hex-img-wrap');
               var label = pair.querySelector('.hex-label-wrap');
               if (img) img.style.cssText = '';
               if (label) label.style.cssText = '';
             });
           }, 500);
-        }, 250);
+        }, 500);
       });
     });
-  }, 400);
+  }, 350);
 }
 
 // ============================================
@@ -841,13 +937,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var isOpen = item.classList.contains('open');
 
-    // Close all FAQ items
+    // Close all OTHER FAQ items (only one open at a time)
     document.querySelectorAll('.faq-item.open').forEach(function(i) {
-      i.classList.remove('open');
+      if (i !== item) {
+        i.classList.remove('open');
+      }
     });
 
-    // Toggle the clicked one
-    if (!isOpen) {
+    // Toggle the clicked item
+    if (isOpen) {
+      item.classList.remove('open');
+    } else {
       item.classList.add('open');
     }
   });
