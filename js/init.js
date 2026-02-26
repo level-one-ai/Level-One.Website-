@@ -340,6 +340,244 @@ function switchInfrastructureSection(type, sectionId) {
 }
 
 
+// ============================================
+// HEXAGON PAIRS — Expand / Collapse / Switch
+// ============================================
+
+// Original feature card data for the hex expanded view
+var hexCardData = {
+  sales: {
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg',
+    labels: ['Revenue Growth', 'Conversion', 'Acquisition'],
+    title: 'Revenue Engines',
+    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.'
+  },
+  support: {
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg',
+    labels: ['Cost Reduction', 'Efficiency'],
+    title: 'Resolution Systems',
+    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.'
+  },
+  consulting: {
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg',
+    labels: ['Profit Identification', 'ROI Mapping'],
+    title: 'Systems Architecture',
+    desc: 'We audit your operations and identify where automation delivers maximum ROI. Every recommendation is backed by measurable impact on revenue, costs, or efficiency.'
+  },
+  workflow: {
+    image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg',
+    labels: ['Cost Elimination', 'Scale'],
+    title: 'Operational Autonomy',
+    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.'
+  }
+};
+
+var currentHexSystem = null;
+
+function buildHexCardHTML(system) {
+  var data = hexCardData[system];
+  if (!data) return '';
+
+  var labelsHTML = '';
+  data.labels.forEach(function(label) {
+    labelsHTML += '<span class="feature-label">' + label + '</span>';
+  });
+
+  return '<div class="feature-card-icon"><img src="' + data.image + '" class="card-img-fill" alt="' + data.title + '"></div>' +
+    '<div class="feature-labels">' + labelsHTML + '</div>' +
+    '<h3>' + data.title + '</h3>' +
+    '<p>' + data.desc + '</p>' +
+    '<div class="hex-card-divider"></div>' +
+    '<button class="hex-card-viewmore" onclick="openCoreSystemsView(\'' + system + '\')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>';
+}
+
+function expandHexSystem(system) {
+  var grid = document.getElementById('hexPairsGrid');
+  var expanded = document.getElementById('hexExpanded');
+  var content = document.getElementById('hexCardContent');
+  var pairs = grid.querySelectorAll('.hex-pair');
+
+  currentHexSystem = system;
+
+  // Step 1: Text hexagons DISAPPEAR
+  pairs.forEach(function(pair) {
+    var label = pair.querySelector('.hex-label-wrap');
+    if (label) {
+      label.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      label.style.opacity = '0';
+      label.style.transform = 'scale(0.7)';
+    }
+  });
+
+  // Step 2: After text gone, image hexes SHRINK and SLIDE LEFT
+  setTimeout(function() {
+    pairs.forEach(function(pair) {
+      var img = pair.querySelector('.hex-img-wrap');
+      if (img) {
+        img.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        img.style.transform = 'scale(0.45) translateX(-120px)';
+        img.style.opacity = '0.3';
+      }
+    });
+  }, 300);
+
+  // Step 3: After images have moved, hide grid and show expanded view with card fade in
+  setTimeout(function() {
+    grid.style.display = 'none';
+
+    // Reset inline styles on pair elements
+    pairs.forEach(function(pair) {
+      var label = pair.querySelector('.hex-label-wrap');
+      var img = pair.querySelector('.hex-img-wrap');
+      if (label) { label.style.cssText = ''; }
+      if (img) { img.style.cssText = ''; }
+    });
+
+    // Build card content
+    content.innerHTML = buildHexCardHTML(system);
+    content.style.opacity = '0';
+    content.style.transform = 'translateY(15px)';
+
+    // Activate the correct mini pair
+    document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
+    if (activeMini) activeMini.classList.add('active');
+
+    // Show expanded view
+    expanded.style.display = 'grid';
+    expanded.style.opacity = '0';
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        expanded.classList.add('active');
+        expanded.style.opacity = '1';
+        // Card fades in after sidebar appears
+        setTimeout(function() {
+          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          content.style.opacity = '1';
+          content.style.transform = 'translateY(0)';
+        }, 150);
+      });
+    });
+  }, 750);
+}
+
+function switchHexCard(system) {
+  if (system === currentHexSystem) return;
+  currentHexSystem = system;
+
+  var content = document.getElementById('hexCardContent');
+
+  // Update active state on sidebar
+  document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
+  if (activeMini) activeMini.classList.add('active');
+
+  // Fade out current card
+  content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+  content.style.opacity = '0';
+  content.style.transform = 'translateY(10px)';
+
+  setTimeout(function() {
+    content.innerHTML = buildHexCardHTML(system);
+    content.style.transform = 'translateY(0)';
+    content.style.opacity = '1';
+  }, 300);
+}
+
+function collapseHexView() {
+  var grid = document.getElementById('hexPairsGrid');
+  var expanded = document.getElementById('hexExpanded');
+
+  currentHexSystem = null;
+
+  // Fade out expanded view
+  expanded.style.transition = 'opacity 0.4s ease';
+  expanded.style.opacity = '0';
+
+  setTimeout(function() {
+    expanded.classList.remove('active');
+    expanded.style.display = 'none';
+
+    // Show grid again — image hexes appear first, then labels fade in
+    grid.style.display = '';
+    var pairs = grid.querySelectorAll('.hex-pair');
+
+    // Start with everything hidden
+    pairs.forEach(function(pair) {
+      var img = pair.querySelector('.hex-img-wrap');
+      var label = pair.querySelector('.hex-label-wrap');
+      if (img) {
+        img.style.opacity = '0';
+        img.style.transform = 'scale(0.7)';
+        img.style.transition = 'none';
+      }
+      if (label) {
+        label.style.opacity = '0';
+        label.style.transform = 'scale(0.7)';
+        label.style.transition = 'none';
+      }
+    });
+
+    // Animate images in
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        pairs.forEach(function(pair) {
+          var img = pair.querySelector('.hex-img-wrap');
+          if (img) {
+            img.style.transition = 'opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+          }
+        });
+
+        // Then labels fade in
+        setTimeout(function() {
+          pairs.forEach(function(pair) {
+            var label = pair.querySelector('.hex-label-wrap');
+            if (label) {
+              label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              label.style.opacity = '1';
+              label.style.transform = 'scale(1)';
+            }
+          });
+          // Clean up inline styles after animation
+          setTimeout(function() {
+            pairs.forEach(function(pair) {
+              var img = pair.querySelector('.hex-img-wrap');
+              var label = pair.querySelector('.hex-label-wrap');
+              if (img) img.style.cssText = '';
+              if (label) label.style.cssText = '';
+            });
+          }, 500);
+        }, 250);
+      });
+    });
+  }, 400);
+}
+
+// ============================================
+// PRICING COMPARISON TABLE — Toggle
+// ============================================
+function togglePricingComparison() {
+  var comparison = document.getElementById('pricingComparison');
+  var btn = document.getElementById('pricingCompareBtn');
+  if (!comparison || !btn) return;
+
+  var isOpen = comparison.classList.contains('open');
+  if (isOpen) {
+    comparison.classList.remove('open');
+    btn.classList.remove('open');
+  } else {
+    comparison.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
 // Scroll Progress Bar
 window.addEventListener('scroll', () => {
   const progressBar = document.getElementById('progressBar');
@@ -353,23 +591,150 @@ window.addEventListener('scroll', () => {
   progressBar.style.width = scrollPercentage + '%';
 });
 
-// Animation on Scroll
+// Enhanced Animation on Scroll — IntersectionObserver with .vis class
 const animateOnScroll = () => {
   const elements = document.querySelectorAll('.anim');
-  
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    if (rect.top < windowHeight * 0.85) {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0) translateX(0)';
-    }
-  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('vis');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+  } else {
+    // Fallback for old browsers
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        el.classList.add('vis');
+      }
+    });
+    window.addEventListener('scroll', function fallbackScroll() {
+      document.querySelectorAll('.anim:not(.vis)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+          el.classList.add('vis');
+        }
+      });
+    });
+  }
 };
 
-window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', animateOnScroll);
+
+// ============================================
+// PREMIUM ANIMATIONS — Magnetic Hover, Glow Pulse
+// ============================================
+
+// Magnetic Hover Effect for hex burger and CTAs
+function initMagneticHover() {
+  const magneticElements = document.querySelectorAll('.hex-burger, .hero-cta .btn-primary, .cta-section .btn-primary');
+
+  magneticElements.forEach(el => {
+    el.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const strength = 0.3;
+
+      this.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+
+    el.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      setTimeout(() => {
+        this.style.transition = '';
+      }, 500);
+    });
+  });
+}
+
+// Glow Trace Effect — Adds a subtle animated orange border trace to glass cards
+function initGlowTrace() {
+  const glassCards = document.querySelectorAll('.feature-card, .process-card, .pricing-card.featured');
+
+  glassCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+  });
+}
+
+// Parallax Depth — subtle depth movement on sections when scrolling
+function initParallaxDepth() {
+  const sections = document.querySelectorAll('.section-inner');
+  let ticking = false;
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const sectionCenter = rect.top + rect.height / 2;
+          const distance = (sectionCenter - viewportCenter) / viewportCenter;
+          const moveY = distance * -8;
+
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            section.style.transform = `translateY(${moveY}px)`;
+          }
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+// Enhanced Cursor Glow — adds a subtle glow following the cursor on dark backgrounds
+function initCursorGlow() {
+  const mainContent = document.getElementById('main-content');
+  if (!mainContent) return;
+
+  const glow = document.createElement('div');
+  glow.style.cssText = 'position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;transition:opacity 0.3s;opacity:0;transform:translate(-50%,-50%)';
+  document.body.appendChild(glow);
+
+  let mouseX = 0, mouseY = 0;
+  let glowX = 0, glowY = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    glow.style.opacity = '1';
+  });
+
+  document.addEventListener('mouseleave', function() {
+    glow.style.opacity = '0';
+  });
+
+  function animateGlow() {
+    glowX += (mouseX - glowX) * 0.08;
+    glowY += (mouseY - glowY) * 0.08;
+    glow.style.left = glowX + 'px';
+    glow.style.top = glowY + 'px';
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+}
+
+// Initialize all premium effects
+document.addEventListener('DOMContentLoaded', function() {
+  initMagneticHover();
+  initGlowTrace();
+  initCursorGlow();
+  // initParallaxDepth disabled by default — uncomment if desired:
+  // initParallaxDepth();
+});
 
 // Q&A Accordion for core-systems-view
 document.addEventListener('DOMContentLoaded', function() {
@@ -418,6 +783,97 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
+// ============================================
+// FAQ ACCORDION
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.faq-btn');
+    if (!btn) return;
+
+    var item = btn.closest('.faq-item');
+    if (!item) return;
+
+    var isOpen = item.classList.contains('open');
+
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item.open').forEach(function(i) {
+      i.classList.remove('open');
+    });
+
+    // Toggle the clicked one
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  });
+});
+
+// ============================================
+// REVIEWS CAROUSEL — Auto-rotate
+// ============================================
+var reviewCurrentIndex = 0;
+var reviewAutoInterval = null;
+
+function initReviewsCarousel() {
+  var slides = document.querySelectorAll('.review-slide');
+  var dotsContainer = document.getElementById('reviewsDots');
+  if (!slides.length || !dotsContainer) return;
+
+  // Build dots
+  dotsContainer.innerHTML = '';
+  for (var i = 0; i < slides.length; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    dot.addEventListener('click', function() {
+      goToReview(parseInt(this.dataset.index));
+    });
+    dotsContainer.appendChild(dot);
+  }
+
+  // Start auto-rotation
+  startReviewAuto();
+}
+
+function goToReview(index) {
+  var track = document.getElementById('reviewsTrack');
+  var slides = document.querySelectorAll('.review-slide');
+  var dots = document.querySelectorAll('.review-dot');
+  if (!track || !slides.length) return;
+
+  reviewCurrentIndex = index;
+  if (reviewCurrentIndex < 0) reviewCurrentIndex = slides.length - 1;
+  if (reviewCurrentIndex >= slides.length) reviewCurrentIndex = 0;
+
+  track.style.transform = 'translateX(-' + (reviewCurrentIndex * 100) + '%)';
+
+  dots.forEach(function(d) { d.classList.remove('active'); });
+  if (dots[reviewCurrentIndex]) dots[reviewCurrentIndex].classList.add('active');
+}
+
+function moveReview(direction) {
+  goToReview(reviewCurrentIndex + direction);
+  // Reset auto-rotate timer on manual interaction
+  stopReviewAuto();
+  startReviewAuto();
+}
+
+function startReviewAuto() {
+  stopReviewAuto();
+  reviewAutoInterval = setInterval(function() {
+    goToReview(reviewCurrentIndex + 1);
+  }, 3000);
+}
+
+function stopReviewAuto() {
+  if (reviewAutoInterval) {
+    clearInterval(reviewAutoInterval);
+    reviewAutoInterval = null;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initReviewsCarousel);
 
 // Newsletter Webhook Submission
 function sendNewsletterToWebhook(email) {
