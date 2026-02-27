@@ -26,8 +26,8 @@
   .process-hex-grid {
     gap: 1.5rem;
   }
-  .process-hex { width: 220px; height: 220px; }
-  .process-hex-center { width: 270px; height: 270px; }
+  .process-hex { width: 240px; height: 209px; }
+  .process-hex-center { width: 290px; height: 253px; }
 
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -117,8 +117,8 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .process-hex { width: 200px; height: 200px; }
-  .process-hex-center { width: 240px; height: 240px; }
+  .process-hex { width: 220px; height: 192px; }
+  .process-hex-center { width: 260px; height: 227px; }
 
   /* Disable stacked animation on mobile — show all cards normally */
   .process-hex-grid.stacked .process-hex {

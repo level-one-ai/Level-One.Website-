@@ -513,30 +513,30 @@ section:hover {
 /* Container */
 .hex-pairs-container {
   position: relative;
-  min-height: 340px;
+  min-height: 480px;
 }
 
 /* Showcase layout: hexes area + info card side by side */
 .hex-showcase {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 2rem;
+  grid-template-columns: 1fr 380px;
+  gap: 2.5rem;
   align-items: center;
-  min-height: 400px;
+  min-height: 520px;
 }
 
 /* Hexes area: positioned container for scattered layout */
 .hex-showcase-hexes {
   position: relative;
-  height: 420px;
+  height: 520px;
 }
 
-/* ---- LARGE HEXAGON — right-of-center within hex area ---- */
+/* ---- LARGE HEXAGON — left-of-center within hex area ---- */
 .hex-large-wrap {
   position: absolute;
-  width: 340px;
-  height: 296px;
-  right: 5%;
+  width: 500px;
+  height: 435px;
+  left: 15%;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -549,72 +549,67 @@ section:hover {
 }
 
 .hex-large-wrap .hex-img-inner img {
-  opacity: 0.85;
+  opacity: 0.95;
   transform: scale(1);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* ---- SMALL HEXAGONS — scattered left of large hex ---- */
+/* ---- SMALL HEXAGONS — scattered around large hex ---- */
 .hex-small-item {
   position: absolute;
   cursor: pointer;
   z-index: 3;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s var(--ease-out-expo);
 }
 
 .hex-small-item:hover {
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
-/* Small hex 1 — top-left area */
+/* Small hex 1 — top-right of large hex */
 .hex-small-1 {
-  width: 130px;
-  height: 113px;
-  left: 8%;
-  top: 8%;
+  width: 180px;
+  height: 157px;
+  right: 2%;
+  top: 2%;
 }
 
-/* Small hex 2 — mid-left, slightly lower */
+/* Small hex 2 — left side, upper area */
 .hex-small-2 {
-  width: 130px;
-  height: 113px;
+  width: 160px;
+  height: 139px;
   left: 0%;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 18%;
 }
 
-.hex-small-2:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Small hex 3 — bottom-left area */
+/* Small hex 3 — lower-left area */
 .hex-small-3 {
-  width: 130px;
-  height: 113px;
-  left: 12%;
-  bottom: 5%;
+  width: 160px;
+  height: 139px;
+  left: 3%;
+  bottom: 8%;
 }
 
 .hex-small-item .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.15);
+  stroke: rgba(255, 255, 255, 0.18);
   stroke-width: 2;
   transition: stroke 0.3s ease, filter 0.3s ease;
 }
 
 .hex-small-item:hover .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.4);
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+  stroke: rgba(255, 255, 255, 0.45);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
 }
 
 .hex-small-item .hex-img-inner img {
   opacity: 0.6;
   transform: scale(1);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s var(--ease-out-expo);
 }
 
 .hex-small-item:hover .hex-img-inner img {
-  opacity: 0.9;
-  transform: scale(1.05);
+  opacity: 0.95;
+  transform: scale(1.12);
 }
 
 /* ---- SHARED HEX ELEMENTS ---- */
@@ -753,9 +748,9 @@ section:hover {
 /* ---- Individual hex card ---- */
 .process-hex {
   position: relative;
-  width: 260px;
-  height: 260px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  width: 280px;
+  height: 244px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   cursor: pointer;
   transition: transform 0.5s var(--ease-out-expo), filter 0.5s ease;
   flex-shrink: 0;
@@ -763,8 +758,8 @@ section:hover {
 
 /* Center hex is larger by default */
 .process-hex-center {
-  width: 320px;
-  height: 320px;
+  width: 340px;
+  height: 296px;
   z-index: 2;
 }
 
@@ -1164,10 +1159,12 @@ footer::before {
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .section-inner-wide { max-width: 95%; }
-  .hex-showcase { grid-template-columns: 1fr 280px; gap: 1.5rem; }
-  .hex-showcase-hexes { height: 360px; }
-  .hex-large-wrap { width: 280px; height: 244px; }
-  .hex-small-1, .hex-small-2, .hex-small-3 { width: 110px; height: 96px; }
+  .hex-showcase { grid-template-columns: 1fr 340px; gap: 2rem; }
+  .hex-showcase-hexes { height: 440px; }
+  .hex-large-wrap { width: 400px; height: 348px; left: 10%; }
+  .hex-small-1 { width: 150px; height: 131px; }
+  .hex-small-2 { width: 135px; height: 118px; }
+  .hex-small-3 { width: 135px; height: 118px; }
 }
 
 @media (max-width: 900px) {
@@ -1177,9 +1174,11 @@ footer::before {
   .services-grid { grid-template-columns: 1fr; }
   nav { padding: 0 1.5rem; }
   .hex-showcase { grid-template-columns: 1fr; gap: 1.5rem; }
-  .hex-showcase-hexes { height: 320px; }
-  .hex-large-wrap { width: 250px; height: 218px; right: 10%; }
-  .hex-small-1, .hex-small-2, .hex-small-3 { width: 100px; height: 87px; }
+  .hex-showcase-hexes { height: 380px; }
+  .hex-large-wrap { width: 320px; height: 279px; left: 15%; }
+  .hex-small-1 { width: 120px; height: 105px; right: 5%; }
+  .hex-small-2 { width: 110px; height: 96px; }
+  .hex-small-3 { width: 110px; height: 96px; }
   .hex-info-card { padding: 1.8rem; align-self: auto; }
 }
 
@@ -1191,20 +1190,21 @@ footer::before {
   .srv-card-visual { height: 330px; }
   .feature-grid,
   .services-grid { gap: 1rem; }
-  .hex-showcase-hexes { height: 280px; }
-  .hex-large-wrap { width: 200px; height: 174px; right: 5%; }
-  .hex-small-1, .hex-small-2, .hex-small-3 { width: 85px; height: 74px; }
-  .hex-small-1 { left: 5%; top: 10%; }
-  .hex-small-2 { left: 0%; }
-  .hex-small-3 { left: 8%; bottom: 8%; }
+  .hex-showcase-hexes { height: 300px; }
+  .hex-large-wrap { width: 240px; height: 209px; left: 15%; }
+  .hex-small-1 { width: 100px; height: 87px; right: 3%; top: 3%; }
+  .hex-small-2 { width: 90px; height: 78px; left: 0%; top: 15%; }
+  .hex-small-3 { width: 90px; height: 78px; left: 2%; bottom: 5%; }
   .hex-info-card { padding: 1.5rem; }
   .hex-info-title { font-size: 1.2rem; }
 }
 
 @media (max-width: 480px) {
-  .hex-showcase-hexes { height: 240px; }
-  .hex-large-wrap { width: 165px; height: 144px; right: 2%; }
-  .hex-small-1, .hex-small-2, .hex-small-3 { width: 72px; height: 63px; }
+  .hex-showcase-hexes { height: 250px; }
+  .hex-large-wrap { width: 190px; height: 165px; left: 12%; }
+  .hex-small-1 { width: 80px; height: 70px; }
+  .hex-small-2 { width: 72px; height: 63px; }
+  .hex-small-3 { width: 72px; height: 63px; }
   .hex-info-card { padding: 1.2rem; }
   .hex-info-desc { font-size: 0.85rem; }
 }
