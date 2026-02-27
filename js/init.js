@@ -341,22 +341,22 @@ function switchInfrastructureSection(type, sectionId) {
 
 
 // ============================================
-// HEXAGON PAIRS — Expand / Collapse / Switch
+// HEXAGON SHOWCASE — Select / Switch
 // ============================================
 
-// Original feature card data for the hex expanded view
+// Feature card data for the hex showcase
 var hexCardData = {
   sales: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg',
     labels: ['Revenue Growth', 'Conversion', 'Acquisition'],
     title: 'Revenue Engines',
-    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.'
+    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged\u2014increasing revenue without expanding headcount.'
   },
   support: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg',
     labels: ['Cost Reduction', 'Efficiency'],
     title: 'Resolution Systems',
-    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.'
+    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly\u2014cutting operational costs and freeing your team for revenue-generating work.'
   },
   consulting: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg',
@@ -368,355 +368,86 @@ var hexCardData = {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg',
     labels: ['Cost Elimination', 'Scale'],
     title: 'Operational Autonomy',
-    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.'
+    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion\u2014reducing costs while increasing operational capacity.'
   }
 };
 
-var currentHexSystem = null;
+var currentHexSystem = 'sales';
 
-function buildHexCardHTML(system) {
-  var data = hexCardData[system];
-  if (!data) return '';
+function selectHexSystem(newSystem) {
+  if (newSystem === currentHexSystem) return;
 
-  var labelsHTML = '';
-  data.labels.forEach(function(label) {
-    labelsHTML += '<span class="feature-label">' + label + '</span>';
-  });
+  var largeImg = document.getElementById('hexLargeImg');
+  var infoCard = document.getElementById('hexInfoCard');
+  var clickedSmall = document.querySelector('.hex-small-item[data-system="' + newSystem + '"]');
 
-  return '<div class="feature-card-icon"><img src="' + data.image + '" class="card-img-fill" alt="' + data.title + '"></div>' +
-    '<div class="feature-labels">' + labelsHTML + '</div>' +
-    '<h3>' + data.title + '</h3>' +
-    '<p>' + data.desc + '</p>' +
-    '<div class="hex-card-divider"></div>' +
-    '<button class="hex-card-viewmore" onclick="openCoreSystemsView(\'' + system + '\')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>';
-}
+  if (!largeImg || !clickedSmall) return;
 
-function expandHexSystem(system) {
-  var grid = document.getElementById('hexPairsGrid');
-  var expanded = document.getElementById('hexExpanded');
-  var content = document.getElementById('hexCardContent');
-  var pairs = grid.querySelectorAll('.hex-pair');
-  var sidebar = document.getElementById('hexExpandedSidebar');
+  var clickedImg = clickedSmall.querySelector('.hex-img-inner img');
+  var oldSystem = currentHexSystem;
+  var oldData = hexCardData[oldSystem];
+  var newData = hexCardData[newSystem];
 
-  currentHexSystem = system;
+  // Fade out large image, clicked small image, and info card
+  largeImg.style.transition = 'opacity 0.4s ease';
+  largeImg.style.opacity = '0';
 
-  // Step 1: Fade out text labels (reverse of collapse step 4)
-  pairs.forEach(function(pair) {
-    var label = pair.querySelector('.hex-label-wrap');
-    if (label) {
-      label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      label.style.opacity = '0';
-      label.style.transform = 'scale(0.7)';
-    }
-  });
+  clickedImg.style.transition = 'opacity 0.4s ease';
+  clickedImg.style.opacity = '0';
 
-  // Capture starting positions of all hex images
-  var pairArray = Array.from(pairs);
-  var imageStartRects = [];
-  pairArray.forEach(function(pair) {
-    var img = pair.querySelector('.hex-img-wrap');
-    if (img) {
-      imageStartRects.push(img.getBoundingClientRect());
-    }
-  });
+  infoCard.style.transition = 'opacity 0.4s ease';
+  infoCard.style.opacity = '0';
 
-  // Step 2: After text gone, measure mini targets and animate images (reverse of collapse step 3)
   setTimeout(function() {
-    // Temporarily show expanded view to measure mini pair positions
-    expanded.style.display = 'grid';
-    expanded.style.opacity = '0';
-    expanded.style.visibility = 'hidden';
-    expanded.style.position = 'absolute';
-    expanded.style.width = grid.parentElement.offsetWidth + 'px';
+    // Swap images: large gets new system, clicked small gets old system
+    largeImg.src = newData.image;
+    largeImg.alt = newData.title;
 
-    // Activate the correct mini pair
-    document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
-      p.classList.remove('active');
+    clickedImg.src = oldData.image;
+    clickedImg.alt = oldData.title;
+
+    // Update clicked small hex's data-system and onclick
+    clickedSmall.setAttribute('data-system', oldSystem);
+    clickedSmall.setAttribute('onclick', "selectHexSystem('" + oldSystem + "')");
+
+    // Update info card content
+    var labels = document.getElementById('hexInfoLabels');
+    var title = document.getElementById('hexInfoTitle');
+    var desc = document.getElementById('hexInfoDesc');
+    var btn = document.getElementById('hexInfoBtn');
+
+    var labelsHTML = '';
+    newData.labels.forEach(function(label) {
+      labelsHTML += '<span class="feature-label">' + label + '</span>';
     });
-    var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
-    if (activeMini) activeMini.classList.add('active');
+    labels.innerHTML = labelsHTML;
+    title.textContent = newData.title;
+    desc.textContent = newData.desc;
+    btn.setAttribute('onclick', "openCoreSystemsView('" + newSystem + "')");
 
-    // Measure target positions of mini images
-    var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
-    var targetRects = [];
-    miniPairs.forEach(function(mini) {
-      var miniImg = mini.querySelector('.hex-mini-img');
-      if (miniImg) {
-        targetRects.push(miniImg.getBoundingClientRect());
-      }
-    });
+    currentHexSystem = newSystem;
 
-    // Hide expanded again
-    expanded.style.display = 'none';
-    expanded.style.visibility = '';
-    expanded.style.position = '';
-    expanded.style.width = '';
-
-    var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
-
-    // Animate hex images slowly from grid positions to mini sidebar positions
-    pairArray.forEach(function(pair, index) {
-      var img = pair.querySelector('.hex-img-wrap');
-      if (!img) return;
-
-      var startRect = imageStartRects[index];
-      var pairSystem = pair.getAttribute('data-system');
-      var targetIndex = systemOrder.indexOf(pairSystem);
-      var targetRect = targetRects[targetIndex];
-
-      if (startRect && targetRect) {
-        var scaleX = targetRect.width / startRect.width;
-        var scaleY = targetRect.height / startRect.height;
-        var scale = Math.min(scaleX, scaleY);
-
-        var startCenterX = startRect.left + startRect.width / 2;
-        var startCenterY = startRect.top + startRect.height / 2;
-        var targetCenterX = targetRect.left + targetRect.width / 2;
-        var targetCenterY = targetRect.top + targetRect.height / 2;
-
-        var translateX = targetCenterX - startCenterX;
-        var translateY = targetCenterY - startCenterY;
-
-        img.style.transition = 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
-        img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale.toFixed(3) + ')';
-        img.style.opacity = '0.7';
-        img.style.zIndex = '100';
-      }
-    });
-
-    // Step 3: After images arrive, swap to expanded view and fade in content (reverse of collapse step 1)
-    setTimeout(function() {
-      grid.style.display = 'none';
-
-      // Reset inline styles on grid elements
-      pairs.forEach(function(pair) {
-        var label = pair.querySelector('.hex-label-wrap');
-        var img = pair.querySelector('.hex-img-wrap');
-        if (label) { label.style.cssText = ''; }
-        if (img) { img.style.cssText = ''; }
-      });
-
-      // Build card content
-      content.innerHTML = buildHexCardHTML(system);
-
-      // Show expanded view with sidebar labels, button, and card hidden initially
-      expanded.style.display = 'grid';
-      expanded.style.opacity = '1';
-      expanded.classList.add('active');
-
-      var collapseBtn = document.getElementById('hexCollapseBtn');
-      if (collapseBtn) {
-        collapseBtn.style.opacity = '0';
-        collapseBtn.style.transition = 'none';
-      }
-      sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
-        label.style.opacity = '0';
-        label.style.transition = 'none';
-      });
-      sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
-        pair.style.background = 'transparent';
-        pair.style.borderColor = 'transparent';
-        pair.style.transition = 'none';
-      });
-      content.style.opacity = '0';
-      content.style.transform = 'translateY(15px)';
-      content.style.transition = 'none';
-
-      // Fade in collapse button, mini labels, mini pair backgrounds, and card content
+    // Fade back in
+    requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          if (collapseBtn) {
-            collapseBtn.style.transition = 'opacity 0.4s ease';
-            collapseBtn.style.opacity = '1';
-          }
-          sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
-            label.style.transition = 'opacity 0.4s ease';
-            label.style.opacity = '1';
-          });
-          sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
-            pair.style.transition = 'background 0.4s ease, border-color 0.4s ease';
-            pair.style.background = '';
-            pair.style.borderColor = '';
-          });
-          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
+        largeImg.style.transition = 'opacity 0.5s ease';
+        largeImg.style.opacity = '0.85';
 
-          // Clean up inline styles after animation completes
-          setTimeout(function() {
-            if (collapseBtn) collapseBtn.style.cssText = '';
-            sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
-              label.style.cssText = '';
-            });
-            sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
-              pair.style.cssText = '';
-            });
-          }, 500);
-        });
+        clickedImg.style.transition = 'opacity 0.5s ease';
+        clickedImg.style.opacity = '0.6';
+
+        infoCard.style.transition = 'opacity 0.5s ease';
+        infoCard.style.opacity = '1';
       });
-    }, 1250);
+    });
   }, 420);
 }
 
-function switchHexCard(system) {
-  if (system === currentHexSystem) return;
-  currentHexSystem = system;
+// Legacy stubs (no longer used but kept for safety)
+function expandHexSystem(system) { selectHexSystem(system); }
+function switchHexCard(system) { selectHexSystem(system); }
+function collapseHexView() { }
 
-  var content = document.getElementById('hexCardContent');
-
-  // Update active state on sidebar
-  document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
-    p.classList.remove('active');
-  });
-  var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
-  if (activeMini) activeMini.classList.add('active');
-
-  // Fade out current card
-  content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-  content.style.opacity = '0';
-  content.style.transform = 'translateY(10px)';
-
-  setTimeout(function() {
-    content.innerHTML = buildHexCardHTML(system);
-    content.style.transform = 'translateY(0)';
-    content.style.opacity = '1';
-  }, 300);
-}
-
-function collapseHexView() {
-  var grid = document.getElementById('hexPairsGrid');
-  var expanded = document.getElementById('hexExpanded');
-  var sidebar = document.getElementById('hexExpandedSidebar');
-  var content = document.getElementById('hexCardContent');
-  var systemOrder = ['sales', 'support', 'consulting', 'workflow'];
-
-  currentHexSystem = null;
-
-  // Step 1: Fade out collapse button, mini labels, mini pair backgrounds, and card content
-  // Keep mini hex images visible — this is the reverse of expand step 3
-  var collapseBtn = document.getElementById('hexCollapseBtn');
-  if (collapseBtn) {
-    collapseBtn.style.transition = 'opacity 0.4s ease';
-    collapseBtn.style.opacity = '0';
-  }
-  sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
-    label.style.transition = 'opacity 0.4s ease';
-    label.style.opacity = '0';
-  });
-  sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
-    pair.style.transition = 'background 0.4s ease, border-color 0.4s ease';
-    pair.style.background = 'transparent';
-    pair.style.borderColor = 'transparent';
-  });
-  if (content) {
-    content.style.transition = 'opacity 0.4s ease';
-    content.style.opacity = '0';
-  }
-
-  // Step 2: After fade, only mini hex images remain — capture their positions
-  setTimeout(function() {
-    var miniRects = [];
-    var miniPairs = sidebar.querySelectorAll('.hex-mini-pair');
-    miniPairs.forEach(function(mini) {
-      var miniImg = mini.querySelector('.hex-mini-img');
-      if (miniImg) {
-        miniRects.push(miniImg.getBoundingClientRect());
-      }
-    });
-
-    // Hide expanded view and reset inline styles
-    expanded.classList.remove('active');
-    expanded.style.display = 'none';
-    if (collapseBtn) collapseBtn.style.cssText = '';
-    sidebar.querySelectorAll('.hex-mini-label').forEach(function(label) {
-      label.style.cssText = '';
-    });
-    sidebar.querySelectorAll('.hex-mini-pair').forEach(function(pair) {
-      pair.style.cssText = '';
-    });
-    if (content) content.style.cssText = '';
-
-    // Step 3: Show grid with images at mini positions, animate slowly to full size
-    // This is the reverse of expand step 2
-    grid.style.display = '';
-    var pairs = grid.querySelectorAll('.hex-pair');
-    var pairArray = Array.from(pairs);
-
-    pairArray.forEach(function(pair) {
-      var img = pair.querySelector('.hex-img-wrap');
-      var label = pair.querySelector('.hex-label-wrap');
-      if (!img) return;
-
-      var pairSystem = pair.getAttribute('data-system');
-      var targetIndex = systemOrder.indexOf(pairSystem);
-      var miniRect = miniRects[targetIndex];
-      var fullRect = img.getBoundingClientRect();
-
-      if (miniRect && fullRect) {
-        var scaleX = miniRect.width / fullRect.width;
-        var scaleY = miniRect.height / fullRect.height;
-        var scale = Math.min(scaleX, scaleY);
-
-        var fullCenterX = fullRect.left + fullRect.width / 2;
-        var fullCenterY = fullRect.top + fullRect.height / 2;
-        var miniCenterX = miniRect.left + miniRect.width / 2;
-        var miniCenterY = miniRect.top + miniRect.height / 2;
-
-        var translateX = miniCenterX - fullCenterX;
-        var translateY = miniCenterY - fullCenterY;
-
-        // Start at the mini position
-        img.style.transition = 'none';
-        img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scale.toFixed(3) + ')';
-        img.style.opacity = '0.7';
-        img.style.zIndex = '100';
-      }
-
-      // Hide labels initially
-      if (label) {
-        label.style.opacity = '0';
-        label.style.transform = 'scale(0.7)';
-        label.style.transition = 'none';
-      }
-    });
-
-    // Animate images slowly from mini positions back to full grid positions
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        pairArray.forEach(function(pair) {
-          var img = pair.querySelector('.hex-img-wrap');
-          if (img) {
-            img.style.transition = 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
-            img.style.transform = 'translate(0, 0) scale(1)';
-            img.style.opacity = '1';
-            img.style.zIndex = '';
-          }
-        });
-
-        // Step 4: After images arrive, fade in text labels (reverse of expand step 1)
-        setTimeout(function() {
-          pairArray.forEach(function(pair) {
-            var label = pair.querySelector('.hex-label-wrap');
-            if (label) {
-              label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-              label.style.opacity = '1';
-              label.style.transform = 'scale(1)';
-            }
-          });
-          // Clean up inline styles after animation completes
-          setTimeout(function() {
-            pairArray.forEach(function(pair) {
-              var img = pair.querySelector('.hex-img-wrap');
-              var label = pair.querySelector('.hex-label-wrap');
-              if (img) img.style.cssText = '';
-              if (label) label.style.cssText = '';
-            });
-          }, 500);
-        }, 900);
-      });
-    });
-  }, 450);
-}
 
 // ============================================
 // PROCESS SECTION — Stacked Card Animation

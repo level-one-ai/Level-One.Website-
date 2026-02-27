@@ -110,117 +110,48 @@
     <div class="section-num anim anim-up" style="text-align:center"><span class="pulse"></span> 01 — Revenue Infrastructure</div>
     <h2 class="section-title anim anim-up d1" style="text-align:center">Four systems.<br>One outcome: high-performance growth.</h2>
     <p class="section-desc anim anim-up d2" style="text-align:center;margin-left:auto;margin-right:auto">We install revenue infrastructure that increases acquisition, reduces overhead, and eliminates manual bottlenecks across your operations.</p>
-    <!-- Hexagon Pairs Layout -->
+    <!-- Hexagon Showcase Layout -->
     <div class="hex-pairs-container anim anim-up d3" id="hexPairsContainer">
-
-      <!-- Hexagon pairs grid (default view) — single horizontal row -->
-      <div class="hex-pairs-grid" id="hexPairsGrid">
-
-        <div class="hex-pair" data-system="sales" onclick="expandHexSystem('sales')">
-          <div class="hex-img-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
+      <div class="hex-showcase" id="hexShowcase">
+        <div class="hex-showcase-left">
+          <div class="hex-large-wrap" id="hexLargeWrap">
+            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/></svg>
             <div class="hex-img-inner">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" alt="Sales Systems">
+              <img id="hexLargeImg" src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" alt="Revenue Engines">
             </div>
           </div>
-          <div class="hex-label-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-label-inner">
-              <span class="hex-label-text">Revenue Engines</span>
+          <div class="hex-small-stack" id="hexSmallStack">
+            <div class="hex-small-item" data-system="support" onclick="selectHexSystem('support')">
+              <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/></svg>
+              <div class="hex-img-inner">
+                <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" alt="Resolution Systems">
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="hex-pair" data-system="support" onclick="expandHexSystem('support')">
-          <div class="hex-img-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-img-inner">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" alt="Support Systems">
+            <div class="hex-small-item" data-system="consulting" onclick="selectHexSystem('consulting')">
+              <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/></svg>
+              <div class="hex-img-inner">
+                <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" alt="Systems Architecture">
+              </div>
             </div>
-          </div>
-          <div class="hex-label-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-label-inner">
-              <span class="hex-label-text">Resolution Systems</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hex-pair" data-system="consulting" onclick="expandHexSystem('consulting')">
-          <div class="hex-img-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-img-inner">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" alt="AI Strategy">
-            </div>
-          </div>
-          <div class="hex-label-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-label-inner">
-              <span class="hex-label-text">Systems Architecture</span>
+            <div class="hex-small-item" data-system="workflow" onclick="selectHexSystem('workflow')">
+              <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/></svg>
+              <div class="hex-img-inner">
+                <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" alt="Operational Autonomy">
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="hex-pair" data-system="workflow" onclick="expandHexSystem('workflow')">
-          <div class="hex-img-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-img-inner">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" alt="Agentic Flows">
-            </div>
+        <div class="hex-info-card" id="hexInfoCard">
+          <div class="hex-info-labels" id="hexInfoLabels">
+            <span class="feature-label">Revenue Growth</span>
+            <span class="feature-label">Conversion</span>
+            <span class="feature-label">Acquisition</span>
           </div>
-          <div class="hex-label-wrap">
-            <svg class="hex-clip-border" viewBox="0 0 200 174"><polygon points="50,0 150,0 200,87 150,174 50,174 0,87" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/></svg>
-            <div class="hex-label-inner">
-              <span class="hex-label-text">Operational Autonomy</span>
-            </div>
-          </div>
+          <h3 class="hex-info-title" id="hexInfoTitle">Revenue Engines</h3>
+          <p class="hex-info-desc" id="hexInfoDesc">Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.</p>
+          <div class="hex-card-divider"></div>
+          <button class="hex-card-viewmore" id="hexInfoBtn" onclick="openCoreSystemsView('sales')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>
         </div>
-
-      </div>
-
-      <!-- Expanded view: minimized hex sidebar + card content -->
-      <div class="hex-expanded" id="hexExpanded">
-
-        <div class="hex-expanded-sidebar" id="hexExpandedSidebar">
-          <!-- Close/collapse button -->
-          <button class="hex-collapse-btn" id="hexCollapseBtn" onclick="collapseHexView()">
-            <svg class="hex-collapse-border" viewBox="0 0 42 42"><polygon points="21,1 39,11 39,31 21,41 3,31 3,11"/></svg>
-            <svg class="hex-collapse-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 1L5 7l6 6"/></svg>
-          </button>
-
-          <div class="hex-mini-pair" data-system="sales" onclick="switchHexCard('sales')">
-            <div class="hex-mini-img">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg" alt="Sales">
-            </div>
-            <div class="hex-mini-label">Revenue Engines</div>
-          </div>
-
-          <div class="hex-mini-pair" data-system="support" onclick="switchHexCard('support')">
-            <div class="hex-mini-img">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg" alt="Support">
-            </div>
-            <div class="hex-mini-label">Resolution Systems</div>
-          </div>
-
-          <div class="hex-mini-pair" data-system="consulting" onclick="switchHexCard('consulting')">
-            <div class="hex-mini-img">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg" alt="Consulting">
-            </div>
-            <div class="hex-mini-label">Systems Architecture</div>
-          </div>
-
-          <div class="hex-mini-pair" data-system="workflow" onclick="switchHexCard('workflow')">
-            <div class="hex-mini-img">
-              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg" alt="Workflow">
-            </div>
-            <div class="hex-mini-label">Operational Autonomy</div>
-          </div>
-        </div>
-
-        <div class="hex-card-content" id="hexCardContent">
-          <!-- Card content injected by JS -->
-        </div>
-
       </div>
     </div>
   </div>
@@ -751,8 +682,21 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <p class="footer-copyright">&copy; 2026 Level One. All rights reserved.</p>
-      <p class="footer-location">Edinburgh, Scotland</p>
+      <div class="footer-bottom-left">
+        <p class="footer-copyright">&copy; 2026 Level One. All rights reserved.</p>
+        <p class="footer-location">Edinburgh, Scotland</p>
+      </div>
+      <div class="footer-social">
+        <a href="#" class="footer-social-link" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="X">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </footer>
