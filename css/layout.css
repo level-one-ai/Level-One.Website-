@@ -534,24 +534,29 @@ section:hover {
 /* ---- LARGE HEXAGON — slightly right-of-center within hex area ---- */
 .hex-large-wrap {
   position: absolute;
-  width: 440px;
-  height: 383px;
-  left: 22%;
-  top: 50%;
+  width: 400px;
+  height: 348px;
+  left: 26%;
+  top: 47%;
   transform: translateY(-50%);
   z-index: 2;
 }
 
 .hex-large-wrap .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.3);
-  stroke-width: 3;
-  transition: stroke 0.4s ease;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 4.5;
+  transition: stroke 0.4s ease, filter 0.4s ease;
 }
 
 .hex-large-wrap .hex-img-inner img {
   opacity: 0.95;
   transform: scale(1);
   transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hex-large-wrap:hover .hex-clip-border polygon {
+  stroke: rgba(255, 255, 255, 0.7);
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.35));
 }
 
 .hex-large-wrap:hover .hex-img-inner img {
@@ -590,19 +595,19 @@ section:hover {
 .hex-small-3 {
   width: 160px;
   height: 139px;
-  left: 0%;
+  left: -3%;
   bottom: 14%;
 }
 
 .hex-small-item .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.18);
-  stroke-width: 2;
+  stroke: rgba(255, 107, 53, 0.45);
+  stroke-width: 3.5;
   transition: stroke 0.3s ease, filter 0.3s ease;
 }
 
 .hex-small-item:hover .hex-clip-border polygon {
-  stroke: rgba(255, 255, 255, 0.45);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
+  stroke: rgba(255, 107, 53, 0.7);
+  filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.3));
 }
 
 .hex-small-item .hex-img-inner img {
@@ -650,7 +655,7 @@ section:hover {
   position: relative;
   overflow: hidden;
   transition: opacity 0.4s ease;
-  align-self: stretch;
+  align-self: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1165,7 +1170,7 @@ footer::before {
   .section-inner-wide { max-width: 95%; }
   .hex-showcase { grid-template-columns: 1fr 340px; gap: 2rem; }
   .hex-showcase-hexes { height: 440px; }
-  .hex-large-wrap { width: 400px; height: 348px; left: 10%; }
+  .hex-large-wrap { width: 350px; height: 305px; left: 15%; }
   .hex-small-1 { width: 150px; height: 131px; }
   .hex-small-2 { width: 135px; height: 118px; }
   .hex-small-3 { width: 135px; height: 118px; }

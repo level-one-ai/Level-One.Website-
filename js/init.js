@@ -388,14 +388,15 @@ function selectHexSystem(newSystem) {
   var oldData = hexCardData[oldSystem];
   var newData = hexCardData[newSystem];
 
-  // Fade out large image, clicked small image, and info card
-  largeImg.style.transition = 'opacity 0.4s ease';
+  // Fade out large image and clicked small image slowly
+  largeImg.style.transition = 'opacity 0.7s ease';
   largeImg.style.opacity = '0';
 
-  clickedImg.style.transition = 'opacity 0.4s ease';
+  clickedImg.style.transition = 'opacity 0.7s ease';
   clickedImg.style.opacity = '0';
 
-  infoCard.style.transition = 'opacity 0.4s ease';
+  // Fade out info card text
+  infoCard.style.transition = 'opacity 0.5s ease';
   infoCard.style.opacity = '0';
 
   setTimeout(function() {
@@ -410,7 +411,7 @@ function selectHexSystem(newSystem) {
     clickedSmall.setAttribute('data-system', oldSystem);
     clickedSmall.setAttribute('onclick', "selectHexSystem('" + oldSystem + "')");
 
-    // Update info card content
+    // Update info card content while it's hidden
     var labels = document.getElementById('hexInfoLabels');
     var title = document.getElementById('hexInfoTitle');
     var desc = document.getElementById('hexInfoDesc');
@@ -427,20 +428,23 @@ function selectHexSystem(newSystem) {
 
     currentHexSystem = newSystem;
 
-    // Fade back in
+    // Fade images back in slowly
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        largeImg.style.transition = 'opacity 0.5s ease';
-        largeImg.style.opacity = '0.85';
+        largeImg.style.transition = 'opacity 0.8s ease';
+        largeImg.style.opacity = '0.95';
 
-        clickedImg.style.transition = 'opacity 0.5s ease';
+        clickedImg.style.transition = 'opacity 0.8s ease';
         clickedImg.style.opacity = '0.6';
 
-        infoCard.style.transition = 'opacity 0.5s ease';
-        infoCard.style.opacity = '1';
+        // Fade info card text in AFTER images have finished
+        setTimeout(function() {
+          infoCard.style.transition = 'opacity 0.6s ease';
+          infoCard.style.opacity = '1';
+        }, 500);
       });
     });
-  }, 420);
+  }, 750);
 }
 
 // Legacy stubs (no longer used but kept for safety)
