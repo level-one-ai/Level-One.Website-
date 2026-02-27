@@ -453,14 +453,14 @@ function collapseHexView() { }
 // PROCESS SECTION — Stacked Card Animation
 // ============================================
 function initProcessStackAnimation() {
-  var processGrid = document.querySelector('.process-grid');
+  var processGrid = document.querySelector('.process-hex-grid');
   if (!processGrid) return;
 
   // Add stacked class initially
   processGrid.classList.add('stacked');
 
-  // Remove individual anim classes from process cards since we handle animation ourselves
-  var cards = processGrid.querySelectorAll('.process-card');
+  // Remove individual anim classes from process hexes since we handle animation ourselves
+  var cards = processGrid.querySelectorAll('.process-hex');
   cards.forEach(function(card) {
     card.classList.remove('anim', 'anim-up', 'd1', 'd3', 'd5');
   });

@@ -505,33 +505,41 @@ section:hover {
    HEXAGON SHOWCASE — Revenue Infrastructure (01)
    ============================================ */
 
+/* Wider section override */
+.section-inner-wide {
+  max-width: 1320px;
+}
+
 /* Container */
 .hex-pairs-container {
   position: relative;
-  min-height: 280px;
+  min-height: 340px;
 }
 
-/* Showcase grid: hexes on left, info card on right */
+/* Showcase layout: hexes area + info card side by side */
 .hex-showcase {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
   align-items: center;
+  min-height: 400px;
 }
 
-/* Left side: large hex + small hex stack */
-.hex-showcase-left {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-/* ---- LARGE HEXAGON ---- */
-.hex-large-wrap {
+/* Hexes area: positioned container for scattered layout */
+.hex-showcase-hexes {
   position: relative;
-  width: 300px;
-  height: 261px;
-  flex-shrink: 0;
+  height: 420px;
+}
+
+/* ---- LARGE HEXAGON — right-of-center within hex area ---- */
+.hex-large-wrap {
+  position: absolute;
+  width: 340px;
+  height: 296px;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
 }
 
 .hex-large-wrap .hex-clip-border polygon {
@@ -546,23 +554,45 @@ section:hover {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* ---- SMALL HEXAGON STACK ---- */
-.hex-small-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
+/* ---- SMALL HEXAGONS — scattered left of large hex ---- */
 .hex-small-item {
-  position: relative;
-  width: 110px;
-  height: 96px;
+  position: absolute;
   cursor: pointer;
+  z-index: 3;
   transition: transform 0.3s ease;
 }
 
 .hex-small-item:hover {
-  transform: scale(1.08);
+  transform: scale(1.1);
+}
+
+/* Small hex 1 — top-left area */
+.hex-small-1 {
+  width: 130px;
+  height: 113px;
+  left: 8%;
+  top: 8%;
+}
+
+/* Small hex 2 — mid-left, slightly lower */
+.hex-small-2 {
+  width: 130px;
+  height: 113px;
+  left: 0%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hex-small-2:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Small hex 3 — bottom-left area */
+.hex-small-3 {
+  width: 130px;
+  height: 113px;
+  left: 12%;
+  bottom: 5%;
 }
 
 .hex-small-item .hex-clip-border polygon {
@@ -610,17 +640,21 @@ section:hover {
   object-fit: cover;
 }
 
-/* ---- INFO CARD ---- */
+/* ---- INFO CARD — taller and thinner ---- */
 .hex-info-card {
   background: rgba(30, 30, 38, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 2.2rem;
+  padding: 2rem 1.8rem;
   position: relative;
   overflow: hidden;
   transition: opacity 0.4s ease;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hex-info-card::before {
@@ -702,115 +736,159 @@ section:hover {
 }
 
 
-/* ---- Process Grid ---- */
+/* ---- Process Hexagon Grid ---- */
 .process-section {
   border-top: 1px solid var(--border);
 }
 
-.process-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  background: transparent;
+.process-hex-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
   position: relative;
+  padding: 2rem 0;
 }
 
-/* Stacked card animation — initial state */
-.process-grid.stacked {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* ---- Individual hex card ---- */
+.process-hex {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  cursor: pointer;
+  transition: transform 0.5s var(--ease-out-expo), filter 0.5s ease;
+  flex-shrink: 0;
 }
 
-.process-grid.stacked .process-card {
-  grid-row: 1;
-  grid-column: 2;
+/* Center hex is larger by default */
+.process-hex-center {
+  width: 320px;
+  height: 320px;
+  z-index: 2;
+}
+
+/* Image layer — fills the hex */
+.process-hex-img {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.process-hex-img .card-img-fill {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo);
+}
+
+/* Text overlay — hidden by default, shown on hover */
+.process-hex-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: rgba(5, 5, 7, 0.75);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.process-hex-overlay .step-label {
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.process-hex-overlay h3 {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.01em;
+}
+
+.process-hex-overlay p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* ---- HOVER BEHAVIOR ---- */
+/* Side hexes: grow on hover, show text */
+.process-hex:hover {
+  transform: scale(1.25);
+  z-index: 5;
+}
+
+.process-hex:hover .process-hex-overlay {
+  opacity: 1;
+}
+
+.process-hex:hover .card-img-fill {
+  opacity: 0.9;
+  transform: scale(1.08);
+}
+
+/* Center hex shrinks when a sibling is hovered */
+.process-hex-grid:has(.process-hex:not(.process-hex-center):hover) .process-hex-center {
+  transform: scale(0.85);
+}
+
+/* Center hex: show text on its own hover */
+.process-hex-center:hover {
+  transform: scale(1.1);
+}
+
+/* When center is hovered, side hexes stay normal */
+.process-hex-grid:has(.process-hex-center:hover) .process-hex:not(.process-hex-center) {
   transform: scale(1);
+}
+
+/* Stacked animation — initial state: all stacked in center */
+.process-hex-grid.stacked .process-hex {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  opacity: 0;
   z-index: 1;
 }
 
-/* Centre card (Infrastructure Deployment) — front */
-.process-grid.stacked .process-card:nth-child(2) {
+.process-hex-grid.stacked .process-hex:nth-child(2) {
   z-index: 3;
   opacity: 1;
 }
 
-/* Left card (Systems Audit) — hidden behind */
-.process-grid.stacked .process-card:nth-child(1) {
+.process-hex-grid.stacked .process-hex:nth-child(1) {
   z-index: 2;
   opacity: 0;
-  transform: scale(0.95);
+  transform: translateX(-50%) scale(0.9);
 }
 
-/* Right card (Performance Monitoring) — hidden behind */
-.process-grid.stacked .process-card:nth-child(3) {
+.process-hex-grid.stacked .process-hex:nth-child(3) {
   z-index: 2;
   opacity: 0;
-  transform: scale(0.9);
+  transform: translateX(-50%) scale(0.9);
 }
 
-/* Revealed state — cards move out into their columns */
-.process-grid.stacked.revealed .process-card {
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease, grid-column 0s;
-}
-
-.process-grid.stacked.revealed .process-card:nth-child(1) {
-  grid-column: 1;
-  transform: scale(1);
-  opacity: 1;
-  z-index: 1;
-}
-
-.process-grid.stacked.revealed .process-card:nth-child(2) {
-  grid-column: 2;
-  transform: scale(1);
-  z-index: 1;
-}
-
-.process-grid.stacked.revealed .process-card:nth-child(3) {
-  grid-column: 3;
-  transform: scale(1);
-  opacity: 1;
-  z-index: 1;
-}
-
-/* Brighter images for process cards */
-.process-card-icon .card-img-fill {
-  opacity: 0.85 !important;
-}
-
-.process-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  padding: 2.2rem;
-  transition: all 0.5s var(--ease-out-expo);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  box-shadow: var(--glass-shadow);
+/* Revealed state — fan out to grid positions */
+.process-hex-grid.stacked.revealed .process-hex {
   position: relative;
-  overflow: hidden;
-}
-
-.process-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.3), transparent);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.process-card:hover {
-  background: var(--glass-bg-hover);
-  border-color: var(--glass-border-hover);
-  box-shadow: var(--glass-shadow-hover);
-  transform: translateY(-6px);
-}
-
-.process-card:hover::before {
+  left: auto;
+  transform: none;
   opacity: 1;
+  z-index: 1;
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.process-hex-grid.stacked.revealed .process-hex-center {
+  z-index: 2;
 }
 
 /* ---- About Section ---- */
@@ -1085,21 +1163,24 @@ footer::before {
 /* GLOBAL RESPONSIVE */
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .hex-showcase { gap: 2rem; }
-  .hex-large-wrap { width: 250px; height: 218px; }
-  .hex-small-item { width: 95px; height: 83px; }
+  .section-inner-wide { max-width: 95%; }
+  .hex-showcase { grid-template-columns: 1fr 280px; gap: 1.5rem; }
+  .hex-showcase-hexes { height: 360px; }
+  .hex-large-wrap { width: 280px; height: 244px; }
+  .hex-small-1, .hex-small-2, .hex-small-3 { width: 110px; height: 96px; }
 }
 
 @media (max-width: 900px) {
-  .feature-grid,
-  .process-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
   .about-layout { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
   .about-tags { justify-content: center; }
   .services-grid { grid-template-columns: 1fr; }
   nav { padding: 0 1.5rem; }
   .hex-showcase { grid-template-columns: 1fr; gap: 1.5rem; }
-  .hex-showcase-left { justify-content: center; }
-  .hex-info-card { padding: 1.8rem; }
+  .hex-showcase-hexes { height: 320px; }
+  .hex-large-wrap { width: 250px; height: 218px; right: 10%; }
+  .hex-small-1, .hex-small-2, .hex-small-3 { width: 100px; height: 87px; }
+  .hex-info-card { padding: 1.8rem; align-self: auto; }
 }
 
 @media (max-width: 768px) {
@@ -1109,20 +1190,21 @@ footer::before {
   .hero h1 { font-size: 1.6rem; }
   .srv-card-visual { height: 330px; }
   .feature-grid,
-  .process-grid,
   .services-grid { gap: 1rem; }
-  .hex-showcase-left { flex-direction: column; align-items: center; }
-  .hex-small-stack { flex-direction: row; gap: 0.5rem; }
-  .hex-large-wrap { width: 220px; height: 192px; }
-  .hex-small-item { width: 85px; height: 74px; }
+  .hex-showcase-hexes { height: 280px; }
+  .hex-large-wrap { width: 200px; height: 174px; right: 5%; }
+  .hex-small-1, .hex-small-2, .hex-small-3 { width: 85px; height: 74px; }
+  .hex-small-1 { left: 5%; top: 10%; }
+  .hex-small-2 { left: 0%; }
+  .hex-small-3 { left: 8%; bottom: 8%; }
   .hex-info-card { padding: 1.5rem; }
   .hex-info-title { font-size: 1.2rem; }
 }
 
 @media (max-width: 480px) {
-  .hex-large-wrap { width: 180px; height: 157px; }
-  .hex-small-item { width: 72px; height: 63px; }
-  .hex-small-stack { gap: 0.35rem; }
+  .hex-showcase-hexes { height: 240px; }
+  .hex-large-wrap { width: 165px; height: 144px; right: 2%; }
+  .hex-small-1, .hex-small-2, .hex-small-3 { width: 72px; height: 63px; }
   .hex-info-card { padding: 1.2rem; }
   .hex-info-desc { font-size: 0.85rem; }
 }
