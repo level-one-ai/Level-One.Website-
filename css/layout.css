@@ -520,7 +520,7 @@ section:hover {
 .hex-showcase {
   display: grid;
   grid-template-columns: 1fr 380px;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: center;
   min-height: 520px;
 }
@@ -531,12 +531,12 @@ section:hover {
   height: 520px;
 }
 
-/* ---- LARGE HEXAGON — left-of-center within hex area ---- */
+/* ---- LARGE HEXAGON — slightly right-of-center within hex area ---- */
 .hex-large-wrap {
   position: absolute;
-  width: 500px;
-  height: 435px;
-  left: 15%;
+  width: 440px;
+  height: 383px;
+  left: 22%;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -552,6 +552,10 @@ section:hover {
   opacity: 0.95;
   transform: scale(1);
   transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hex-large-wrap:hover .hex-img-inner img {
+  opacity: 1;
 }
 
 /* ---- SMALL HEXAGONS — scattered around large hex ---- */
@@ -578,16 +582,16 @@ section:hover {
 .hex-small-2 {
   width: 160px;
   height: 139px;
-  left: 0%;
-  top: 18%;
+  left: -2%;
+  top: 12%;
 }
 
 /* Small hex 3 — lower-left area */
 .hex-small-3 {
   width: 160px;
   height: 139px;
-  left: 3%;
-  bottom: 8%;
+  left: 0%;
+  bottom: 14%;
 }
 
 .hex-small-item .hex-clip-border polygon {
