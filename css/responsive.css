@@ -19,11 +19,15 @@
     font-size: 1rem;
   }
 
-  .feature-grid,
-  .process-grid {
+  .feature-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+  .process-hex-grid {
+    gap: 1.5rem;
+  }
+  .process-hex { width: 240px; height: 209px; }
+  .process-hex-center { width: 290px; height: 253px; }
 
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -103,14 +107,29 @@
   }
 
   /* Feature & Process Grids */
-  .feature-grid,
-  .process-grid {
+  .feature-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  .feature-card-icon,
-  .process-card-icon {
+  /* Process hex cards — stack vertically on mobile */
+  .process-hex-grid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .process-hex { width: 220px; height: 192px; }
+  .process-hex-center { width: 260px; height: 227px; }
+
+  /* Disable stacked animation on mobile — show all cards normally */
+  .process-hex-grid.stacked .process-hex {
+    position: relative;
+    left: auto;
+    opacity: 1;
+    transform: none;
+    z-index: 1;
+  }
+
+  .feature-card-icon {
     height: 200px;
   }
 
@@ -251,7 +270,7 @@
 
   /* Reduce glassmorphism blur on mobile for performance */
   .feature-card,
-  .process-card,
+  .process-hex,
   .srv-card,
   .pricing-card,
   .blog-card,
@@ -288,12 +307,12 @@
   }
 
   .feature-card h3,
-  .process-card h3 {
+  .process-hex-overlay h3 {
     font-size: 1rem;
   }
 
   .feature-card p,
-  .process-card p {
+  .process-hex-overlay p {
     font-size: 0.82rem;
   }
 
@@ -376,7 +395,7 @@
   }
 
   .feature-card-icon,
-  .process-card-icon {
+  .process-hex-img {
     height: 160px;
   }
 
@@ -448,7 +467,7 @@
 
   /* Reduce glassmorphism complexity on small devices */
   .feature-card,
-  .process-card,
+  .process-hex,
   .srv-card,
   .pricing-card,
   .blog-card {
@@ -497,12 +516,12 @@
   }
 
   .feature-card h3,
-  .process-card h3 {
+  .process-hex-overlay h3 {
     font-size: 0.9rem;
   }
 
   .feature-card p,
-  .process-card p {
+  .process-hex-overlay p {
     font-size: 0.75rem;
   }
 
@@ -627,7 +646,7 @@
 
   /* Minimal glassmorphism on smallest devices */
   .feature-card,
-  .process-card,
+  .process-hex,
   .srv-card,
   .pricing-card,
   .blog-card {
@@ -662,7 +681,7 @@
   .blog-card,
   .srv-card,
   .feature-card,
-  .process-card,
+  .process-hex,
   .pricing-btn,
   .time-slot,
   .nav-btn,
@@ -694,7 +713,7 @@
 
   /* Disable hover-only effects on touch for clean experience */
   .feature-card:hover,
-  .process-card:hover,
+  .process-hex:hover,
   .srv-card:hover,
   .pricing-card:hover,
   .blog-card:hover {
@@ -702,7 +721,7 @@
   }
 
   .feature-card:active,
-  .process-card:active,
+  .process-hex:active,
   .srv-card:active,
   .pricing-card:active,
   .blog-card:active {

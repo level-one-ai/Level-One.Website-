@@ -446,20 +446,46 @@
 
 .srv-card-title {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-family: var(--heading);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--white);
-  background: linear-gradient(to bottom, rgba(5,5,7,0.9) 0%, rgba(5,5,7,0.4) 80%, transparent 100%);
-  padding: 1.4rem 1.4rem 2.5rem;
+  top: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #e2e2e8;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  background: rgba(5, 5, 7, 0.75);
+  backdrop-filter: blur(12px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
   z-index: 2;
-  text-align: center;
-  letter-spacing: 0.02em;
-  border: none;
-  backdrop-filter: none;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.srv-card:hover .srv-card-title {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+.pill-dot-white {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.8;
+  animation: pulse-white 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-white {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 4px rgba(255, 255, 255, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 12px rgba(255, 255, 255, 0.8); }
 }
 
 .srv-pills {

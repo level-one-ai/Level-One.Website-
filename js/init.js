@@ -341,22 +341,22 @@ function switchInfrastructureSection(type, sectionId) {
 
 
 // ============================================
-// HEXAGON PAIRS — Expand / Collapse / Switch
+// HEXAGON SHOWCASE — Select / Switch
 // ============================================
 
-// Original feature card data for the hex expanded view
+// Feature card data for the hex showcase
 var hexCardData = {
   sales: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459449/Whisk_9083c2dff85528ca4114eca372fa5906dr.jpg',
     labels: ['Revenue Growth', 'Conversion', 'Acquisition'],
     title: 'Revenue Engines',
-    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged—increasing revenue without expanding headcount.'
+    desc: 'Infrastructure that generates qualified pipeline and drives conversion. Every prospect is identified, qualified, and engaged\u2014increasing revenue without expanding headcount.'
   },
   support: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459448/Whisk_d397bbc3aa1701280a94eea24f609ac5dr.jpg',
     labels: ['Cost Reduction', 'Efficiency'],
     title: 'Resolution Systems',
-    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly—cutting operational costs and freeing your team for revenue-generating work.'
+    desc: 'Infrastructure that reduces support overhead while protecting brand quality. Routine inquiries are resolved instantly\u2014cutting operational costs and freeing your team for revenue-generating work.'
   },
   consulting: {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459442/Whisk_26e82c97b8738ed83da4cdbe4acb856ddr.jpg',
@@ -368,197 +368,129 @@ var hexCardData = {
     image: 'https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459438/Whisk_054b050aea37afcbb5c4beaa69bd3260dr.jpg',
     labels: ['Cost Elimination', 'Scale'],
     title: 'Operational Autonomy',
-    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion—reducing costs while increasing operational capacity.'
+    desc: 'Infrastructure that removes manual overhead from your workflow. Data flows automatically from capture to completion\u2014reducing costs while increasing operational capacity.'
   }
 };
 
-var currentHexSystem = null;
+var currentHexSystem = 'sales';
 
-function buildHexCardHTML(system) {
-  var data = hexCardData[system];
-  if (!data) return '';
+function selectHexSystem(newSystem) {
+  if (newSystem === currentHexSystem) return;
 
-  var labelsHTML = '';
-  data.labels.forEach(function(label) {
-    labelsHTML += '<span class="feature-label">' + label + '</span>';
-  });
+  var largeImg = document.getElementById('hexLargeImg');
+  var infoCard = document.getElementById('hexInfoCard');
+  var clickedSmall = document.querySelector('.hex-small-item[data-system="' + newSystem + '"]');
 
-  return '<div class="feature-card-icon"><img src="' + data.image + '" class="card-img-fill" alt="' + data.title + '"></div>' +
-    '<div class="feature-labels">' + labelsHTML + '</div>' +
-    '<h3>' + data.title + '</h3>' +
-    '<p>' + data.desc + '</p>' +
-    '<div class="hex-card-divider"></div>' +
-    '<button class="hex-card-viewmore" onclick="openCoreSystemsView(\'' + system + '\')">View Full Specification <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l5 5-5 5"/></svg></button>';
-}
+  if (!largeImg || !clickedSmall) return;
 
-function expandHexSystem(system) {
-  var grid = document.getElementById('hexPairsGrid');
-  var expanded = document.getElementById('hexExpanded');
-  var content = document.getElementById('hexCardContent');
-  var pairs = grid.querySelectorAll('.hex-pair');
+  var clickedImg = clickedSmall.querySelector('.hex-img-inner img');
+  var oldSystem = currentHexSystem;
+  var oldData = hexCardData[oldSystem];
+  var newData = hexCardData[newSystem];
 
-  currentHexSystem = system;
+  // Fade out large image and clicked small image slowly
+  largeImg.style.transition = 'opacity 0.7s ease';
+  largeImg.style.opacity = '0';
 
-  // Step 1: Text hexagons DISAPPEAR
-  pairs.forEach(function(pair) {
-    var label = pair.querySelector('.hex-label-wrap');
-    if (label) {
-      label.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-      label.style.opacity = '0';
-      label.style.transform = 'scale(0.7)';
-    }
-  });
+  clickedImg.style.transition = 'opacity 0.7s ease';
+  clickedImg.style.opacity = '0';
 
-  // Step 2: After text gone, image hexes SHRINK and SLIDE LEFT
+  // Fade out info card text
+  infoCard.style.transition = 'opacity 0.5s ease';
+  infoCard.style.opacity = '0';
+
   setTimeout(function() {
-    pairs.forEach(function(pair) {
-      var img = pair.querySelector('.hex-img-wrap');
-      if (img) {
-        img.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        img.style.transform = 'scale(0.45) translateX(-120px)';
-        img.style.opacity = '0.3';
-      }
+    // Swap images: large gets new system, clicked small gets old system
+    largeImg.src = newData.image;
+    largeImg.alt = newData.title;
+
+    clickedImg.src = oldData.image;
+    clickedImg.alt = oldData.title;
+
+    // Update clicked small hex's data-system and onclick
+    clickedSmall.setAttribute('data-system', oldSystem);
+    clickedSmall.setAttribute('onclick', "selectHexSystem('" + oldSystem + "')");
+
+    // Update info card content while it's hidden
+    var labels = document.getElementById('hexInfoLabels');
+    var title = document.getElementById('hexInfoTitle');
+    var desc = document.getElementById('hexInfoDesc');
+    var btn = document.getElementById('hexInfoBtn');
+
+    var labelsHTML = '';
+    newData.labels.forEach(function(label) {
+      labelsHTML += '<span class="feature-label">' + label + '</span>';
     });
-  }, 300);
+    labels.innerHTML = labelsHTML;
+    title.textContent = newData.title;
+    desc.textContent = newData.desc;
+    btn.setAttribute('onclick', "openCoreSystemsView('" + newSystem + "')");
 
-  // Step 3: After images have moved, hide grid and show expanded view with card fade in
-  setTimeout(function() {
-    grid.style.display = 'none';
+    currentHexSystem = newSystem;
 
-    // Reset inline styles on pair elements
-    pairs.forEach(function(pair) {
-      var label = pair.querySelector('.hex-label-wrap');
-      var img = pair.querySelector('.hex-img-wrap');
-      if (label) { label.style.cssText = ''; }
-      if (img) { img.style.cssText = ''; }
-    });
-
-    // Build card content
-    content.innerHTML = buildHexCardHTML(system);
-    content.style.opacity = '0';
-    content.style.transform = 'translateY(15px)';
-
-    // Activate the correct mini pair
-    document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
-      p.classList.remove('active');
-    });
-    var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
-    if (activeMini) activeMini.classList.add('active');
-
-    // Show expanded view
-    expanded.style.display = 'grid';
-    expanded.style.opacity = '0';
-
+    // Fade images back in slowly
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        expanded.classList.add('active');
-        expanded.style.opacity = '1';
-        // Card fades in after sidebar appears
+        largeImg.style.transition = 'opacity 0.8s ease';
+        largeImg.style.opacity = '0.95';
+
+        clickedImg.style.transition = 'opacity 0.8s ease';
+        clickedImg.style.opacity = '0.6';
+
+        // Fade info card text in AFTER images have finished
         setTimeout(function() {
-          content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
-        }, 150);
+          infoCard.style.transition = 'opacity 0.6s ease';
+          infoCard.style.opacity = '1';
+        }, 500);
       });
     });
   }, 750);
 }
 
-function switchHexCard(system) {
-  if (system === currentHexSystem) return;
-  currentHexSystem = system;
+// Legacy stubs (no longer used but kept for safety)
+function expandHexSystem(system) { selectHexSystem(system); }
+function switchHexCard(system) { selectHexSystem(system); }
+function collapseHexView() { }
 
-  var content = document.getElementById('hexCardContent');
 
-  // Update active state on sidebar
-  document.querySelectorAll('.hex-mini-pair').forEach(function(p) {
-    p.classList.remove('active');
+// ============================================
+// PROCESS SECTION — Stacked Card Animation
+// ============================================
+function initProcessStackAnimation() {
+  var processGrid = document.querySelector('.process-hex-grid');
+  if (!processGrid) return;
+
+  // Add stacked class initially
+  processGrid.classList.add('stacked');
+
+  // Remove individual anim classes from process hexes since we handle animation ourselves
+  var cards = processGrid.querySelectorAll('.process-hex');
+  cards.forEach(function(card) {
+    card.classList.remove('anim', 'anim-up', 'd1', 'd3', 'd5');
   });
-  var activeMini = document.querySelector('.hex-mini-pair[data-system="' + system + '"]');
-  if (activeMini) activeMini.classList.add('active');
 
-  // Fade out current card
-  content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-  content.style.opacity = '0';
-  content.style.transform = 'translateY(10px)';
+  var hasRevealed = false;
 
-  setTimeout(function() {
-    content.innerHTML = buildHexCardHTML(system);
-    content.style.transform = 'translateY(0)';
-    content.style.opacity = '1';
-  }, 300);
-}
-
-function collapseHexView() {
-  var grid = document.getElementById('hexPairsGrid');
-  var expanded = document.getElementById('hexExpanded');
-
-  currentHexSystem = null;
-
-  // Fade out expanded view
-  expanded.style.transition = 'opacity 0.4s ease';
-  expanded.style.opacity = '0';
-
-  setTimeout(function() {
-    expanded.classList.remove('active');
-    expanded.style.display = 'none';
-
-    // Show grid again — image hexes appear first, then labels fade in
-    grid.style.display = '';
-    var pairs = grid.querySelectorAll('.hex-pair');
-
-    // Start with everything hidden
-    pairs.forEach(function(pair) {
-      var img = pair.querySelector('.hex-img-wrap');
-      var label = pair.querySelector('.hex-label-wrap');
-      if (img) {
-        img.style.opacity = '0';
-        img.style.transform = 'scale(0.7)';
-        img.style.transition = 'none';
-      }
-      if (label) {
-        label.style.opacity = '0';
-        label.style.transform = 'scale(0.7)';
-        label.style.transition = 'none';
-      }
-    });
-
-    // Animate images in
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        pairs.forEach(function(pair) {
-          var img = pair.querySelector('.hex-img-wrap');
-          if (img) {
-            img.style.transition = 'opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
-            img.style.opacity = '1';
-            img.style.transform = 'scale(1)';
-          }
-        });
-
-        // Then labels fade in
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !hasRevealed) {
+        hasRevealed = true;
+        // Small delay then reveal cards
         setTimeout(function() {
-          pairs.forEach(function(pair) {
-            var label = pair.querySelector('.hex-label-wrap');
-            if (label) {
-              label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-              label.style.opacity = '1';
-              label.style.transform = 'scale(1)';
-            }
-          });
-          // Clean up inline styles after animation
-          setTimeout(function() {
-            pairs.forEach(function(pair) {
-              var img = pair.querySelector('.hex-img-wrap');
-              var label = pair.querySelector('.hex-label-wrap');
-              if (img) img.style.cssText = '';
-              if (label) label.style.cssText = '';
-            });
-          }, 500);
-        }, 250);
-      });
+          processGrid.classList.add('revealed');
+        }, 300);
+        observer.unobserve(processGrid);
+      }
     });
-  }, 400);
+  }, {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+  });
+
+  observer.observe(processGrid);
 }
+
+document.addEventListener('DOMContentLoaded', initProcessStackAnimation);
 
 // ============================================
 // PRICING COMPARISON TABLE — Toggle
@@ -797,13 +729,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var isOpen = item.classList.contains('open');
 
-    // Close all FAQ items
+    // Close all OTHER FAQ items (only one open at a time)
     document.querySelectorAll('.faq-item.open').forEach(function(i) {
-      i.classList.remove('open');
+      if (i !== item) {
+        i.classList.remove('open');
+      }
     });
 
-    // Toggle the clicked one
-    if (!isOpen) {
+    // Toggle the clicked item
+    if (isOpen) {
+      item.classList.remove('open');
+    } else {
       item.classList.add('open');
     }
   });
@@ -863,7 +799,7 @@ function startReviewAuto() {
   stopReviewAuto();
   reviewAutoInterval = setInterval(function() {
     goToReview(reviewCurrentIndex + 1);
-  }, 3000);
+  }, 6000);
 }
 
 function stopReviewAuto() {
