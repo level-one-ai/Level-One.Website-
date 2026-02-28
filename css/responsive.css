@@ -24,7 +24,7 @@
     gap: 1.5rem;
   }
   .process-hex-grid {
-    gap: 2.5rem;
+    gap: 3.5rem;
   }
   .process-hex { width: 200px; height: 174px; }
   .process-hex-center { width: 200px; height: 174px; }
@@ -122,11 +122,7 @@
 
   /* Disable stacked animation on mobile — show all cards normally */
   .process-hex-grid.stacked .process-hex {
-    position: relative;
-    left: auto;
     opacity: 1;
-    transform: none;
-    z-index: 1;
   }
 
   .feature-card-icon {

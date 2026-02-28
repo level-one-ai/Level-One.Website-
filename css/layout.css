@@ -757,7 +757,7 @@ section:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4rem;
+  gap: 6rem;
   position: relative;
   padding: 2rem 0;
 }
@@ -865,44 +865,15 @@ section:hover {
   transform: scale(0.82);
 }
 
-/* Stacked animation — initial state: all stacked in center */
+/* Stacked state — all hexes invisible in their final positions */
 .process-hex-grid.stacked .process-hex {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) scale(1);
   opacity: 0;
-  z-index: 1;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.process-hex-grid.stacked .process-hex:nth-child(2) {
-  z-index: 3;
-  opacity: 1;
-}
-
-.process-hex-grid.stacked .process-hex:nth-child(1) {
-  z-index: 2;
-  opacity: 0;
-  transform: translateX(-50%) scale(0.9);
-}
-
-.process-hex-grid.stacked .process-hex:nth-child(3) {
-  z-index: 2;
-  opacity: 0;
-  transform: translateX(-50%) scale(0.9);
-}
-
-/* Revealed state — fan out to grid positions */
+/* Revealed state — all hexes fade in simultaneously */
 .process-hex-grid.stacked.revealed .process-hex {
-  position: relative;
-  left: auto;
-  transform: none;
   opacity: 1;
-  z-index: 1;
-  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.process-hex-grid.stacked.revealed .process-hex-center {
-  z-index: 2;
 }
 
 /* ---- About Section ---- */
