@@ -757,7 +757,7 @@ section:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
   position: relative;
   padding: 2rem 0;
 }
@@ -765,8 +765,8 @@ section:hover {
 /* ---- Individual hex card ---- */
 .process-hex {
   position: relative;
-  width: 300px;
-  height: 261px;
+  width: 240px;
+  height: 209px;
   cursor: pointer;
   transition: transform 0.5s var(--ease-out-expo), filter 0.5s ease;
   flex-shrink: 0;
@@ -845,9 +845,9 @@ section:hover {
 }
 
 /* ---- HOVER BEHAVIOR ---- */
-/* Side hexes: grow on hover, show text */
+/* Any hex: grow large on hover, show text */
 .process-hex:hover {
-  transform: scale(1.25);
+  transform: scale(1.65);
   z-index: 5;
 }
 
@@ -860,19 +860,9 @@ section:hover {
   transform: scale(1.08);
 }
 
-/* Center hex shrinks when a sibling is hovered */
-.process-hex-grid:has(.process-hex:not(.process-hex-center):hover) .process-hex-center {
-  transform: scale(0.85);
-}
-
-/* Center hex: show text on its own hover */
-.process-hex-center:hover {
-  transform: scale(1.1);
-}
-
-/* When center is hovered, side hexes stay normal */
-.process-hex-grid:has(.process-hex-center:hover) .process-hex:not(.process-hex-center) {
-  transform: scale(1);
+/* All non-hovered hexes shrink when any hex is hovered */
+.process-hex-grid:has(.process-hex:hover) .process-hex:not(:hover) {
+  transform: scale(0.82);
 }
 
 /* Stacked animation — initial state: all stacked in center */

@@ -24,10 +24,10 @@
     gap: 1.5rem;
   }
   .process-hex-grid {
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
-  .process-hex { width: 240px; height: 209px; }
-  .process-hex-center { width: 290px; height: 253px; }
+  .process-hex { width: 200px; height: 174px; }
+  .process-hex-center { width: 200px; height: 174px; }
 
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -117,8 +117,8 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .process-hex { width: 220px; height: 192px; }
-  .process-hex-center { width: 260px; height: 227px; }
+  .process-hex { width: 180px; height: 157px; }
+  .process-hex-center { width: 180px; height: 157px; }
 
   /* Disable stacked animation on mobile — show all cards normally */
   .process-hex-grid.stacked .process-hex {
