@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hexagon Positioning Tool — 02 Deployment Process</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050507;
+  --bg-card: #0a0a0e;
+  --border: rgba(255,255,255,0.06);
+  --text: #f0f0f2;
+  --text-secondary: #7a7a8a;
+  --text-muted: #3e3e4e;
+  --white: #ffffff;
+  --orange: #ff6b35;
+  --orange-border: rgba(255, 107, 53, 0.25);
+  --glass-bg: rgba(10, 10, 14, 0.55);
+  --glass-bg-hover: rgba(14, 14, 20, 0.7);
+  --glass-blur: blur(20px) saturate(1.3);
+  --glass-border: rgba(255, 107, 53, 0.12);
+  --glass-border-hover: rgba(255, 107, 53, 0.35);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 107, 53, 0.06);
+  --depth-radial-section: radial-gradient(ellipse 100% 80% at 50% -20%, rgba(255, 107, 53, 0.03) 0%, transparent 50%);
+  --mono: 'JetBrains Mono', monospace;
+  --heading: 'Sora', 'Space Grotesk', sans-serif;
+  --body: 'Inter', 'DM Sans', sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--body);
+  background: #0d0d12;
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- TOOL LAYOUT ---- */
+.tool-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+}
+
+/* ---- CONTROLS PANEL ---- */
+.controls-panel {
+  background: #0a0a0e;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.controls-panel::-webkit-scrollbar { width: 4px; }
+.controls-panel::-webkit-scrollbar-track { background: transparent; }
+.controls-panel::-webkit-scrollbar-thumb { background: rgba(255,107,53,0.15); border-radius: 2px; }
+
+.tool-title {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255,107,53,0.15);
+}
+
+.tool-title span {
+  color: var(--orange);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  display: block;
+  margin-top: 0.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ctrl-group {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.ctrl-group-title {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.ctrl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.ctrl-row:last-child { margin-bottom: 0; }
+
+.ctrl-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.ctrl-value {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--white);
+  min-width: 50px;
+  text-align: right;
+}
+
+input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--orange);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(255,107,53,0.5);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--orange);
+  cursor: pointer;
+  border: none;
+}
+
+.hex-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.hex-tab {
+  flex: 1;
+  padding: 0.45rem 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.hex-tab.active {
+  background: rgba(255,107,53,0.1);
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.hex-tab:hover:not(.active) {
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text);
+}
+
+.tool-btn {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+.tool-btn-primary {
+  background: var(--orange);
+  color: #000;
+}
+.tool-btn-primary:hover {
+  box-shadow: 0 0 20px rgba(255,107,53,0.4);
+  transform: translateY(-1px);
+}
+.tool-btn-secondary {
+  background: rgba(255,107,53,0.08);
+  color: var(--orange);
+  border: 1px solid rgba(255,107,53,0.25);
+}
+.tool-btn-secondary:hover {
+  background: rgba(255,107,53,0.15);
+  border-color: var(--orange);
+}
+.tool-btn-ghost {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.tool-btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.btn-row { display: flex; gap: 0.5rem; }
+.btn-row .tool-btn { flex: 1; }
+
+.output-area {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #abb2bf;
+  line-height: 1.6;
+  max-height: 250px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.output-area::-webkit-scrollbar { width: 4px; }
+.output-area::-webkit-scrollbar-track { background: transparent; }
+.output-area::-webkit-scrollbar-thumb { background: rgba(255,107,53,0.15); border-radius: 2px; }
+
+.copy-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--orange);
+  color: #000;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.5);
+}
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.info-tip {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid rgba(255,107,53,0.2);
+  border-radius: 0 6px 6px 0;
+}
+
+/* ---- PREVIEW PANEL ---- */
+.preview-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+.preview-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 107, 53, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 107, 53, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ---- EXACT REPLICA SECTION ---- */
+.replica-section {
+  position: relative;
+  z-index: 1;
+  padding: 7rem 2rem;
+  border: 2px solid transparent;
+  transition: border-color 0.4s ease;
+  background: transparent;
+  width: 100%;
+  max-width: 1200px;
+}
+.replica-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--depth-radial-section);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.section-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--orange-border);
+  border-radius: 100px;
+  background: rgba(255, 107, 53, 0.05);
+}
+
+.pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 4px rgba(255, 107, 53, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 12px rgba(255, 107, 53, 0.8); }
+}
+
+.section-title {
+  font-family: var(--heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  line-height: 1.15;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  max-width: 560px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 3.5rem;
+  letter-spacing: 0.01em;
+}
+
+.process-hex-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.process-hex {
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  transition: transform 0.5s var(--ease-out-expo), filter 0.5s ease;
+}
+
+.process-hex-img {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.process-hex-img .card-img-fill {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.process-hex-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: rgba(5, 5, 7, 0.75);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+.process-hex-overlay .step-label {
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.step-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.step-label::before {
+  content: '';
+  width: 2px; height: 14px;
+  background: var(--orange);
+  opacity: 0.5;
+  box-shadow: 0 0 6px rgba(255, 107, 53, 0.4);
+}
+
+.process-hex-overlay h3 {
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+.process-hex-overlay p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Hover */
+.process-hex:hover { z-index: 5; }
+.process-hex:hover .process-hex-overlay { opacity: 1; }
+.process-hex:hover .card-img-fill { opacity: 0.9; transform: scale(1.08); }
+
+.process-hex-grid:has(.process-hex:not(.process-hex-center):hover) .process-hex-center {
+  transform: scale(0.85);
+}
+.process-hex-center:hover { transform: scale(1.1); }
+.process-hex-grid:has(.process-hex-center:hover) .process-hex:not(.process-hex-center) {
+  transform: scale(1);
+}
+
+/* Tool selected outline */
+.process-hex.tool-selected {
+  outline: 2px dashed var(--orange);
+  outline-offset: 6px;
+}
+
+/* Section outline reference */
+.section-outline {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed rgba(255,107,53,0.12);
+  pointer-events: none;
+  z-index: 100;
+  border-radius: 4px;
+}
+
+.dims-badge {
+  position: absolute;
+  top: 6px; right: 8px;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: rgba(255,107,53,0.4);
+  z-index: 100;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="tool-layout">
+  <!-- CONTROLS -->
+  <div class="controls-panel">
+    <div class="tool-title">
+      Hexagon Positioning Tool
+      <span>02 — Deployment Process Section</span>
+    </div>
+
+    <div class="info-tip">
+      Click a hexagon in the preview or use the tabs to select it. Adjust size, hover scale, and gap. Then generate and copy the code.
+    </div>
+
+    <!-- Select hex -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Select Hexagon</div>
+      <div class="hex-tabs">
+        <div class="hex-tab active" data-hex="0">Phase 1</div>
+        <div class="hex-tab" data-hex="1">Phase 2</div>
+        <div class="hex-tab" data-hex="2">Phase 3</div>
+      </div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Selected</span>
+        <span class="ctrl-value" id="selected-name">Systems Audit</span>
+      </div>
+    </div>
+
+    <!-- Size -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Size (Default State)</div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Width</span>
+        <input type="range" id="hex-width" min="100" max="500" value="280">
+        <span class="ctrl-value" id="hex-width-val">280px</span>
+      </div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Height</span>
+        <input type="range" id="hex-height" min="87" max="435" value="244">
+        <span class="ctrl-value" id="hex-height-val">244px</span>
+      </div>
+      <div class="ctrl-row" style="justify-content:flex-end;gap:0.5rem;margin-top:0.3rem;">
+        <button class="tool-btn tool-btn-ghost" style="width:auto;padding:0.35rem 0.7rem;font-size:0.58rem;" onclick="lockAspectRatio()" id="lock-btn">Lock Ratio: ON</button>
+      </div>
+    </div>
+
+    <!-- Hover scale -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Hover Scale</div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Scale</span>
+        <input type="range" id="hover-scale" min="100" max="200" value="125">
+        <span class="ctrl-value" id="hover-scale-val">1.25</span>
+      </div>
+      <div class="ctrl-row">
+        <button class="tool-btn tool-btn-ghost" style="font-size:0.58rem;padding:0.4rem 0.8rem;" id="preview-hover-btn" onclick="toggleHoverPreview()">Preview Hover</button>
+      </div>
+    </div>
+
+    <!-- Grid gap -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Grid Settings</div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Gap</span>
+        <input type="range" id="grid-gap" min="0" max="100" value="32">
+        <span class="ctrl-value" id="grid-gap-val">2rem</span>
+      </div>
+    </div>
+
+    <!-- Center shrink -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Center Shrink on Sibling Hover</div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">Shrink to</span>
+        <input type="range" id="center-shrink" min="50" max="100" value="85">
+        <span class="ctrl-value" id="center-shrink-val">0.85</span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button class="tool-btn tool-btn-primary" onclick="generateCode()">Generate Code</button>
+    </div>
+    <div class="btn-row">
+      <button class="tool-btn tool-btn-secondary" onclick="copyCode()">Copy to Clipboard</button>
+      <button class="tool-btn tool-btn-ghost" onclick="resetAll()">Reset</button>
+    </div>
+
+    <!-- Output -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">Generated Output</div>
+      <div class="output-area" id="code-output">Adjust the values above and click "Generate Code" to see the output here.</div>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <div class="replica-section" id="replica">
+      <div class="section-outline"></div>
+      <div class="dims-badge" id="section-dims"></div>
+      <div class="section-inner">
+        <div class="section-num" style="text-align:center"><span class="pulse"></span> 02 — Deployment Process</div>
+        <h2 class="section-title" style="text-align:center">Three phases.<br>Measurable commercial impact.</h2>
+        <p class="section-desc" style="text-align:center;margin-left:auto;margin-right:auto">We follow a structured deployment protocol focused on revenue growth, cost reduction, and operational efficiency across Scotland and the UK.</p>
+        <div class="process-hex-grid" id="hex-grid">
+          <div class="process-hex tool-selected" id="hex-0" onclick="selectHex(0)">
+            <div class="process-hex-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459429/Whisk_2d3cf369b4c88a8a8f941b53648eb51deg.png" class="card-img-fill" alt="Audit">
+            </div>
+            <div class="process-hex-overlay">
+              <div class="step-label">Phase 1</div>
+              <h3>Systems Audit</h3>
+              <p>We map your current workflow and quantify where inefficiency costs you revenue or margin. Every recommendation targets measurable commercial impact.</p>
+            </div>
+          </div>
+          <div class="process-hex process-hex-center" id="hex-1" onclick="selectHex(1)">
+            <div class="process-hex-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459428/Whisk_5349c90e685b97fae1c4144eb7f7fb57eg.png" class="card-img-fill" alt="Building">
+            </div>
+            <div class="process-hex-overlay">
+              <div class="step-label">Phase 2</div>
+              <h3>Infrastructure Deployment</h3>
+              <p>We install revenue infrastructure designed to increase acquisition, reduce costs, and eliminate manual overhead. Every system is tested before handover.</p>
+            </div>
+          </div>
+          <div class="process-hex" id="hex-2" onclick="selectHex(2)">
+            <div class="process-hex-img">
+              <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459420/Whisk_7741b67544eeaef8cd14c8fb31b59fcdeg.png" class="card-img-fill" alt="Scaling">
+            </div>
+            <div class="process-hex-overlay">
+              <div class="step-label">Phase 3</div>
+              <h3>Performance Monitoring</h3>
+              <p>We track system performance against revenue, cost, and efficiency metrics. Your infrastructure adapts to maintain competitive advantage as you scale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="copy-toast" id="copy-toast">Copied to clipboard</div>
+
+<script>
+const hexNames = ['Systems Audit', 'Infrastructure Deployment', 'Performance Monitoring'];
+
+const defaults = {
+  hexes: [
+    { w: 280, h: 244, hover: 1.25 },
+    { w: 340, h: 296, hover: 1.10 },
+    { w: 280, h: 244, hover: 1.25 }
+  ],
+  gap: 32,
+  centerShrink: 0.85
+};
+
+let state = JSON.parse(JSON.stringify(defaults));
+let selectedHex = 0;
+let aspectLocked = true;
+let hoverPreviewing = false;
+
+const hexEls = [document.getElementById('hex-0'), document.getElementById('hex-1'), document.getElementById('hex-2')];
+const gridEl = document.getElementById('hex-grid');
+const tabs = document.querySelectorAll('.hex-tab');
+
+const widthSlider = document.getElementById('hex-width');
+const heightSlider = document.getElementById('hex-height');
+const hoverSlider = document.getElementById('hover-scale');
+const gapSlider = document.getElementById('grid-gap');
+const shrinkSlider = document.getElementById('center-shrink');
+
+const widthValEl = document.getElementById('hex-width-val');
+const heightValEl = document.getElementById('hex-height-val');
+const hoverValEl = document.getElementById('hover-scale-val');
+const gapValEl = document.getElementById('grid-gap-val');
+const shrinkValEl = document.getElementById('center-shrink-val');
+const selectedNameEl = document.getElementById('selected-name');
+const codeOutput = document.getElementById('code-output');
+const dimsEl = document.getElementById('section-dims');
+
+function selectHex(idx) {
+  // Stop any active hover preview
+  if (hoverPreviewing) toggleHoverPreview();
+
+  selectedHex = idx;
+  tabs.forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+  hexEls.forEach(function(el, i) { el.classList.toggle('tool-selected', i === idx); });
+
+  var hex = state.hexes[idx];
+  widthSlider.value = hex.w;
+  heightSlider.value = hex.h;
+  hoverSlider.value = Math.round(hex.hover * 100);
+
+  widthValEl.textContent = hex.w + 'px';
+  heightValEl.textContent = hex.h + 'px';
+  hoverValEl.textContent = hex.hover.toFixed(2);
+  selectedNameEl.textContent = hexNames[idx];
+}
+
+tabs.forEach(function(tab) {
+  tab.addEventListener('click', function() { selectHex(parseInt(tab.dataset.hex)); });
+});
+
+function applyState() {
+  state.hexes.forEach(function(hex, i) {
+    hexEls[i].style.width = hex.w + 'px';
+    hexEls[i].style.height = hex.h + 'px';
+  });
+  gridEl.style.gap = state.gap + 'px';
+
+  var rect = document.getElementById('replica').getBoundingClientRect();
+  dimsEl.textContent = Math.round(rect.width) + ' x ' + Math.round(rect.height);
+}
+
+widthSlider.addEventListener('input', function() {
+  var val = parseInt(widthSlider.value);
+  state.hexes[selectedHex].w = val;
+  widthValEl.textContent = val + 'px';
+
+  if (aspectLocked) {
+    var ratio = defaults.hexes[selectedHex].w / defaults.hexes[selectedHex].h;
+    var newH = Math.round(val / ratio);
+    state.hexes[selectedHex].h = newH;
+    heightSlider.value = newH;
+    heightValEl.textContent = newH + 'px';
+  }
+  applyState();
+});
+
+heightSlider.addEventListener('input', function() {
+  var val = parseInt(heightSlider.value);
+  state.hexes[selectedHex].h = val;
+  heightValEl.textContent = val + 'px';
+
+  if (aspectLocked) {
+    var ratio = defaults.hexes[selectedHex].w / defaults.hexes[selectedHex].h;
+    var newW = Math.round(val * ratio);
+    state.hexes[selectedHex].w = newW;
+    widthSlider.value = newW;
+    widthValEl.textContent = newW + 'px';
+  }
+  applyState();
+});
+
+hoverSlider.addEventListener('input', function() {
+  var val = parseInt(hoverSlider.value) / 100;
+  state.hexes[selectedHex].hover = val;
+  hoverValEl.textContent = val.toFixed(2);
+});
+
+gapSlider.addEventListener('input', function() {
+  var val = parseInt(gapSlider.value);
+  state.gap = val;
+  gapValEl.textContent = (val / 16).toFixed(1) + 'rem';
+  applyState();
+});
+
+shrinkSlider.addEventListener('input', function() {
+  var val = parseInt(shrinkSlider.value) / 100;
+  state.centerShrink = val;
+  shrinkValEl.textContent = val.toFixed(2);
+});
+
+function lockAspectRatio() {
+  aspectLocked = !aspectLocked;
+  document.getElementById('lock-btn').textContent = 'Lock Ratio: ' + (aspectLocked ? 'ON' : 'OFF');
+}
+
+function toggleHoverPreview() {
+  hoverPreviewing = !hoverPreviewing;
+  var btn = document.getElementById('preview-hover-btn');
+  var hex = state.hexes[selectedHex];
+  var el = hexEls[selectedHex];
+
+  if (hoverPreviewing) {
+    el.style.transform = 'scale(' + hex.hover + ')';
+    el.style.zIndex = '5';
+    el.querySelector('.process-hex-overlay').style.opacity = '1';
+    btn.textContent = 'Stop Preview';
+    btn.style.borderColor = 'var(--orange)';
+    btn.style.color = 'var(--orange)';
+  } else {
+    el.style.transform = '';
+    el.style.zIndex = '';
+    el.querySelector('.process-hex-overlay').style.opacity = '';
+    btn.textContent = 'Preview Hover';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }
+}
+
+function resetAll() {
+  state = JSON.parse(JSON.stringify(defaults));
+  hoverPreviewing = false;
+  hexEls.forEach(function(el) {
+    el.style.transform = '';
+    el.style.zIndex = '';
+    el.querySelector('.process-hex-overlay').style.opacity = '';
+  });
+  var btn = document.getElementById('preview-hover-btn');
+  btn.textContent = 'Preview Hover';
+  btn.style.borderColor = '';
+  btn.style.color = '';
+
+  gapSlider.value = state.gap;
+  gapValEl.textContent = (state.gap / 16).toFixed(1) + 'rem';
+  shrinkSlider.value = Math.round(state.centerShrink * 100);
+  shrinkValEl.textContent = state.centerShrink.toFixed(2);
+
+  selectHex(0);
+  applyState();
+  codeOutput.textContent = 'Adjust the values above and click "Generate Code" to see the output here.';
+}
+
+function generateCode() {
+  var s = state;
+  var h = s.hexes;
+
+  var css = '';
+  css += '/* ---- Process Hexagon Grid ---- */\n';
+  css += '.process-hex-grid {\n';
+  css += '  display: flex;\n';
+  css += '  justify-content: center;\n';
+  css += '  align-items: center;\n';
+  css += '  gap: ' + s.gap + 'px;\n';
+  css += '  position: relative;\n';
+  css += '  padding: 2rem 0;\n';
+  css += '}\n\n';
+
+  css += '.process-hex {\n';
+  css += '  position: relative;\n';
+  css += '  width: ' + h[0].w + 'px;\n';
+  css += '  height: ' + h[0].h + 'px;\n';
+  css += '  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);\n';
+  css += '  cursor: pointer;\n';
+  css += '  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;\n';
+  css += '  flex-shrink: 0;\n';
+  css += '}\n\n';
+
+  css += '.process-hex-center {\n';
+  css += '  width: ' + h[1].w + 'px;\n';
+  css += '  height: ' + h[1].h + 'px;\n';
+  css += '  z-index: 2;\n';
+  css += '}\n\n';
+
+  var sidesMatch = (h[0].w === h[2].w && h[0].h === h[2].h);
+  if (!sidesMatch) {
+    css += '/* Phase 3 hex — custom size */\n';
+    css += '.process-hex-phase3 {\n';
+    css += '  width: ' + h[2].w + 'px;\n';
+    css += '  height: ' + h[2].h + 'px;\n';
+    css += '}\n\n';
+  }
+
+  css += '/* Hover behavior */\n';
+  css += '.process-hex:hover {\n';
+  css += '  transform: scale(' + h[0].hover.toFixed(2) + ');\n';
+  css += '  z-index: 5;\n';
+  css += '}\n\n';
+
+  css += '.process-hex-center:hover {\n';
+  css += '  transform: scale(' + h[1].hover.toFixed(2) + ');\n';
+  css += '}\n\n';
+
+  var sidesHoverMatch = (h[0].hover === h[2].hover);
+  if (!sidesHoverMatch) {
+    css += '.process-hex-phase3:hover {\n';
+    css += '  transform: scale(' + h[2].hover.toFixed(2) + ');\n';
+    css += '}\n\n';
+  }
+
+  css += '/* Center shrinks when sibling hovered */\n';
+  css += '.process-hex-grid:has(.process-hex:not(.process-hex-center):hover) .process-hex-center {\n';
+  css += '  transform: scale(' + s.centerShrink.toFixed(2) + ');\n';
+  css += '}\n\n';
+
+  css += '/* When center is hovered, sides stay normal */\n';
+  css += '.process-hex-grid:has(.process-hex-center:hover) .process-hex:not(.process-hex-center) {\n';
+  css += '  transform: scale(1);\n';
+  css += '}\n';
+
+  var phase3Extra = (!sidesMatch) ? ' process-hex-phase3' : '';
+
+  var html = '';
+  html += '<div class="process-hex-grid">\n';
+  html += '  <div class="process-hex anim anim-up d1" onclick="openProcessView(\'audit\')">\n';
+  html += '    <div class="process-hex-img">\n';
+  html += '      <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459429/Whisk_2d3cf369b4c88a8a8f941b53648eb51deg.png" class="card-img-fill" alt="Audit">\n';
+  html += '    </div>\n';
+  html += '    <div class="process-hex-overlay">\n';
+  html += '      <div class="step-label">Phase 1</div>\n';
+  html += '      <h3>Systems Audit</h3>\n';
+  html += '      <p>We map your current workflow and quantify where inefficiency costs you revenue or margin. Every recommendation targets measurable commercial impact.</p>\n';
+  html += '    </div>\n';
+  html += '  </div>\n';
+
+  html += '  <div class="process-hex process-hex-center anim anim-up d3" onclick="openProcessView(\'deployment\')">\n';
+  html += '    <div class="process-hex-img">\n';
+  html += '      <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459428/Whisk_5349c90e685b97fae1c4144eb7f7fb57eg.png" class="card-img-fill" alt="Building">\n';
+  html += '    </div>\n';
+  html += '    <div class="process-hex-overlay">\n';
+  html += '      <div class="step-label">Phase 2</div>\n';
+  html += '      <h3>Infrastructure Deployment</h3>\n';
+  html += '      <p>We install revenue infrastructure designed to increase acquisition, reduce costs, and eliminate manual overhead. Every system is tested before handover.</p>\n';
+  html += '    </div>\n';
+  html += '  </div>\n';
+
+  html += '  <div class="process-hex' + phase3Extra + ' anim anim-up d5" onclick="openProcessView(\'monitoring\')">\n';
+  html += '    <div class="process-hex-img">\n';
+  html += '      <img src="https://res.cloudinary.com/dw5n0wlmr/image/upload/v1770459420/Whisk_7741b67544eeaef8cd14c8fb31b59fcdeg.png" class="card-img-fill" alt="Scaling">\n';
+  html += '    </div>\n';
+  html += '    <div class="process-hex-overlay">\n';
+  html += '      <div class="step-label">Phase 3</div>\n';
+  html += '      <h3>Performance Monitoring</h3>\n';
+  html += '      <p>We track system performance against revenue, cost, and efficiency metrics. Your infrastructure adapts to maintain competitive advantage as you scale.</p>\n';
+  html += '    </div>\n';
+  html += '  </div>\n';
+  html += '</div>';
+
+  var output = '/* =========================================\n';
+  output += '   CSS — Replace the .process-hex rules in\n';
+  output += '   css/layout.css (lines ~748-896)\n';
+  output += '   ========================================= */\n\n';
+  output += css;
+  output += '\n\n<!-- =========================================\n';
+  output += '     HTML — Replace the .process-hex-grid div\n';
+  output += '     in index.html inside #process section\n';
+  output += '     ========================================= -->\n\n';
+  output += html;
+
+  codeOutput.textContent = output;
+}
+
+function copyCode() {
+  var text = codeOutput.textContent;
+  if (!text || text.indexOf('Adjust the values') === 0) {
+    generateCode();
+    text = codeOutput.textContent;
+  }
+  navigator.clipboard.writeText(text).then(function() {
+    var toast = document.getElementById('copy-toast');
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2000);
+  });
+}
+
+// Init
+applyState();
+selectHex(0);
+</script>
+</body>
+</html>
